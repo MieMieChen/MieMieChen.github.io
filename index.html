@@ -338,10 +338,10 @@
             <div class="lg:col-span-7">
                 <div class="grid grid-cols-2 gap-4">
                     <!-- 【换图指引】：影视剧截图 -->
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="https://images.unsplash.com/photo-1578356108197-0466487041be?q=80&w=1000" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1000" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=1000" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="2caa60f3430185b03cb43821ad9ae394.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="b6aa47ffe34415ad36be6cf957225bb6.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="d8351747698a4e75d0595ecf0351d9c8.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="e5facae488f83451c3332cfe34c89405.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
                 </div>
             </div>
         </div>
@@ -384,17 +384,17 @@
         /* --- 【换图指引】：1. 旅行城市与画廊数据 --- */
         // 在这里修改或添加你想显示的城市，词云会自动渲染
         const travelCities = [
-            { name: 'Beijing', size: '5.5rem', rotate: '-4deg' },
+            { name: 'Beijing', size: '3.5rem', rotate: '-4deg' },
             { name: 'Shanghai', size: '4.5rem', rotate: '2deg' },
             { name: 'Hong Kong', size: '4rem', rotate: '-3deg' },
             { name: 'Melbourne', size: '5rem', rotate: '6deg' },
             { name: 'Brisbane', size: '3.5rem', rotate: '-5deg' },
-            { name: 'Orlando', size: '2.8rem', rotate: '8deg' },
+            { name: 'Orlando', size: '4.8rem', rotate: '8deg' },
             { name: 'Gold Coast', size: '4.2rem', rotate: '0deg' },
             { name: 'Sydney', size: '6rem', rotate: '-7deg' },
             { name: 'Chengdu', size: '3.2rem', rotate: '5deg' },
             { name: 'Beihai', size: '2.5rem', rotate: '-10deg' },
-            { name: 'Santiago', size: '3.4rem', rotate: '3deg' }
+            { name: 'Santiago', size: '4.4rem', rotate: '3deg' }
         ];
 
         // 这里对应点击每个城市后弹出的照片列表
@@ -402,8 +402,8 @@
             'Sydney': ['31f533890acf84ec5dbe29ac368ba367.jpg', '55fc95dd69b3aa57cf13b0c4ac2f78f2.jpg','e7b854d24044977bd7fb7f7e069e4664 copy.jpg'],
             'Gold Coast':['b080543a040b6b503baa9b60d39c31b8.jpg','c7c41984d6cbbce3c1ed949dadb77319.jpg','636f6d4344cc00914f91f71952a48370.jpg'],
             'Brisbane':['9a173d623310e4e91268d56b4b03bb34.jpg','b3831e2ce8de00f77e28bc21738e335c.jpg'],
-            'Shanghai': ['https://images.unsplash.com/photo-1548859953-2830eec48467?w=1200'],
-            'Beijing': ['https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200'],
+            'Shanghai': ['4c5115f6662a4952b9967ed767eeaba4.jpg','b566605b3e4a0d7b43063b3741d2ffb1.jpg',''],
+            'Beijing': ['86892695268823d9dccac038c4d667c9.jpg','638d8b74f49b1520a0639ea9dc24c82e.jpg'],
             'Melbourne': ['ceb2d5c58d19c969f02d73c57e9a7fd5.jpg','0a576ccb7f4de66e282e00f4709a067c.jpg','ff6fa1a3960db580dda50599f84d9186.jpg'],
             'Chengdu':['2fe1b55a53bce75330ae54ba2b74b6dc.jpg'],
             'Orlando':['dd526393983468274e80a1cae10039cd.jpg'],
@@ -416,15 +416,15 @@
         // src 替换为你的本地图片名，或者保持 Unsplash 链接做 Demo
         const foodImages = [
             { src: 'fb38ef47c5b75890ba5b7b0d71bf7d34.jpg', top: '5%', left: '12%', w: '240px', rotate: '-5deg', z: 10 },
-            { src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800', top: '12%', left: '38%', w: '280px', rotate: '4deg', z: 15 },
-            { src: 'https://images.unsplash.com/photo-1541014741259-df549fa9ba6f?q=80&w=800', top: '38%', left: '8%', w: '260px', rotate: '7deg', z: 20 },
-            { src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800', top: '10%', left: '68%', w: '210px', rotate: '-12deg', z: 25 },
-            { src: 'https://images.unsplash.com/photo-1563245372-f21724e3a26d?q=80&w=800', top: '45%', left: '32%', w: '300px', rotate: '-2deg', z: 30 },
-            { src: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=800', top: '32%', left: '58%', w: '220px', rotate: '5deg', z: 35 },
-            { src: 'https://images.unsplash.com/photo-1523905330026-b8bd1f5f320e?q=80&w=800', top: '60%', left: '65%', w: '250px', rotate: '-4deg', z: 40 },
-            { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800', top: '55%', left: '12%', w: '230px', rotate: '15deg', z: 12 },
-            { src: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=800', top: '8%', left: '82%', w: '180px', rotate: '3deg', z: 5 },
-            { src: 'https://images.unsplash.com/photo-1505253149613-112d21d9f6a9?q=80&w=800', top: '70%', left: '36%', w: '340px', rotate: '2deg', z: 45 }
+            { src: '7fffbc9e50eeac7d38d6e737c66dfbf4.jpg', top: '12%', left: '38%', w: '280px', rotate: '4deg', z: 15 },
+            { src: 'b124665e34454813428e86c08155de28.jpg', top: '38%', left: '8%', w: '260px', rotate: '7deg', z: 20 },
+            { src: '85a6ae4ad53415265383e448d7768aaa.jpg', top: '10%', left: '68%', w: '210px', rotate: '-12deg', z: 25 },
+            { src: '07f3bfb110353b2b05d79458114ae4f0.jpg', top: '45%', left: '32%', w: '300px', rotate: '-2deg', z: 30 },
+            { src: '77126af9b491c07eec234d8af46c9b7c.jpg', top: '32%', left: '58%', w: '220px', rotate: '5deg', z: 35 },
+            { src: '829eaf4034b686c6977daac6b728ac94.jpg', top: '60%', left: '65%', w: '250px', rotate: '-4deg', z: 40 },
+            { src: '5d583ca7da493e17aa88b3c2b0749e39.jpg', top: '55%', left: '12%', w: '230px', rotate: '15deg', z: 12 },
+            { src: 'b6817fd0e6add602a26c0d832e4340e6.jpg', top: '8%', left: '82%', w: '180px', rotate: '3deg', z: 5 },
+            { src: '8f1971083658d364b703abce95d97a42.jpg', top: '70%', left: '36%', w: '340px', rotate: '2deg', z: 45 }
         ];
 
         let currentGallery = [];
