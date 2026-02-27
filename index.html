@@ -7,12 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- 引入高级字体：Playfair Display (衬线), Inter (无衬线), Space Mono (等宽) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --brand-yellow: #FACC15; 
-            --bg-cream: #FFFEF9;    
+            --brand-yellow: #FACC15; /* 你的品牌色：黄色 */
+            --bg-cream: #FFFEF9;    /* 奶白色背景 */
             --text-main: #1A1A1A;
         }
 
@@ -24,141 +25,178 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        /* 【设计感元素】背景网格叠加层 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
         }
 
-        .yellow-accent { color: var(--brand-yellow); }
-        .bg-yellow-accent { background-color: var(--brand-yellow); }
-
+        /* 滚动进入动画 */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* 玻璃拟态卡片 */
         .glass-card {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: all 0.5s ease;
         }
-        .glass-card:hover {
-            border-color: var(--brand-yellow);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(250, 204, 21, 0.1);
-        }
+        .glass-card:hover { transform: translateY(-10px); border-color: var(--brand-yellow); box-shadow: 0 30px 60px -12px rgba(250,204,21,0.1); }
 
         #canvas-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.35;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.25;
         }
+
+        /* 地图样式：高还原地理轮廓 */
+        .land-path {
+            fill: #E2E8F0;
+            stroke: #FFFFFF;
+            stroke-width: 0.8;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .land-path:hover { fill: #FEF08A; }
+        .land-path.active-region { fill: var(--brand-yellow); stroke: #CA8A04; }
+
+        .image-container { overflow: hidden; position: relative; border-radius: 2px; cursor: pointer; }
+        .image-zoom { transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1); }
+        .image-container:hover .image-zoom { transform: scale(1.08); }
 
         .nav-link {
-            position: relative;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
+            position: relative;
         }
         .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--brand-yellow);
-            transition: width 0.3s ease;
+            content: ''; position: absolute; width: 0; height: 1px;
+            bottom: -4px; left: 0; background-color: var(--brand-yellow);
+            transition: width 0.4s ease;
         }
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        .nav-link:hover::after { width: 100%; }
 
-        .gallery-container {
-            overflow: hidden;
-            position: relative;
+        /* 影视板块深色背景 */
+        .cinema-bg { background-color: #0A0A0A; color: #EEE; }
+        .yellow-accent { color: var(--brand-yellow); }
+
+        /* --- 美食画廊弹窗样式 --- */
+        #gallery-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.98);
+            z-index: 1000;
+            padding: 40px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .gallery-img {
-            transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1);
+        .modal-close { position: absolute; top: 40px; right: 40px; color: white; cursor: pointer; }
+        .gallery-img { max-width: 100%; max-height: 70vh; object-fit: contain; transition: opacity 0.4s; }
+        .gallery-nav { 
+            background: rgba(255,255,255,0.1); color: white; width: 50px; height: 50px; 
+            display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer;
         }
-        .gallery-container:hover .gallery-img {
-            transform: scale(1.05);
-        }
+        .gallery-nav:hover { background: var(--brand-yellow); color: black; }
     </style>
 </head>
 <body>
 
     <canvas id="canvas-container"></canvas>
 
+    <!-- 【换图指引】：美食画廊弹窗 -->
+    <div id="gallery-modal">
+        <div class="modal-close" onclick="closeGallery()"><i data-lucide="x" class="w-8 h-8"></i></div>
+        <div class="flex items-center gap-8 w-full max-w-6xl justify-between">
+            <div class="gallery-nav" onclick="changeImage(-1)"><i data-lucide="chevron-left"></i></div>
+            <img id="modal-img" src="" class="gallery-img shadow-2xl">
+            <div class="gallery-nav" onclick="changeImage(1)"><i data-lucide="chevron-right"></i></div>
+        </div>
+        <div class="mt-8 text-center">
+            <h4 id="modal-title" class="text-white text-3xl serif italic mb-2">Category</h4>
+            <p id="modal-counter" class="mono text-stone-500 text-[10px] tracking-widest"></p>
+        </div>
+    </div>
+
     <!-- 导航栏 -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-8 flex justify-between items-center mix-blend-difference text-white">
-        <div class="text-2xl font-bold tracking-tighter italic">ZC.</div>
-        <div class="space-x-10 hidden md:flex">
+    <nav class="fixed top-0 w-full z-50 px-10 py-10 flex justify-between items-center mix-blend-difference text-white">
+        <!-- 【GitHub跳转】：左上角品牌标志 -->
+        <a href="https://github.com/MieMieChen" target="_blank" class="text-3xl font-bold tracking-tighter italic hover:text-yellow-400 transition-colors">ZC.</a>
+        <div class="hidden lg:flex space-x-12">
             <a href="#about" class="nav-link">Bio</a>
             <a href="#projects" class="nav-link">Agents</a>
             <a href="#garden" class="nav-link">Garden</a>
-            <a href="#lifestyle" class="nav-link">Life</a>
-            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#travel" class="nav-link">Travel</a>
+            <a href="#food" class="nav-link">Palate</a>
+            <a href="#cinema" class="nav-link">Frames</a>
         </div>
     </nav>
 
-    <!-- 首屏 -->
+    <!-- 首屏部分 -->
     <section class="min-h-screen flex flex-col justify-center px-8 md:px-24">
         <div class="reveal">
-            <p class="text-[10px] font-bold tracking-[0.4em] uppercase mb-8 text-gray-400 italic">SJTU Software Engineering Researcher</p>
-            <h1 class="text-6xl md:text-[9.5rem] leading-[0.85] mb-12 tracking-tighter">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="w-10 h-[1px] bg-stone-300"></span>
+                <p class="mono text-[10px] font-bold tracking-[0.6em] uppercase text-stone-400">SJTU / Class of 2027</p>
+            </div>
+            <!-- 【文案修改】：主标题 -->
+            <h1 class="text-7xl md:text-[11rem] leading-[0.8] mb-12 tracking-tighter font-bold">
                 Zimeng Chen <br>
                 <span class="italic yellow-accent serif">陈梓萌</span>
             </h1>
-            <p class="max-w-2xl text-xl md:text-2xl text-gray-500 font-light leading-relaxed">
-                Architecting autonomous ecosystems through <span class="text-black font-normal border-b-2 border-yellow-400">Multi-Agent Workflows</span>. 
-                Junior student at Shanghai Jiao Tong University.
-            </p>
-        </div>
-        <div class="mt-16 reveal" style="transition-delay: 0.2s;">
-            <a href="#projects" class="group inline-flex items-center gap-4">
-                <span class="w-12 h-12 rounded-full border border-black flex items-center justify-center group-hover:bg-yellow-400 group-hover:border-yellow-400 transition-all duration-500">
-                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </span>
-                <span class="text-sm font-bold uppercase tracking-widest italic">Explore My Research</span>
-            </a>
+            <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-20">
+                <p class="max-w-xl text-xl text-stone-500 font-light leading-relaxed text-pretty">
+                    Exploring the orchestration of <span class="text-black font-semibold border-b-2 border-yellow-400">Multi-Agent Workflows</span> and the architectural beauty of autonomous reasoning systems.
+                </p>
+                <div class="mono text-[10px] uppercase tracking-[0.3em] text-stone-300 transform rotate-90 hidden md:block">Scroll to Decipher</div>
+            </div>
         </div>
     </section>
 
-    <!-- 关于我 -->
+    <!-- 1. Bio Section -->
     <section id="about" class="py-40 px-8 md:px-24 bg-white">
-        <div class="grid md:grid-cols-2 gap-24 items-center reveal">
-            <div class="relative">
-                <div class="aspect-[3/4] overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl bg-gray-100">
-                    <!-- 个人照片 -->
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Profile of Zimeng Chen">
+        <div class="grid lg:grid-cols-12 gap-24 items-center reveal">
+            <div class="lg:col-span-5 relative">
+                <!-- 【换图指引】：修改 src 为你上传到根目录的图片名 -->
+                <div class="image-container aspect-[3/4] shadow-2xl group" onclick="window.open('https://github.com/MieMieChen', '_blank')">
+                    <img src="4870d4d12ebb2b73d6f0d940f2ec3327.jpg" class="image-zoom w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Zimeng Chen">
                 </div>
-                <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400/10 -z-10 rounded-full blur-3xl"></div>
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400/5 rounded-full blur-3xl"></div>
             </div>
-            <div>
-                <h2 class="text-5xl mb-10 font-bold tracking-tight">Software Engineer & <br><span class="serif italic yellow-accent text-6xl">Agent Architect</span></h2>
-                <div class="space-y-8 text-gray-600 text-lg leading-relaxed font-light">
-                    <p>I am currently a Year 3 student at <span class="text-black font-medium underline decoration-yellow-400 decoration-2 underline-offset-4">SJTU</span>. My academic pursuit lies at the intersection of large language models and distributed system orchestration.</p>
-                    <p>My work explores how <span class="text-black font-medium">Agentic Workflows</span> can empower LLMs to handle complex, non-linear tasks with higher autonomy and lower hallucination rates.</p>
-                    <div class="flex gap-16 pt-10 border-t border-gray-100">
+            <div class="lg:col-span-7">
+                <!-- 【文案修改】：侧边标题 -->
+                <h2 class="text-5xl md:text-6xl mb-12 font-bold tracking-tight leading-tight">
+                    <span class="yellow-accent">Software Engineering &</span><br>
+                    <span class="text-black">Agent Architect</span>
+                </h2>
+                <div class="space-y-10 text-stone-600 text-lg leading-relaxed font-light text-pretty">
+                    <p>Junior student at <span class="text-black font-medium italic underline decoration-yellow-400 decoration-2 underline-offset-8">Shanghai Jiao Tong University</span>. My research is dedicated to the study of decentralized intelligence and the formalization of agentic reasoning loops.</p>
+                    <p>I focus on building robust system architectures where large language models transition from passive participants to proactive collaborative entities within complex environments.</p>
+                    <div class="grid grid-cols-2 gap-10 pt-10 border-t border-stone-100">
                         <div>
-                            <p class="text-[10px] uppercase text-gray-400 tracking-[0.2em] mb-2 font-bold italic text-nowrap">Institution</p>
-                            <p class="font-bold text-black text-xl italic serif">SJTU '26</p>
+                            <p class="mono text-[10px] uppercase text-stone-400 tracking-widest mb-3">Academic Context</p>
+                            <p class="font-bold text-black text-xl italic serif">SJTU Class of '27</p>
                         </div>
                         <div>
-                            <p class="text-[10px] uppercase text-gray-400 tracking-[0.2em] mb-2 font-bold italic text-nowrap">Specialization</p>
-                            <p class="font-bold text-black text-xl">AI Agent / MAS</p>
+                            <p class="mono text-[10px] uppercase text-stone-400 tracking-widest mb-3">Core Expertise</p>
+                            <p class="font-bold text-black text-xl font-mono">Agentic MAS</p>
                         </div>
                     </div>
                 </div>
@@ -166,106 +204,153 @@
         </div>
     </section>
 
-    <!-- 项目展示 (GitHub API 联动) -->
+    <!-- 2. Code Latitudes (GitHub Projects) -->
     <section id="projects" class="py-40 px-8 md:px-24">
-        <div class="flex justify-between items-end mb-20 reveal">
-            <h2 class="text-6xl serif italic tracking-tighter">Agentic Repositories</h2>
-            <a href="https://github.com/MieMieChen" target="_blank" class="text-xs font-bold tracking-[0.2em] text-gray-400 hover:text-yellow-500 transition-colors uppercase">View GitHub Profile →</a>
+        <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal">
+            <h2 class="text-6xl md:text-8xl font-bold tracking-tighter serif italic">Code Latitudes</h2>
+            <!-- 【GitHub跳转】：项目标题右侧链接 -->
+            <a href="https://github.com/MieMieChen" target="_blank" class="mono text-[10px] font-bold uppercase tracking-widest text-brand-yellow hover:text-black transition-all mb-4 md:mb-0 border-b border-brand-yellow pb-2">@MieMieChen on GitHub →</a>
         </div>
-        <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 reveal">
-            <div class="col-span-full py-20 text-center text-gray-300 animate-pulse font-mono tracking-widest italic uppercase">Syncing GitHub Repositories...</div>
+        <div id="repo-grid" class="grid lg:grid-cols-3 gap-10 reveal">
+            <div class="col-span-full py-20 text-center mono italic text-stone-300 uppercase tracking-widest">Synchronizing Autonomous Agents...</div>
         </div>
     </section>
 
-    <!-- 数字花园 (Obsidian 笔记) -->
-    <section id="garden" class="py-40 px-8 md:px-24 bg-stone-100">
-        <div class="max-w-5xl mx-auto text-center reveal">
-            <p class="text-yellow-500 font-bold tracking-[0.5em] uppercase text-[10px] mb-6 italic underline decoration-2 underline-offset-8">Second Brain</p>
-            <h2 class="text-6xl md:text-7xl mb-12 serif italic tracking-tighter">Digital Garden</h2>
-            <p class="text-2xl text-gray-500 mb-20 leading-relaxed font-light max-w-3xl mx-auto">
-                A public window into my <span class="text-black font-medium italic">Obsidian</span> vault. A curated collection of my thoughts on AI, system design, and the philosophy of code.
+    <!-- 3. Digital Garden -->
+    <section id="garden" class="py-40 px-8 md:px-24 bg-stone-100 border-y border-stone-200">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <p class="mono text-[10px] uppercase text-stone-400 tracking-[0.5em] mb-10">Recursive Notes Archive</p>
+            <h2 class="text-6xl md:text-[7.5rem] font-bold tracking-tighter serif italic leading-none mb-12">Digital Garden</h2>
+            <p class="text-2xl text-stone-500 leading-relaxed font-light italic mb-16">
+                A non-linear collection of research logs, paper summaries, and architectural failures—the messy process behind the polished code.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left mb-20">
-                <div class="glass-card p-12 rounded-sm border-l-4 border-yellow-400">
-                    <i data-lucide="brain" class="text-yellow-500 mb-8 w-8 h-8"></i>
-                    <h3 class="text-2xl font-bold mb-4 serif italic">Knowledge Graph</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed font-light italic text-pretty">Exploring Agent Architecture, prompt engineering patterns, and software design principles.</p>
-                </div>
-                <div class="glass-card p-12 rounded-sm border-l-4 border-yellow-400">
-                    <i data-lucide="zap" class="text-yellow-500 mb-8 w-8 h-8"></i>
-                    <h3 class="text-2xl font-bold mb-4 serif italic">Thinking Logs</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed font-light italic text-pretty">Capturing paper summaries and research reflections in real-time from my SJTU lab work.</p>
-                </div>
-            </div>
-            <!-- 连接到你的 Vercel 站点 -->
-            <a href="https://notes-ten-sepia.vercel.app" target="_blank" class="inline-block px-14 py-6 bg-black text-white font-bold tracking-[0.3em] hover:bg-yellow-400 hover:text-black transition-all duration-700 uppercase text-[10px] rounded-full shadow-lg">
-                Enter The Garden
+            <a href="https://notes-ten-sepia.vercel.app" target="_blank" class="inline-block px-20 py-8 bg-black text-white mono text-[10px] font-bold uppercase tracking-[0.4em] rounded-full hover:bg-yellow-400 hover:text-black transition-all shadow-2xl">
+                Access Obsidian Vault
             </a>
         </div>
     </section>
 
-    <!-- 生活模块: 旅行与美食 -->
-    <section id="lifestyle" class="py-40 bg-white overflow-hidden">
-        <!-- 旅行 -->
-        <div class="px-8 md:px-24 mb-40 reveal">
-            <div class="flex items-center gap-10 mb-16">
-                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase">Travel</h2>
-                <div class="h-px flex-grow bg-gray-100"></div>
-                <span class="text-yellow-500 italic serif text-3xl italic">Wandering</span>
+    <!-- 4. Travel Mapping -->
+    <section id="travel" class="py-40 px-8 md:px-24 bg-white overflow-hidden">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal">
+            <div class="max-w-2xl">
+                <p class="mono text-[10px] uppercase text-stone-400 tracking-[0.5em] mb-4">Spatial Context</p>
+                <h2 class="text-6xl md:text-8xl font-bold tracking-tighter serif italic leading-none">Memory Mapping</h2>
             </div>
-            <div class="grid md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-8 gallery-container overflow-hidden rounded-sm shadow-2xl aspect-video bg-gray-50">
-                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200&auto=format&fit=crop" class="gallery-img w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/10"></div>
-                </div>
-                <div class="md:col-span-4">
-                    <p class="text-3xl serif italic mb-8 leading-snug text-gray-800">"Exploring landscapes as I explore latent spaces."</p>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed tracking-wide italic">Observing how urban design and digital systems share the same principles of harmony and architecture.</p>
-                </div>
+            <div class="flex gap-2 mt-12 md:mt-0 p-1 bg-stone-100 rounded-full">
+                <button onclick="switchMap('world')" id="btn-world" class="px-8 py-3 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-widest transition-all">World</button>
+                <button onclick="switchMap('china')" id="btn-china" class="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-white">China</button>
             </div>
         </div>
 
-        <!-- 美食 -->
-        <div class="px-8 md:px-24 reveal text-right">
-            <div class="flex items-center gap-10 mb-16 flex-row-reverse">
-                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase">Food</h2>
-                <div class="h-px flex-grow bg-gray-100"></div>
-                <span class="text-yellow-400 italic serif text-3xl italic">Gastronomy</span>
-            </div>
-            <div class="grid md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-4 order-2 md:order-1 text-left">
-                    <p class="text-3xl serif italic mb-8 leading-snug text-gray-800">"A perfect dish is the ultimate orchestrated workflow."</p>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed tracking-wide italic">Fine-tuning the parameters of flavor. Finding inspiration in the precision and timing of culinary arts.</p>
+        <div class="grid lg:grid-cols-12 gap-20 items-start reveal">
+            <div class="lg:col-span-7 bg-stone-50 rounded-3xl p-10 shadow-inner border border-stone-100 relative min-h-[500px] flex items-center justify-center">
+                <div id="world-map-wrapper" class="w-full h-full">
+                    <svg viewBox="0 -50 1000 550" class="w-full h-auto">
+                        <path id="reg-asia" class="land-path active-region" d="M580,50 C650,40 850,50 950,80 C980,120 920,250 900,320 C850,380 650,360 620,320 C590,280 570,100 580,50 Z" onclick="handleMapClick('Asia')"></path>
+                        <path id="reg-oceania" class="land-path" d="M780,335 C800,320 830,325 860,330 C880,335 905,330 910,355 C915,380 905,405 885,425 C860,445 810,440 780,425 C755,410 750,360 Z" onclick="handleMapClick('Oceania')"></path>
+                        <path id="reg-namerica" class="land-path" d="M120,40 C150,30 200,35 250,50 C300,65 350,55 380,80 C400,100 410,150 380,200 C350,250 180,240 100,80 Z" onclick="handleMapClick('North America')"></path>
+                    </svg>
                 </div>
-                <div class="md:col-span-8 order-1 md:order-2 gallery-container overflow-hidden rounded-sm shadow-2xl aspect-video bg-gray-50">
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop" class="gallery-img w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/10"></div>
+                <div id="china-map-wrapper" class="w-full h-full hidden">
+                    <svg viewBox="0 0 600 500" class="w-full h-auto">
+                        <path id="prov-main" class="land-path active-region" d="M150,150 C180,100 250,50 350,80 C400,100 520,120 550,220 C570,300 520,420 450,450 C380,470 180,420 100,380 100,200 Z" onclick="handleMapClick('Shanghai')"></path>
+                        <path id="prov-bj" class="land-path" d="M390,140 L415,145 L410,165 L385,160 Z" onclick="handleMapClick('Beijing')"></path>
+                        <circle cx="400" cy="150" r="5" fill="#FACC15" stroke="white" stroke-width="1.5"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="lg:col-span-5">
+                <div id="loc-card" class="glass-card p-12 rounded-3xl transition-all duration-500">
+                    <h3 id="loc-name" class="text-5xl serif italic mb-8">Oceania</h3>
+                    <p id="loc-story" class="text-stone-500 leading-relaxed font-light italic mb-12 text-pretty">"The blue Pacific frontier. A unique ecosystem where isolated evolution meets modern architecture."</p>
+                    <div class="image-container aspect-video rounded-2xl shadow-xl"><img id="loc-img-1" src="e7b854d24044977bd7fb7f7e069e4664.jpg" class="w-full h-full object-cover"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 联系方式 -->
-    <footer id="contact" class="py-40 px-8 md:px-24 bg-black text-white">
-        <div class="reveal">
-            <h2 class="text-6xl md:text-[10rem] mb-24 serif italic text-center tracking-tighter">Let's Connect.</h2>
-            <div class="grid md:grid-cols-3 gap-20 border-t border-white/10 pt-20">
-                <div>
-                    <p class="text-gray-500 uppercase tracking-[0.3em] text-[10px] mb-6 font-bold italic">Base Location</p>
-                    <p class="text-2xl font-light">Shanghai, China</p>
-                </div>
-                <div class="md:col-span-2">
-                    <p class="text-gray-500 uppercase tracking-[0.3em] text-[10px] mb-6 font-bold italic text-nowrap">Collaborative Inquiries</p>
-                    <a href="mailto:zimeng.chen@sjtu.edu.cn" class="text-3xl md:text-5xl hover:text-yellow-400 transition-all serif italic border-b border-white/20 pb-4 block truncate tracking-tighter italic">zimeng.chen@sjtu.edu.cn</a>
+    <!-- 5. Gastronomic Algorithms (画廊可点) -->
+    <section id="food" class="py-40 px-8 md:px-24 bg-white">
+        <div class="max-w-4xl mx-auto text-center mb-32 reveal">
+            <h2 class="text-6xl md:text-8xl font-bold tracking-tighter serif italic text-pretty">Gastronomic Algorithms</h2>
+            <p class="mono text-[10px] uppercase tracking-[0.5em] text-stone-400 mt-8">Click to Browse Collections</p>
+        </div>
+        <div class="grid md:grid-cols-4 gap-8 reveal">
+            <!-- 【换图指引】：点击分类会打开画廊。具体的照片路径在下方的 JS 脚本中修改 -->
+            <div class="group border-l border-stone-100 pl-8 cursor-pointer" onclick="openGallery('Chinese')">
+                <h3 class="text-2xl font-bold mb-6 serif italic group-hover:text-yellow-500 transition-colors">Chinese</h3>
+                <p class="text-sm text-stone-400 leading-relaxed mb-10 font-light italic">Balancing the logic of spices and the ancient art of fire control.</p>
+                <div class="aspect-[3/4] image-container rounded-sm shadow-xl"><img src="https://images.unsplash.com/photo-1512058560366-cd242959b4fe?q=80&w=800" class="image-zoom w-full h-full object-cover grayscale group-hover:grayscale-0"></div>
+            </div>
+            <div class="group border-l border-stone-100 pl-8 cursor-pointer" onclick="openGallery('Western')">
+                <h3 class="text-2xl font-bold mb-6 serif italic group-hover:text-yellow-500 transition-colors">Western</h3>
+                <p class="text-sm text-stone-400 leading-relaxed mb-10 font-light italic">From refined bistros to the pure precision of French techniques.</p>
+                <div class="aspect-[3/4] image-container rounded-sm shadow-xl"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800" class="image-zoom w-full h-full object-cover grayscale group-hover:grayscale-0"></div>
+            </div>
+            <div class="group border-l border-stone-100 pl-8 cursor-pointer" onclick="openGallery('Snacks')">
+                <h3 class="text-2xl font-bold mb-6 serif italic group-hover:text-yellow-500 transition-colors">Snacks</h3>
+                <p class="text-sm text-stone-400 leading-relaxed mb-10 font-light italic">Spontaneous street-side inspirations found in every corner.</p>
+                <div class="aspect-[3/4] image-container rounded-sm shadow-xl"><img src="https://images.unsplash.com/photo-1541014741259-df549fa9ba6f?q=80&w=800" class="image-zoom w-full h-full object-cover grayscale group-hover:grayscale-0"></div>
+            </div>
+            <div class="group border-l border-stone-100 pl-8 cursor-pointer" onclick="openGallery('Coffee')">
+                <h3 class="text-2xl font-bold mb-6 serif italic group-hover:text-yellow-500 transition-colors">Coffee</h3>
+                <p class="text-sm text-stone-400 leading-relaxed mb-10 font-light italic">A daily essential to reset the logic and find fresh inspiration.</p>
+                <div class="aspect-[3/4] image-container rounded-sm shadow-xl"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800" class="image-zoom w-full h-full object-cover grayscale group-hover:grayscale-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Cinema Section -->
+    <section id="cinema" class="py-40 px-8 md:px-24 cinema-bg relative">
+        <div class="grid lg:grid-cols-12 gap-20 items-center reveal">
+            <div class="lg:col-span-5">
+                <span class="mono text-[10px] text-yellow-500 tracking-[0.4em] uppercase mb-10 block">Systematic Deciphering</span>
+                <h2 class="text-6xl md:text-8xl font-bold serif italic mb-10 leading-none">Frames & <br>Narratives</h2>
+                <!-- 【文案修改】：影视感悟 -->
+                <div class="space-y-8 text-stone-400 text-lg leading-relaxed font-light italic text-pretty">
+                    <p>I find a deep resonance between Multi-Agent Systems and the narrative structure of <span class="text-white font-medium underline decoration-yellow-400 underline-offset-8">Detective Thrillers</span>. Every clue is a hidden state, every character an agent with a unique perspective.</p>
+                    <p>In <span class="text-white font-medium">Medical Dramas</span>, I am captivated by the diagnostic algorithms—transforming chaotic symptoms into orchestrated cures.</p>
                 </div>
             </div>
-            <div class="mt-40 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] tracking-[0.4em] text-gray-600 font-bold uppercase">
-                <p>ZIMENG CHEN / SJTU SOFTWARE ENGINEERING '26</p>
-                <div class="flex gap-10">
-                    <a href="https://github.com/MieMieChen" class="hover:text-yellow-400 transition-colors tracking-widest">GITHUB</a>
-                    <a href="#" class="hover:text-yellow-400 transition-colors tracking-widest">LINKEDIN</a>
+            <div class="lg:col-span-7">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="d8351747698a4e75d0595ecf0351d9c8.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="e5facae488f83451c3332cfe34c89405.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="2caa60f3430185b03cb43821ad9ae394.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
+                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="b6aa47ffe34415ad36be6cf957225bb6.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
                 </div>
-                <p>© 2024 PRECISION & AGENTS</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Classic Reverted Style) -->
+    <footer class="py-32 px-8 md:px-24 bg-black text-white">
+        <div class="reveal">
+            <p class="mono text-brand-yellow text-[10px] tracking-[0.5em] uppercase mb-16 italic">Initialize Handshake</p>
+            <div class="grid lg:grid-cols-2 gap-20 border-t border-white/10 pt-20">
+                <div class="space-y-4">
+                    <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase mb-6">Direct Channel</p>
+                    <a href="mailto:zimeng.chen@sjtu.edu.cn" class="text-3xl md:text-5xl hover:text-yellow-400 transition-all serif italic block border-b border-white/10 pb-4 truncate">zimeng.chen@sjtu.edu.cn</a>
+                </div>
+                <div class="grid grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase">Social</p>
+                        <ul class="space-y-2 mono text-xs uppercase tracking-widest font-bold">
+                            <!-- 【GitHub跳转】：页脚链接 -->
+                            <li><a href="https://github.com/MieMieChen" target="_blank" class="text-stone-400 hover:text-white transition-colors">GitHub Profile →</a></li>
+                            <li><a href="#" class="text-stone-400 hover:text-white transition-colors">LinkedIn Link →</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase">Status</p>
+                        <p class="text-stone-400 mono text-xs uppercase tracking-widest">Available for <br>Research Sync</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-40 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 mono text-[10px] text-stone-600 uppercase tracking-widest">
+                <p>© 2026 Zimeng Chen / SJTU Class of '27</p>
+                <p>Designed for Precision & Autonomous Agents</p>
             </div>
         </div>
     </footer>
@@ -273,87 +358,150 @@
     <script>
         lucide.createIcons();
 
-        // 揭示动画
+        /* --- 【换图指引】：美食照片数据 --- */
+        // 将这里的 URL 替换为你自己的图片路径或文件名即可
+        const foodGalleries = {
+            'Chinese': [
+                'https://images.unsplash.com/photo-1512058560366-cd242959b4fe?q=80&w=1200',
+                'https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=1200'
+            ],
+            'Western': [
+                'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200',
+                'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1200'
+            ],
+            'Snacks': [
+                'https://images.unsplash.com/photo-1541014741259-df549fa9ba6f?q=80&w=1200',
+                'https://images.unsplash.com/photo-1523905330026-b8bd1f5f320e?q=80&w=1200'
+            ],
+            'Coffee': [
+                'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200',
+                'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200'
+            ]
+        };
+
+        let currentCategory = '';
+        let currentIdx = 0;
+
+        function openGallery(category) {
+            currentCategory = category;
+            currentIdx = 0;
+            document.getElementById('gallery-modal').style.display = 'flex';
+            updateModal();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGallery() {
+            document.getElementById('gallery-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeImage(dir) {
+            const list = foodGalleries[currentCategory];
+            currentIdx = (currentIdx + dir + list.length) % list.length;
+            const img = document.getElementById('modal-img');
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = list[currentIdx]; img.style.opacity = '1'; updateModal(); }, 200);
+        }
+
+        function updateModal() {
+            const list = foodGalleries[currentCategory];
+            document.getElementById('modal-title').innerText = currentCategory;
+            document.getElementById('modal-img').src = list[currentIdx];
+            document.getElementById('modal-counter').innerText = `${currentIdx + 1} / ${list.length}`;
+        }
+
+        // 揭示动画逻辑
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // GitHub 数据获取
+        /* --- 【文案修改】：地图数据 --- */
+        const locationData = {
+            'Oceania': { tag: 'Frontier', story: '"The blue Pacific frontier. Where architectural lines meet the vastness of the Southern Cross."', img: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800' },
+            'Beijing': { tag: 'Historical Node', story: '"Where history meets the frantic pace of digital innovation. Zhongguancun to the Forbidden City."', img: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?q=80&w=800' },
+            'Shanghai': { tag: 'Primary Lab', story: '"My daily symphony of algorithms. SJTU provides the space, but the city provides the kinetic inspiration."', img: '6f77c944a2833ff2dbc68b852c9d6da1.jpg' }
+        };
+
+        function switchMap(type) {
+            const world = document.getElementById('world-map-wrapper');
+            const china = document.getElementById('china-map-wrapper');
+            const bw = document.getElementById('btn-world');
+            const bc = document.getElementById('btn-china');
+            if(type === 'world') {
+                world.classList.remove('hidden'); china.classList.add('hidden');
+                bw.classList.add('bg-black', 'text-white'); bc.classList.remove('bg-black', 'text-white');
+                handleMapClick('Oceania');
+            } else {
+                world.classList.add('hidden'); china.classList.remove('hidden');
+                bc.classList.add('bg-black', 'text-white'); bw.classList.remove('bg-black', 'text-white');
+                handleMapClick('Beijing');
+            }
+        }
+
+        function handleMapClick(loc) {
+            const card = document.getElementById('loc-card');
+            const data = locationData[loc] || { tag: 'Node', story: '"Mapping the latent spaces of our world."', img: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800' };
+            document.querySelectorAll('.land-path').forEach(p => p.classList.remove('active-region'));
+            const target = document.getElementById(`reg-${loc.toLowerCase().replace(' ', '')}`) || 
+                           document.getElementById(`prov-${loc.toLowerCase() === 'beijing' ? 'bj' : 'sh'}`);
+            if(target) target.classList.add('active-region');
+            card.style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loc-name').innerText = loc;
+                document.getElementById('loc-tag').innerText = data.tag;
+                document.getElementById('loc-story').innerText = data.story;
+                document.getElementById('loc-img-1').src = data.img;
+                card.style.opacity = '1';
+            }, 300);
+        }
+
+        // GitHub 实时拉取：修正链接指向
         async function fetchRepos(username) {
             const grid = document.getElementById('repo-grid');
             try {
                 const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=9`);
                 const data = await res.json();
-                grid.innerHTML = ''; 
-                
-                if (!Array.isArray(data)) throw new Error('API Error');
-
+                grid.innerHTML = '';
                 data.forEach(repo => {
-                    if (repo.fork) return; 
+                    if (repo.fork) return;
                     const card = document.createElement('a');
-                    card.href = repo.html_url;
-                    card.target = "_blank";
-                    card.className = "glass-card p-12 rounded-sm group flex flex-col justify-between h-full";
+                    card.href = repo.html_url; card.target = "_blank";
+                    card.className = "glass-card p-12 rounded-2xl group flex flex-col justify-between h-full";
                     card.innerHTML = `
                         <div>
-                            <div class="flex justify-between items-start mb-8">
-                                <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-yellow-600 bg-yellow-50 px-3 py-1 italic">${repo.language || 'Agentic'}</span>
-                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover:text-yellow-500 transition-colors"></i>
+                            <div class="flex justify-between items-start mb-10 mono uppercase text-[9px] tracking-widest text-stone-400">
+                                <span>${repo.language || 'Agentic'}</span>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:text-yellow-500 transition-colors"></i>
                             </div>
-                            <h3 class="text-2xl font-bold mb-4 serif italic group-hover:text-yellow-600 transition-colors tracking-tighter">${repo.name}</h3>
-                            <p class="text-sm text-gray-400 line-clamp-2 leading-relaxed font-light italic">${repo.description || 'Designing autonomous agent orchestration and MAS architectures.'}</p>
-                        </div>
-                        <div class="mt-12 flex items-center gap-6 text-[10px] font-bold text-gray-300 tracking-[0.2em]">
-                            <span class="flex items-center gap-2 font-mono"><i data-lucide="star" class="w-3 h-3 text-yellow-500"></i> ${repo.stargazers_count}</span>
-                            <span class="flex items-center gap-2 font-mono"><i data-lucide="git-branch" class="w-3 h-3"></i> ${repo.forks_count}</span>
+                            <h3 class="text-2xl font-bold mb-6 serif italic group-hover:text-yellow-600 transition-colors tracking-tight">${repo.name}</h3>
+                            <p class="text-sm text-stone-500 leading-relaxed font-light italic">${repo.description || 'Autonomous orchestration workflow.'}</p>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
                 lucide.createIcons();
-            } catch (err) {
-                grid.innerHTML = `<div class="col-span-full py-20 text-center text-gray-400 font-serif italic text-xs tracking-widest uppercase italic">Sync failed. View @MieMieChen on GitHub directly.</div>`;
-            }
+            } catch (err) { grid.innerHTML = `<div class="col-span-full py-20 mono text-stone-400 italic">Sync Suspended. <a href="https://github.com/MieMieChen" class="underline">View profile manually.</a></div>`; }
         }
         fetchRepos('MieMieChen');
 
-        // 背景粒子
+        // 动态粒子特效
         const canvas = document.getElementById('canvas-container');
         const ctx = canvas.getContext('2d');
         let points = [];
         function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             points = [];
-            for(let i=0; i<45; i++) {
-                points.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.22,
-                    vy: (Math.random() - 0.5) * 0.22,
-                    r: Math.random() * 1.5 + 0.5
-                });
+            for(let i=0; i<35; i++) {
+                points.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12, r: Math.random() * 1.5 + 0.5 });
             }
         }
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#FACC15';
-            points.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#FACC15';
+            points.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); });
             requestAnimationFrame(draw);
         }
-        window.addEventListener('resize', init);
-        init();
-        draw();
+        window.addEventListener('resize', init); init(); draw();
     </script>
 </body>
 </html>
