@@ -38,7 +38,7 @@
       background: var(--paper);
       color: var(--ink);
       font-family: var(--sans);
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.7;
       overflow-x: hidden;
     }
@@ -146,7 +146,7 @@
     .rail-copy {
       margin: 1.35rem 0 1.25rem;
       color: var(--ink-soft);
-      font-size: 0.95rem;
+      font-size: 1rem;
       line-height: 1.72;
     }
 
@@ -170,7 +170,7 @@
       padding: 0.45rem 0.7rem;
       border-radius: 0.85rem;
       color: #6a7c82;
-      font-size: 0.83rem;
+      font-size: 0.88rem;
       font-weight: 600;
       letter-spacing: 0.015em;
       transition: color 180ms ease, background 180ms ease, transform 180ms ease;
@@ -233,7 +233,18 @@
       text-transform: uppercase;
     }
 
-    main { min-width: 0; }
+    main {
+      min-width: 0;
+      background: linear-gradient(
+        180deg,
+        #eef7fb 0%,
+        #f8fbf9 18%,
+        #f4fafc 38%,
+        #fffdf7 60%,
+        #f7fbfc 80%,
+        #fff8f1 100%
+      );
+    }
 
     .hero {
       position: relative;
@@ -262,6 +273,7 @@
       inset: 0;
       z-index: -2;
       background:
+        linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.25) 82%, #f8fbf9 100%),
         linear-gradient(90deg, rgba(237, 247, 251, 0.98) 0%, rgba(237, 247, 251, 0.9) 38%, rgba(237, 247, 251, 0.28) 64%, rgba(237, 247, 251, 0.03) 100%),
         linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 35%);
     }
@@ -394,8 +406,7 @@
 
     .section {
       position: relative;
-      padding: clamp(3.5rem, 5.5vw, 5.4rem) clamp(2rem, 6vw, 6rem);
-      border-top: 1px solid var(--line);
+      padding: clamp(3rem, 4.5vw, 4.6rem) clamp(2rem, 6vw, 6rem);
     }
 
     .section-inner {
@@ -405,10 +416,10 @@
 
     .section-heading {
       display: grid;
-      grid-template-columns: minmax(15rem, 0.42fr) 1fr;
-      gap: clamp(2rem, 4vw, 4.5rem);
+      grid-template-columns: minmax(14rem, 0.38fr) 1fr;
+      gap: clamp(2rem, 3.5vw, 3.8rem);
       align-items: start;
-      margin-bottom: clamp(2.2rem, 4vw, 3.5rem);
+      margin-bottom: clamp(1.9rem, 3vw, 2.8rem);
     }
 
     .section-kicker {
@@ -434,8 +445,8 @@
       max-width: 43rem;
       margin: 0;
       color: var(--ink-soft);
-      font-size: clamp(1.05rem, 1.25vw, 1.18rem);
-      line-height: 1.75;
+      font-size: clamp(1.12rem, 1.32vw, 1.24rem);
+      line-height: 1.7;
       text-wrap: pretty;
     }
 
@@ -446,9 +457,7 @@
 
     .about {
       overflow: hidden;
-      background:
-        radial-gradient(circle at 88% 14%, rgba(244, 127, 98, 0.11), transparent 24rem),
-        var(--paper);
+      background: radial-gradient(circle at 88% 14%, rgba(244, 127, 98, 0.08), transparent 27rem);
     }
 
     .about-grid {
@@ -537,7 +546,7 @@
     .about-note p {
       margin: 0;
       color: var(--ink-soft);
-      font-size: 1rem;
+      font-size: 1.03rem;
     }
 
     .focus-list {
@@ -553,13 +562,11 @@
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.6);
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.76rem;
     }
 
     .works {
-      background:
-        linear-gradient(130deg, rgba(172, 216, 238, 0.22), transparent 37%),
-        #f8fcfd;
+      background: radial-gradient(circle at 8% 10%, rgba(172, 216, 238, 0.15), transparent 30rem);
     }
 
     .works-list {
@@ -618,7 +625,7 @@
     .work-authors {
       margin: 0 0 1.15rem;
       color: #71848a;
-      font-size: 0.84rem;
+      font-size: 0.9rem;
       line-height: 1.7;
     }
 
@@ -631,7 +638,7 @@
       max-width: 48rem;
       margin: 0;
       color: var(--ink-soft);
-      font-size: 0.98rem;
+      font-size: 1.04rem;
     }
 
     .work-meta {
@@ -648,13 +655,13 @@
       background: color-mix(in srgb, var(--card-accent, var(--coral)) 16%, white);
       color: var(--ink);
       font-family: var(--mono);
-      font-size: 0.64rem;
+      font-size: 0.71rem;
       font-weight: 500;
     }
 
     .paper-link {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.74rem;
       font-weight: 500;
       text-decoration: underline;
       text-decoration-color: var(--card-accent, var(--coral));
@@ -684,7 +691,7 @@
       font-weight: 700;
     }
 
-    .research { background: var(--paper); }
+    .research { background: transparent; }
 
     .timeline {
       position: relative;
@@ -719,7 +726,7 @@
       width: 1rem;
       aspect-ratio: 1;
       margin-top: 0.55rem;
-      border: 0.25rem solid var(--paper);
+      border: 0.25rem solid #fffdf7;
       border-radius: 50%;
       background: var(--coral);
       box-shadow: 0 0 0 1px rgba(24, 55, 68, 0.15);
@@ -735,21 +742,21 @@
       margin: 0 0 0.35rem;
       color: var(--coral);
       font-family: var(--mono);
-      font-size: 0.66rem;
+      font-size: 0.73rem;
       font-weight: 500;
       letter-spacing: 0.04em;
     }
 
     .research-lab {
       margin: 0;
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       font-weight: 700;
     }
 
     .research-place {
       margin: 0.3rem 0 0;
       color: #788c92;
-      font-size: 0.8rem;
+      font-size: 0.88rem;
     }
 
     .current-tag {
@@ -762,7 +769,7 @@
       background: rgba(53, 110, 85, 0.1);
       color: var(--leaf);
       font-family: var(--mono);
-      font-size: 0.55rem;
+      font-size: 0.62rem;
       font-weight: 500;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -798,7 +805,7 @@
     .research-body > p {
       margin: 0 0 1.2rem;
       color: var(--ink-soft);
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .research-points {
@@ -814,7 +821,7 @@
       position: relative;
       padding-left: 1rem;
       color: #60767d;
-      font-size: 0.86rem;
+      font-size: 0.93rem;
       line-height: 1.65;
     }
 
@@ -831,9 +838,7 @@
 
     .education {
       overflow: hidden;
-      background:
-        linear-gradient(145deg, rgba(172, 216, 238, 0.18), transparent 42%),
-        #fbfcf8;
+      background: radial-gradient(circle at 92% 18%, rgba(172, 216, 238, 0.12), transparent 30rem);
       color: var(--ink);
     }
 
@@ -907,13 +912,13 @@
     .school-cn {
       margin: 0 0 0.55rem;
       color: #72868c;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
     }
 
     .degree {
       margin: 0;
       color: var(--ink-soft);
-      font-size: 0.96rem;
+      font-size: 1.04rem;
     }
 
     .education-date {
@@ -921,28 +926,26 @@
       padding-top: 0.2rem;
       color: var(--coral);
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.76rem;
       font-weight: 500;
       line-height: 1.55;
     }
 
     .service {
-      background:
-        radial-gradient(circle at 14% 72%, rgba(255, 209, 102, 0.15), transparent 20rem),
-        var(--paper);
+      background: radial-gradient(circle at 10% 76%, rgba(255, 209, 102, 0.12), transparent 25rem);
     }
 
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(1rem, 4vw, 3rem);
+      grid-template-columns: 1fr;
+      max-width: 68rem;
     }
 
     .service-column {
-      padding: clamp(1.4rem, 2.4vw, 2rem);
-      border: 1px solid var(--line);
-      border-radius: 1.2rem;
-      background: rgba(255, 255, 255, 0.72);
+      padding: 1.35rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: transparent;
     }
 
     .service-column h3 {
@@ -954,10 +957,10 @@
 
     .service-entry {
       display: grid;
-      grid-template-columns: 3.2rem minmax(0, 1fr);
-      gap: 1rem;
-      padding: 1.15rem 0;
-      border-top: 1px solid var(--line);
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 1.4rem;
+      padding: 0;
+      border-top: 0;
     }
 
     .service-entry:first-of-type {
@@ -969,70 +972,74 @@
       padding-top: 0.1rem;
       color: var(--coral);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.78rem;
       font-weight: 500;
     }
 
     .service-entry h4 {
       margin: 0 0 0.25rem;
-      font-size: 0.97rem;
+      font-size: 1.16rem;
       font-weight: 700;
     }
 
     .service-entry p {
       margin: 0;
       color: #70848a;
-      font-size: 0.84rem;
-      line-height: 1.6;
+      font-size: 0.98rem;
+      line-height: 1.65;
     }
 
     .honors-strip {
       display: grid;
-      grid-template-columns: auto 1fr;
-      gap: clamp(1.5rem, 4vw, 4rem);
+      grid-template-columns: 10rem 1fr;
+      gap: clamp(1.5rem, 3vw, 3rem);
       align-items: start;
-      margin-top: 2.4rem;
-      padding: 1.5rem;
-      border-radius: 1.2rem;
-      background: var(--paper-blue);
+      max-width: 68rem;
+      margin-top: 2.2rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
     }
 
     .honors-strip h3 {
       margin: 0;
       font-family: var(--serif);
-      font-size: 1.3rem;
+      font-size: 1.16rem;
     }
 
     .honors-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem 2rem;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
     .honors-list li {
-      padding: 0.52rem 0.75rem;
-      border: 1px solid rgba(24, 55, 68, 0.1);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
-      font-size: 0.68rem;
-      font-weight: 600;
+      display: grid;
+      gap: 0.1rem;
+      padding-left: 0.9rem;
+      border-left: 0.2rem solid var(--sky);
+      font-size: 0.97rem;
+      line-height: 1.45;
+    }
+
+    .honors-list li strong { font-weight: 700; }
+
+    .honors-list li span {
+      color: #71848a;
+      font-family: var(--mono);
+      font-size: 0.76rem;
     }
 
     .contact {
       overflow: hidden;
-      background: #f6b57d;
+      background: radial-gradient(circle at 86% 24%, rgba(244, 127, 98, 0.12), transparent 26rem);
     }
 
     .contact::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 86% 24%, rgba(255, 255, 255, 0.34), transparent 18rem),
-        linear-gradient(125deg, rgba(255, 255, 255, 0.22), transparent 50%);
+      display: none;
     }
 
     .contact-card {
@@ -1045,8 +1052,8 @@
       padding: clamp(2rem, 3.5vw, 3.2rem);
       border: 1px solid rgba(24, 55, 68, 0.14);
       border-radius: 1.4rem;
-      background: rgba(255, 253, 247, 0.68);
-      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.52);
+      box-shadow: 0 18px 55px rgba(24, 55, 68, 0.08);
     }
 
     .contact-card h2 {
@@ -1063,7 +1070,7 @@
       max-width: 39rem;
       margin: 1.4rem 0 0;
       color: #46616a;
-      font-size: 1rem;
+      font-size: 1.08rem;
     }
 
     .contact-links {
@@ -1081,7 +1088,7 @@
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.64);
       font-family: var(--mono);
-      font-size: 0.67rem;
+      font-size: 0.75rem;
       font-weight: 500;
       transition: background 180ms ease, transform 180ms ease;
     }
@@ -1097,10 +1104,10 @@
       gap: 1rem;
       padding: 1.2rem clamp(2rem, 7vw, 7rem);
       border-top: 1px solid rgba(24, 55, 68, 0.1);
-      background: #f6b57d;
+      background: transparent;
       color: rgba(24, 55, 68, 0.68);
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.68rem;
       letter-spacing: 0.04em;
     }
 
@@ -1211,6 +1218,7 @@
 
       .hero::after {
         background:
+          linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.28) 84%, #f8fbf9 100%),
           linear-gradient(90deg, rgba(237, 247, 251, 0.96), rgba(237, 247, 251, 0.66) 58%, rgba(237, 247, 251, 0.1)),
           linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
       }
@@ -1271,6 +1279,7 @@
 
       .hero::after {
         background:
+          linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.3) 84%, #f8fbf9 100%),
           linear-gradient(90deg, rgba(237, 247, 251, 0.97), rgba(237, 247, 251, 0.75) 67%, rgba(237, 247, 251, 0.18)),
           linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
       }
@@ -1284,7 +1293,7 @@
 
       .hero-intro {
         max-width: 27rem;
-        font-size: 0.96rem;
+        font-size: 1.02rem;
       }
 
       .section { padding-inline: 1.1rem; }
@@ -1304,6 +1313,7 @@
       .research-points { grid-template-columns: 1fr; }
       .research-item { padding-bottom: 3.2rem; }
       .honors-strip { grid-template-columns: 1fr; }
+      .honors-list { grid-template-columns: 1fr; }
 
       .contact-card {
         padding: 1.5rem;
@@ -1638,51 +1648,18 @@
           <div class="section-heading reveal">
             <div>
               <p class="section-kicker">05 · Service</p>
-              <h2 class="section-title" id="service-title">Academic &amp; community service.</h2>
+              <h2 class="section-title" id="service-title">Academic service &amp; honors.</h2>
             </div>
-            <p class="section-lead">Academic reviewing and benchmark organization sit beside long-term student leadership and volunteer work. Each reflects a different kind of responsibility.</p>
+            <p class="section-lead">Peer-review service and selected university honors.</p>
           </div>
 
           <div class="service-grid">
             <article class="service-column reveal">
-              <h3>Academic &amp; Research Community</h3>
               <div class="service-entry">
                 <span class="service-year">2027</span>
                 <div>
                   <h4>Reviewer · ICLR 2027</h4>
                   <p>Peer review service for the International Conference on Learning Representations.</p>
-                </div>
-              </div>
-              <div class="service-entry">
-                <span class="service-year">2026</span>
-                <div>
-                  <h4>Organization &amp; Execution Team · Agents' Last Exam</h4>
-                  <p>Contributed to task development and verifiable evaluation for a large-scale benchmark of professional agents.</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="service-column reveal">
-              <h3>Leadership &amp; Community</h3>
-              <div class="service-entry">
-                <span class="service-year">SJTU</span>
-                <div>
-                  <h4>Class Representative</h4>
-                  <p>Coordinated class communication, student affairs, and collective activities for the Software Engineering cohort.</p>
-                </div>
-              </div>
-              <div class="service-entry">
-                <span class="service-year">SJTU</span>
-                <div>
-                  <h4>Planning Division · Youth Volunteer Service Team</h4>
-                  <p>Planned and supported campus and community volunteer initiatives.</p>
-                </div>
-              </div>
-              <div class="service-entry">
-                <span class="service-year">VOL.</span>
-                <div>
-                  <h4>Shanghai Marathon &amp; Peking University A-Plan</h4>
-                  <p>Volunteer service supporting public events and student programs.</p>
                 </div>
               </div>
             </article>
@@ -1691,10 +1668,8 @@
           <div class="honors-strip reveal">
             <h3>Selected honors</h3>
             <ul class="honors-list">
-              <li>SJTU Outstanding Student · 2024</li>
-              <li>SJTU Merit Scholarship (Class C) · 2024</li>
-              <li>IELTS 7.5</li>
-              <li>CET-6 625</li>
+              <li><strong>SJTU Outstanding Student</strong><span>2024</span></li>
+              <li><strong>SJTU Merit Scholarship (Class C)</strong><span>2023–2025</span></li>
             </ul>
           </div>
         </div>
