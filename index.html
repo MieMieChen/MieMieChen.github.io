@@ -1,543 +1,1769 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zimeng Chen | SJTU AI Agent Researcher</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- 引入高质感字体：衬线体用于标题，无衬线体用于正文，等宽体用于标注 -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --brand-yellow: #FACC15; /* 品牌黄色 */
-            --bg-cream: #FFFEF9;    /* 奶白色背景 */
-            --text-main: #1A1A1A;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zimeng Chen is a software engineering undergraduate at Shanghai Jiao Tong University researching LLM agents, reinforcement learning, and reliable agent evaluation.">
+  <meta name="theme-color" content="#f4a261">
+  <title>Zimeng Chen — LLM Agents &amp; Reinforcement Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c4051'/%3E%3Cpath d='M32 49c-2-10-1-19 0-29M32 34c-9-1-15-6-17-13 9-1 16 3 17 13Zm0-5c8-1 14-6 16-13-8-1-14 4-16 13Z' fill='none' stroke='%23ffd166' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='17' r='4' fill='%23f47f62'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #183744;
+      --ink-soft: #49646d;
+      --paper: #fffdf7;
+      --paper-blue: #edf7fb;
+      --sky: #acd8ee;
+      --sun: #ffd166;
+      --coral: #f47f62;
+      --leaf: #356e55;
+      --line: rgba(24, 55, 68, 0.14);
+      --white: #ffffff;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --rail: 17.5rem;
+      --shadow: 0 24px 80px rgba(24, 55, 68, 0.12);
+    }
 
-        body {
-            background-color: var(--bg-cream);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+    * { box-sizing: border-box; }
 
-        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
-        .mono { font-family: 'Space Mono', monospace; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 2rem;
+    }
 
-        /* 【设计感元素】背景网格线，营造系统架构感 */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -2;
-            pointer-events: none;
-        }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-        /* 滚动进入动画 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+    ::selection {
+      color: var(--ink);
+      background: rgba(255, 209, 102, 0.7);
+    }
 
-        /* 玻璃拟态卡片 */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: all 0.5s ease;
-        }
-        .glass-card:hover { transform: translateY(-10px); border-color: var(--brand-yellow); box-shadow: 0 30px 60px -12px rgba(250,204,21,0.1); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        #canvas-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.2;
-        }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { display: block; max-width: 100%; }
 
-        /* 词云文字样式 */
-        .city-tag {
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            color: #ccc;
-            padding: 5px 15px;
-        }
-        .city-tag:hover {
-            color: var(--brand-yellow);
-            transform: scale(1.15) rotate(0deg) !important;
-            z-index: 10;
-        }
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 1000;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      transform: translateY(-180%);
+      transition: transform 180ms ease;
+    }
 
-        /* 美食海报堆叠效果 */
-        .collage-container {
-            position: relative;
-            height: 700px;
-            width: 100%;
-        }
-        .food-poster {
-            position: absolute;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
-            border: 8px solid white;
-            background: white;
-        }
-        .food-poster:hover {
-            transform: scale(1.05) rotate(0deg) !important;
-            z-index: 50 !important;
-            box-shadow: 0 30px 60px rgba(250, 204, 21, 0.2);
-        }
+    .skip-link:focus { transform: translateY(0); }
 
-        .image-container { overflow: hidden; position: relative; border-radius: 2px; }
-        .image-zoom { transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1); }
-        .image-container:hover .image-zoom { transform: scale(1.08); }
+    .site-shell {
+      display: grid;
+      grid-template-columns: var(--rail) minmax(0, 1fr);
+      min-height: 100vh;
+    }
 
-        .nav-link {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            font-weight: 700;
-            position: relative;
-        }
-        .nav-link::after {
-            content: ''; position: absolute; width: 0; height: 1px;
-            bottom: -4px; left: 0; background-color: var(--brand-yellow);
-            transition: width 0.4s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
+    .profile-rail {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 100vh;
+      padding: 1.5rem;
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 18% 6%, rgba(255, 209, 102, 0.22), transparent 24%),
+        linear-gradient(180deg, rgba(255, 253, 247, 0.97), rgba(245, 251, 250, 0.96));
+      backdrop-filter: blur(18px);
+    }
 
-        .cinema-bg { background-color: #0A0A0A; color: #EEE; }
-        .yellow-accent { color: var(--brand-yellow) !important; }
+    .rail-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-        /* 通用相册弹窗 */
-        #gallery-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.98);
-            z-index: 1000;
-            padding: 40px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-close { position: absolute; top: 40px; right: 40px; color: white; cursor: pointer; }
-        .gallery-img { max-width: 100%; max-height: 70vh; object-fit: contain; transition: opacity 0.4s; }
-        .gallery-nav { 
-            background: rgba(255,255,255,0.1); color: white; width: 50px; height: 50px; 
-            display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer;
-        }
-        .gallery-nav:hover { background: var(--brand-yellow); color: black; }
-    </style>
+    .identity {
+      display: grid;
+      grid-template-columns: 4.3rem 1fr;
+      align-items: center;
+      gap: 0.9rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .portrait {
+      width: 4.3rem;
+      aspect-ratio: 1;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 26%;
+      box-shadow: 0 8px 28px rgba(24, 55, 68, 0.18);
+    }
+
+    .identity-name {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 650;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .identity-cn {
+      display: block;
+      margin-top: 0.28rem;
+      color: var(--coral);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    .rail-copy {
+      margin: 1.25rem 0 1.4rem;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      line-height: 1.75;
+    }
+
+    .rail-copy strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .nav-toggle { display: none; }
+
+    .rail-nav {
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    .rail-nav a {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      align-items: center;
+      min-height: 2.65rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 0.85rem;
+      color: #6a7c82;
+      font-size: 0.79rem;
+      font-weight: 650;
+      letter-spacing: 0.015em;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .rail-nav a span {
+      color: #9ba9ad;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+    }
+
+    .rail-nav a:hover,
+    .rail-nav a.active {
+      color: var(--ink);
+      background: rgba(172, 216, 238, 0.25);
+      transform: translateX(0.2rem);
+    }
+
+    .rail-nav a.active span { color: var(--coral); }
+
+    .rail-bottom {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .social-row a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.25rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .social-row a:hover {
+      border-color: rgba(244, 127, 98, 0.65);
+      background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .rail-location {
+      margin: 0.85rem 0 0;
+      color: #788c92;
+      font-family: var(--mono);
+      font-size: 0.61rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    main { min-width: 0; }
+
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      background: #b4dcf0;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background-image: url("assets/lily-hero.webp");
+      background-position: 58% center;
+      background-size: cover;
+      transform: scale(1.01);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(237, 247, 251, 0.98) 0%, rgba(237, 247, 251, 0.82) 37%, rgba(237, 247, 251, 0.14) 68%, rgba(237, 247, 251, 0.02) 100%),
+        linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 35%);
+    }
+
+    .hero-sun {
+      position: absolute;
+      top: 9%;
+      left: 7%;
+      z-index: -1;
+      width: 13rem;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      background: rgba(255, 244, 194, 0.22);
+      box-shadow: 0 0 80px rgba(255, 239, 168, 0.55), inset 0 0 48px rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(2px);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.42;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.32) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px);
+      background-size: 5rem 5rem;
+      mask-image: linear-gradient(90deg, black, transparent 58%);
+    }
+
+    .hero-content {
+      width: min(58rem, 72%);
+      padding: clamp(5rem, 9vw, 8rem) clamp(2rem, 8vw, 8.5rem);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 1.35rem;
+      color: var(--leaf);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 2.3rem;
+      height: 0.18rem;
+      border-radius: 999px;
+      background: var(--sun);
+    }
+
+    .hero h1 {
+      max-width: 11ch;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(4.4rem, 9.2vw, 9.8rem);
+      font-weight: 600;
+      line-height: 0.84;
+      letter-spacing: -0.075em;
+      text-wrap: balance;
+    }
+
+    .hero h1 em {
+      display: block;
+      color: var(--coral);
+      font-size: 0.34em;
+      font-style: normal;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+    }
+
+    .hero-intro {
+      max-width: 40rem;
+      margin: 2rem 0 0;
+      color: #274e5d;
+      font-size: clamp(1.04rem, 1.35vw, 1.28rem);
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .hero-intro strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 3rem;
+      padding: 0.8rem 1.2rem;
+      border: 1px solid rgba(24, 55, 68, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 0.77rem;
+      font-weight: 700;
+      box-shadow: 0 8px 28px rgba(24, 55, 68, 0.08);
+      backdrop-filter: blur(8px);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .button::after {
+      content: "↗";
+      font-size: 0.95rem;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(24, 55, 68, 0.16);
+    }
+
+    .hero-note {
+      position: absolute;
+      right: 1.8rem;
+      bottom: 1.5rem;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.52);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.54);
+      color: #274e5d;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .section {
+      position: relative;
+      padding: clamp(5.5rem, 9vw, 9rem) clamp(2rem, 7vw, 7rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .section-inner {
+      width: min(75rem, 100%);
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(11rem, 0.34fr) 1fr;
+      gap: clamp(2rem, 6vw, 7rem);
+      align-items: start;
+      margin-bottom: clamp(3rem, 6vw, 5.5rem);
+    }
+
+    .section-kicker {
+      margin: 0 0 0.8rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.8vw, 5.4rem);
+      font-weight: 600;
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+    }
+
+    .section-lead {
+      max-width: 43rem;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.05rem, 1.45vw, 1.25rem);
+      line-height: 1.85;
+      text-wrap: pretty;
+    }
+
+    .section-lead strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .about {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 14%, rgba(244, 127, 98, 0.11), transparent 24rem),
+        var(--paper);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: stretch;
+    }
+
+    .thesis-card {
+      position: relative;
+      min-height: 29rem;
+      padding: clamp(2rem, 4vw, 3.6rem);
+      overflow: hidden;
+      border-radius: 2rem;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .thesis-card::after {
+      content: "";
+      position: absolute;
+      right: -5rem;
+      bottom: -7rem;
+      width: 22rem;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2.4rem rgba(255, 255, 255, 0.045), 0 0 0 5rem rgba(255, 255, 255, 0.035);
+    }
+
+    .thesis-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .thesis-label::before {
+      content: "";
+      width: 0.55rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--sun);
+      box-shadow: 0 0 0 0.3rem rgba(255, 209, 102, 0.13);
+    }
+
+    .thesis-card blockquote {
+      position: relative;
+      z-index: 1;
+      margin: 4.5rem 0 0;
+      font-family: var(--serif);
+      font-size: clamp(2.15rem, 4vw, 4rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .thesis-card blockquote span { color: var(--sun); }
+
+    .about-notes {
+      display: grid;
+      align-content: start;
+      gap: 1rem;
+    }
+
+    .about-note {
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about-note:first-child { padding-top: 0.2rem; }
+
+    .about-note h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      margin: 0 0 0.6rem;
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      letter-spacing: -0.025em;
+    }
+
+    .about-note h3 span {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.08em;
+    }
+
+    .about-note p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.93rem;
+    }
+
+    .focus-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.8rem;
+    }
+
+    .focus-list span {
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.6);
+      font-family: var(--mono);
+      font-size: 0.64rem;
+    }
+
+    .works {
+      background:
+        linear-gradient(130deg, rgba(172, 216, 238, 0.22), transparent 37%),
+        #f8fcfd;
+    }
+
+    .works-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .work-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 7rem minmax(0, 1fr) 9rem;
+      gap: clamp(1rem, 3vw, 3rem);
+      align-items: start;
+      padding: clamp(1.45rem, 3vw, 2.4rem);
+      overflow: hidden;
+      border: 1px solid rgba(24, 55, 68, 0.12);
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.84);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .work-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 0.28rem;
+      background: var(--card-accent, var(--coral));
+    }
+
+    .work-card:hover {
+      border-color: rgba(24, 55, 68, 0.24);
+      box-shadow: 0 22px 60px rgba(24, 55, 68, 0.1);
+      transform: translateY(-4px);
+    }
+
+    .work-index {
+      padding-top: 0.2rem;
+      color: var(--card-accent, var(--coral));
+      font-family: var(--serif);
+      font-size: 3.1rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .work-content h3 {
+      margin: 0 0 0.6rem;
+      font-family: var(--serif);
+      font-size: clamp(1.55rem, 2.8vw, 2.45rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.04em;
+    }
+
+    .work-authors {
+      margin: 0 0 1.15rem;
+      color: #71848a;
+      font-size: 0.76rem;
+      line-height: 1.7;
+    }
+
+    .work-authors strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .work-summary {
+      max-width: 48rem;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+
+    .work-meta {
+      display: grid;
+      justify-items: end;
+      gap: 1rem;
+      text-align: right;
+    }
+
+    .venue {
+      display: inline-block;
+      padding: 0.48rem 0.72rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card-accent, var(--coral)) 16%, white);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+    }
+
+    .paper-link {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: var(--card-accent, var(--coral));
+      text-decoration-thickness: 0.12rem;
+      text-underline-offset: 0.3rem;
+    }
+
+    .paper-link::after { content: " ↗"; }
+
+    .confidentiality-note {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      margin-top: 1.4rem;
+      padding: 1rem 1.15rem;
+      border: 1px dashed rgba(24, 55, 68, 0.2);
+      border-radius: 1rem;
+      color: #60767d;
+      font-size: 0.78rem;
+    }
+
+    .confidentiality-note strong { color: var(--ink); }
+
+    .confidentiality-note span {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    .research { background: var(--paper); }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 0;
+      margin-left: 0.55rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0.75rem;
+      bottom: 0.75rem;
+      left: 0.48rem;
+      width: 1px;
+      background: linear-gradient(var(--coral), var(--sky), var(--leaf));
+    }
+
+    .research-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.3rem 12.5rem minmax(0, 1fr);
+      gap: clamp(1rem, 3vw, 2.5rem);
+      padding: 0 0 4rem;
+    }
+
+    .research-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 1rem;
+      aspect-ratio: 1;
+      margin-top: 0.55rem;
+      border: 0.25rem solid var(--paper);
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 1px rgba(24, 55, 68, 0.15);
+    }
+
+    .research-item:nth-child(2) .timeline-dot { background: var(--sun); }
+    .research-item:nth-child(3) .timeline-dot { background: var(--sky); }
+    .research-item:nth-child(4) .timeline-dot { background: var(--leaf); }
+
+    .research-meta { padding-top: 0.15rem; }
+
+    .research-date {
+      margin: 0 0 0.35rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .research-lab {
+      margin: 0;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .research-place {
+      margin: 0.3rem 0 0;
+      color: #788c92;
+      font-size: 0.72rem;
+    }
+
+    .current-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.7rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(53, 110, 85, 0.1);
+      color: var(--leaf);
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .current-tag::before {
+      content: "";
+      width: 0.42rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .research-body {
+      padding-bottom: 3.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .research-item:last-child .research-body {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .research-body h3 {
+      margin: 0 0 0.65rem;
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+      font-weight: 600;
+      line-height: 1.22;
+      letter-spacing: -0.035em;
+    }
+
+    .research-body > p {
+      margin: 0 0 1.2rem;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+    }
+
+    .research-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 1.3rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .research-points li {
+      position: relative;
+      padding-left: 1rem;
+      color: #60767d;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .research-points li::before {
+      content: "";
+      position: absolute;
+      top: 0.63rem;
+      left: 0;
+      width: 0.34rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--sun);
+    }
+
+    .education {
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .education::before {
+      content: "";
+      position: absolute;
+      top: -16rem;
+      right: -12rem;
+      width: 39rem;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6rem rgba(255, 255, 255, 0.025), 0 0 0 12rem rgba(255, 255, 255, 0.018);
+    }
+
+    .education .section-kicker { color: var(--sun); }
+    .education .section-lead { color: rgba(255, 255, 255, 0.66); }
+
+    .education-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .education-card {
+      display: flex;
+      min-height: 19rem;
+      flex-direction: column;
+      padding: 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 1.4rem;
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(8px);
+      transition: background 200ms ease, transform 200ms ease;
+    }
+
+    .education-card:hover {
+      background: rgba(255, 255, 255, 0.085);
+      transform: translateY(-4px);
+    }
+
+    .school-mark {
+      display: grid;
+      width: 3rem;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--sun);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .education-card:nth-child(2) .school-mark { background: var(--coral); }
+    .education-card:nth-child(3) .school-mark { background: var(--sky); }
+
+    .education-card h3 {
+      margin: 2rem 0 0.55rem;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+    }
+
+    .school-cn {
+      margin: 0 0 0.9rem;
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 0.72rem;
+    }
+
+    .degree {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.8rem;
+    }
+
+    .education-date {
+      margin: auto 0 0;
+      padding-top: 2rem;
+      color: var(--sun);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+    }
+
+    .service {
+      background:
+        radial-gradient(circle at 14% 72%, rgba(255, 209, 102, 0.15), transparent 20rem),
+        var(--paper);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1rem, 4vw, 3rem);
+    }
+
+    .service-column {
+      padding: clamp(1.5rem, 3vw, 2.4rem);
+      border: 1px solid var(--line);
+      border-radius: 1.6rem;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .service-column h3 {
+      margin: 0 0 1.8rem;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      letter-spacing: -0.03em;
+    }
+
+    .service-entry {
+      display: grid;
+      grid-template-columns: 3.2rem minmax(0, 1fr);
+      gap: 1rem;
+      padding: 1.15rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .service-entry:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .service-year {
+      padding-top: 0.1rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+    }
+
+    .service-entry h4 {
+      margin: 0 0 0.25rem;
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    .service-entry p {
+      margin: 0;
+      color: #70848a;
+      font-size: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .honors-strip {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: start;
+      margin-top: 2.4rem;
+      padding: 1.5rem;
+      border-radius: 1.2rem;
+      background: var(--paper-blue);
+    }
+
+    .honors-strip h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.3rem;
+    }
+
+    .honors-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .honors-list li {
+      padding: 0.52rem 0.75rem;
+      border: 1px solid rgba(24, 55, 68, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.68rem;
+      font-weight: 650;
+    }
+
+    .contact {
+      overflow: hidden;
+      background: #f6b57d;
+    }
+
+    .contact::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 86% 24%, rgba(255, 255, 255, 0.34), transparent 18rem),
+        linear-gradient(125deg, rgba(255, 255, 255, 0.22), transparent 50%);
+    }
+
+    .contact-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+      padding: clamp(2rem, 5vw, 4.5rem);
+      border: 1px solid rgba(24, 55, 68, 0.14);
+      border-radius: 2rem;
+      background: rgba(255, 253, 247, 0.68);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .contact-card h2 {
+      max-width: 12ch;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6.5vw, 6rem);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .contact-copy {
+      max-width: 39rem;
+      margin: 1.4rem 0 0;
+      color: #46616a;
+      font-size: 0.92rem;
+    }
+
+    .contact-links {
+      display: grid;
+      justify-items: end;
+      gap: 0.6rem;
+    }
+
+    .contact-links a {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      padding: 0.65rem 1rem;
+      border: 1px solid rgba(24, 55, 68, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.64);
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      font-weight: 500;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .contact-links a:hover {
+      background: var(--white);
+      transform: translateX(-3px);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.2rem clamp(2rem, 7vw, 7rem);
+      border-top: 1px solid rgba(24, 55, 68, 0.1);
+      background: #f6b57d;
+      color: rgba(24, 55, 68, 0.68);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.5rem);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--sun);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 1100px) {
+      :root { --rail: 15.5rem; }
+
+      .hero-content {
+        width: min(51rem, 82%);
+        padding-left: clamp(2rem, 5vw, 5rem);
+      }
+
+      .section { padding-inline: clamp(1.6rem, 5vw, 4rem); }
+
+      .work-card {
+        grid-template-columns: 4rem minmax(0, 1fr) 7.5rem;
+      }
+
+      .work-index { font-size: 2.35rem; }
+
+      .research-item {
+        grid-template-columns: 1.3rem 10rem minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 860px) {
+      html { scroll-padding-top: 6rem; }
+      .site-shell { display: block; }
+
+      .profile-rail {
+        position: sticky;
+        top: 0;
+        height: auto;
+        padding: 0.75rem 1rem;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .rail-inner {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .identity {
+        grid-template-columns: 2.7rem 1fr;
+        gap: 0.65rem;
+        padding: 0;
+        border: 0;
+      }
+
+      .portrait {
+        width: 2.7rem;
+        border-width: 2px;
+      }
+
+      .identity-name { font-size: 1rem; }
+
+      .identity-cn,
+      .rail-copy,
+      .rail-bottom { display: none; }
+
+      .nav-toggle {
+        display: inline-flex;
+        width: 2.8rem;
+        aspect-ratio: 1;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        cursor: pointer;
+      }
+
+      .rail-nav {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0.75rem;
+        display: none;
+        width: min(19rem, calc(100vw - 1.5rem));
+        padding: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: rgba(255, 253, 247, 0.97);
+        box-shadow: var(--shadow);
+      }
+
+      .rail-nav.open { display: grid; }
+      .rail-nav a { min-height: 2.8rem; }
+      .hero { min-height: calc(100svh - 4.3rem); }
+      .hero::before { background-position: 63% center; }
+
+      .hero::after {
+        background:
+          linear-gradient(90deg, rgba(237, 247, 251, 0.96), rgba(237, 247, 251, 0.66) 58%, rgba(237, 247, 251, 0.1)),
+          linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
+      }
+
+      .hero-content {
+        width: 86%;
+        padding: 5rem 1.6rem 6rem;
+      }
+
+      .hero h1 { font-size: clamp(4.3rem, 15vw, 7.4rem); }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 1.7rem;
+      }
+
+      .about-grid,
+      .service-grid { grid-template-columns: 1fr; }
+
+      .work-card {
+        grid-template-columns: 3.3rem minmax(0, 1fr);
+      }
+
+      .work-meta {
+        grid-column: 2;
+        grid-template-columns: auto 1fr;
+        justify-items: start;
+        align-items: center;
+        text-align: left;
+      }
+
+      .research-item {
+        grid-template-columns: 1.3rem minmax(0, 1fr);
+        gap: 0.9rem 1.2rem;
+      }
+
+      .research-meta,
+      .research-body { grid-column: 2; }
+
+      .education-list { grid-template-columns: 1fr; }
+      .education-card { min-height: 15rem; }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .contact-links { justify-items: start; }
+    }
+
+    @media (max-width: 560px) {
+      .hero::before { background-position: 66% center; }
+
+      .hero::after {
+        background:
+          linear-gradient(90deg, rgba(237, 247, 251, 0.97), rgba(237, 247, 251, 0.75) 67%, rgba(237, 247, 251, 0.18)),
+          linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
+      }
+
+      .hero-content {
+        width: 96%;
+        padding-inline: 1.15rem;
+      }
+
+      .hero h1 { font-size: clamp(3.9rem, 18vw, 5.5rem); }
+
+      .hero-intro {
+        max-width: 27rem;
+        font-size: 0.96rem;
+      }
+
+      .hero-note { display: none; }
+      .section { padding-inline: 1.1rem; }
+      .section-title { font-size: clamp(2.6rem, 13vw, 4rem); }
+
+      .thesis-card {
+        min-height: 24rem;
+        border-radius: 1.4rem;
+      }
+
+      .work-card {
+        grid-template-columns: 1fr;
+        border-radius: 1.2rem;
+      }
+
+      .work-index { font-size: 1.8rem; }
+      .work-meta { grid-column: 1; }
+      .research-points { grid-template-columns: 1fr; }
+      .research-item { padding-bottom: 3.2rem; }
+      .honors-strip { grid-template-columns: 1fr; }
+
+      .contact-card {
+        padding: 1.5rem;
+        border-radius: 1.4rem;
+      }
+
+      footer {
+        flex-direction: column;
+        padding-inline: 1.1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <canvas id="canvas-container"></canvas>
+  <div class="site-shell">
+    <aside class="profile-rail" aria-label="Profile and site navigation">
+      <div class="rail-inner">
+        <a class="identity" href="#home" aria-label="Back to top">
+          <img class="portrait" src="6f77c944a2833ff2dbc68b852c9d6da1.jpg" alt="Portrait of Zimeng Chen">
+          <div>
+            <p class="identity-name">Zimeng Chen</p>
+            <span class="identity-cn">陈梓萌</span>
+          </div>
+        </a>
 
-    <!-- 通用全屏画廊弹窗 -->
-    <div id="gallery-modal">
-        <div class="modal-close" onclick="closeGallery()"><i data-lucide="x" class="w-8 h-8"></i></div>
-        <div class="flex items-center gap-8 w-full max-w-6xl justify-between">
-            <div class="gallery-nav" onclick="changeImage(-1)"><i data-lucide="chevron-left"></i></div>
-            <img id="modal-img" src="" class="gallery-img shadow-2xl">
-            <div class="gallery-nav" onclick="changeImage(1)"><i data-lucide="chevron-right"></i></div>
+        <p class="rail-copy">
+          Software Engineering undergraduate at <strong>Shanghai Jiao Tong University</strong>. Researching LLM agents, reinforcement learning, and verifiable systems.
+        </p>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="rail-navigation" aria-label="Open navigation">Menu</button>
+
+        <nav class="rail-nav" id="rail-navigation" aria-label="Main navigation">
+          <a href="#about"><span>01</span>About</a>
+          <a href="#work"><span>02</span>Selected Work</a>
+          <a href="#research"><span>03</span>Research</a>
+          <a href="#education"><span>04</span>Education</a>
+          <a href="#service"><span>05</span>Service</a>
+          <a href="#contact"><span>06</span>Contact</a>
+        </nav>
+
+        <div class="rail-bottom">
+          <div class="social-row" aria-label="External profiles">
+            <a href="mailto:zimeng_chen@sjtu.edu.cn">Email</a>
+            <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+          <p class="rail-location">Shanghai · San Diego · Building toward reliable agents</p>
         </div>
-        <div class="mt-8 text-center">
-            <h4 id="modal-title" class="text-white text-3xl serif italic mb-2">Location</h4>
-            <p id="modal-counter" class="mono text-stone-500 text-[10px] tracking-widest"></p>
+      </div>
+    </aside>
+
+    <main id="main-content">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-sun" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-content reveal is-visible">
+          <p class="eyebrow">LLM agents · RL · evaluation</p>
+          <h1 id="hero-title">Zimeng Chen <em>陈梓萌</em></h1>
+          <p class="hero-intro">
+            I build <strong>agents that can reason for longer and fail more visibly</strong>. My current work spans reliable evaluation for interactive 3D worlds at UC San Diego's Q-Lab and deployment-aware reinforcement learning at APEX Lab.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">Selected work</a>
+            <a class="button" href="mailto:zimeng_chen@sjtu.edu.cn">Get in touch</a>
+          </div>
         </div>
-    </div>
+        <p class="hero-note">Coral Asiatic lilies · California light</p>
+      </section>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-10 py-10 flex justify-between items-center mix-blend-difference text-white">
-        <!-- 【GitHub跳转】：ZC 标志点击跳转 GitHub Profile -->
-        <a href="https://github.com/MieMieChen" target="_blank" class="text-3xl font-bold tracking-tighter italic hover:text-yellow-400 transition-colors">ZC.</a>
-        <div class="hidden lg:flex space-x-12">
-            <a href="#about" class="nav-link">Bio</a>
-            <a href="#projects" class="nav-link">Agents</a>
-            <a href="#garden" class="nav-link">Garden</a>
-            <a href="#travel" class="nav-link">Travel</a>
-            <a href="#food" class="nav-link">Palate</a>
-            <a href="#cinema" class="nav-link">Frames</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col justify-center px-8 md:px-24">
-        <div class="reveal">
-            <div class="flex items-center gap-4 mb-10">
-                <span class="w-10 h-[1px] bg-stone-300"></span>
-                <p class="mono text-[10px] font-bold tracking-[0.6em] uppercase text-stone-400">SJTU SE / Class of 2027</p>
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">01 · About</p>
+              <h2 class="section-title" id="about-title">What I care about.</h2>
             </div>
-            <!-- 【文案修改】：中文名黄色显示 -->
-            <h1 class="text-7xl md:text-[11rem] leading-[0.8] mb-12 tracking-tighter font-bold">
-                Zimeng Chen <br>
-                <span class="italic yellow-accent serif">陈梓萌</span>
-            </h1>
-            <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-20">
-                <p class="max-w-xl text-xl text-stone-500 font-light leading-relaxed">
-                    Software engineering student at Shanghai Jiao Tong University, specializing in autonomous agents. I explore the intersection of system architecture and agentic intelligence through research and projects.Currently contributing as a researcher at CMIC Lab under the guidance of Prof. Siheng Chen.
-                </p>
-                <div class="mono text-[10px] uppercase tracking-[0.3em] text-stone-300 transform rotate-90 hidden md:block">Scroll to Decipher</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 1. Bio Section -->
-    <section id="about" class="py-40 px-8 md:px-24 bg-white">
-        <div class="grid lg:grid-cols-12 gap-24 items-center reveal">
-            <div class="lg:col-span-5 relative">
-                <!-- 【图片修改】：主页Bio照片，确保根目录有此文件 -->
-                <div class="image-container aspect-[3/4] shadow-2xl group" onclick="window.open('https://github.com/MieMieChen', '_blank')">
-                    <img src="6f77c944a2833ff2dbc68b852c9d6da1.jpg" class="image-zoom w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Zimeng Chen">
-                </div>
-                <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400/5 rounded-full blur-3xl"></div>
-            </div>
-            <div class="lg:col-span-7">
-                <!-- 【文案修改】：加粗的 Bio 标题 -->
-                <h2 class="text-5xl md:text-6xl mb-12 font-bold tracking-tight leading-tight">
-                    <span class="yellow-accent font-bold">Software Engineering &</span><br>
-                    <span class="text-black font-bold">Agent Architect</span>
-                </h2>
-                <div class="space-y-10 text-stone-600 text-lg leading-relaxed font-light">
-                    <p>
-                        <span class="mono text-[10px] uppercase text-brand-yellow font-bold block mb-2">In-Curriculum Focus</span>
-                        At <span class="text-black font-medium italic underline decoration-yellow-400">Shanghai Jiao Tong University</span>, my academic foundation is built on full-stack development, system architecture, and testing. I have achieved excellence in courses including <span class="text-black font-medium">Advanced Data Structures, Application System Architecture, Computer Systems Engineering, and Web Development.</span>
-                    </p>
-                    <p>
-                        <span class="mono text-[10px] uppercase text-brand-yellow font-bold block mb-2">Extra-Curriculum Research</span>
-                        Beyond the classroom, I focus on the frontier of <span class="text-black font-medium">Autonomous Agents</span>. My research explores agentic memory mechanisms, the design of sophisticated workflows, benchmark construction, and the collective synergy of Multi-Agent Systems (MAS).
-                    </p>
-                    <div class="grid grid-cols-2 gap-10 pt-10 border-t border-stone-100">
-                        <div>
-                            <p class="mono text-[10px] uppercase text-stone-400 tracking-widest mb-3 font-bold">Academic Base</p>
-                            <p class="font-bold text-black text-xl italic serif">SJTU Class of '27</p>
-                        </div>
-                        <div>
-                            <p class="mono text-[10px] uppercase text-stone-400 tracking-widest mb-3 font-bold">Key Interests</p>
-                            <p class="font-bold text-black text-xl font-mono">MAS / Memory / Benchmarking</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. Code Latitudes (精选简历项目) -->
-    <section id="projects" class="py-40 px-8 md:px-24 bg-stone-50 border-y border-stone-100">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal">
-            <h2 class="text-6xl md:text-8xl font-bold tracking-tighter serif italic">Code Latitudes</h2>
-            <!-- 【GitHub跳转】：主标题右侧链接 -->
-            <a href="https://github.com/MieMieChen" target="_blank" class="mono text-[10px] font-bold uppercase tracking-widest text-brand-yellow hover:text-black transition-all mb-4 md:mb-0 border-b border-brand-yellow pb-2">Full Profile @MieMieChen →</a>
-        </div>
-        
-        <!-- 【项目修改】：此处手动列出你的简历代表作 -->
-        <div class="grid lg:grid-cols-3 gap-10 reveal">
-            <!-- 项目 1: DeepReader -->
-            <div class="glass-card p-12 rounded-2xl flex flex-col justify-between h-full">
-                <div>
-                    <div class="flex justify-between items-start mb-10 mono uppercase text-[9px] tracking-widest text-stone-400">
-                        <span>Course / Agent DAG</span>
-                        <i data-lucide="brain-circuit" class="w-4 h-4 text-yellow-500"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold mb-6 serif italic">DeepReader</h3>
-                    <p class="text-sm text-stone-500 leading-relaxed font-light italic">Agent-driven multi-modal QA system combining external agent DAG with Graph Memory for long-range reasoning. (Will submit to ICML)</p>
-                </div>
-                <a href="https://github.com/MieMieChen" target="_blank" class="mt-12 text-[10px] font-bold uppercase tracking-widest hover:text-yellow-500 transition-colors inline-flex items-center gap-2">Source Code <i data-lucide="arrow-up-right" class="w-3 h-3"></i></a>
-            </div>
-
-            <!-- 项目 2: Intelligent Tutoring System -->
-            <div class="glass-card p-12 rounded-2xl flex flex-col justify-between h-full">
-                <div>
-                    <div class="flex justify-between items-start mb-10 mono uppercase text-[9px] tracking-widest text-stone-400">
-                        <span>Full-stack / RAG</span>
-                        <i data-lucide="layers" class="w-4 h-4 text-yellow-500"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold mb-6 serif italic">EduAgent</h3>
-                    <p class="text-sm text-stone-500 leading-relaxed font-light italic">Sophisticated RAG pipeline using LightRAG and Neo4j. Implements a multi-personality agent system for personalized tutoring.</p>
-                </div>
-                <a href="https://github.com/MieMieChen/Intelligent_tutoring_system_seproject" target="_blank" class="mt-12 text-[10px] font-bold uppercase tracking-widest hover:text-yellow-500 transition-colors inline-flex items-center gap-2">Source Code <i data-lucide="arrow-up-right" class="w-3 h-3"></i></a>
-            </div>
-
-            <!-- 项目 3: LSM-Tree Storage -->
-            <div class="glass-card p-12 rounded-2xl flex flex-col justify-between h-full border-b-4 border-b-yellow-400">
-                <div>
-                    <div class="flex justify-between items-start mb-10 mono uppercase text-[9px] tracking-widest text-stone-400">
-                        <span>System / C++</span>
-                        <i data-lucide="database" class="w-4 h-4 text-yellow-500"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold mb-6 serif italic">LSM Storage</h3>
-                    <p class="text-sm text-stone-500 leading-relaxed font-light italic">High-performance storage engine integrating skiplist memtables, hierarchical SSTables, and HNSW vector indexing.</p>
-                </div>
-                <a href="https://github.com/MieMieChen/LSM_new" target="_blank" class="mt-12 text-[10px] font-bold uppercase tracking-widest hover:text-yellow-500 transition-colors inline-flex items-center gap-2">Source Code <i data-lucide="arrow-up-right" class="w-3 h-3"></i></a>
-            </div>
-
-            <div class="glass-card p-12 rounded-2xl flex flex-col justify-between h-full">
-                <div>
-                    <div class="flex justify-between items-start mb-10 mono uppercase text-[9px] tracking-widest text-stone-400">
-                        <span>CourseLab / Ebookstore</span>
-                        <i data-lucide="brain-circuit" class="w-4 h-4 text-yellow-500"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold mb-6 serif italic">Ebookstore</h3>
-                    <p class="text-sm text-stone-500 leading-relaxed font-light italic">Full5stack E5commerce System: Developed the frontend using React/Ant Design, integrated with a Spring Boot REST API backend and MySQL,MongoDb,Neo4j for persistence.Also integrated MCP (appled in cherry studio) for books_search,microservice for ,agent5service,redis.</p>
-                </div>
-                <a href="https://github.com/MieMieChen/E_BOOKSTRORE_PRO" target="_blank" class="mt-12 text-[10px] font-bold uppercase tracking-widest hover:text-yellow-500 transition-colors inline-flex items-center gap-2">Source Code <i data-lucide="arrow-up-right" class="w-3 h-3"></i></a>
-            </div>
-
-
-        </div>
-    </section>
-
-    <!-- 3. Digital Garden -->
-    <section id="garden" class="py-40 px-8 md:px-24 bg-white border-b border-stone-200">
-        <div class="max-w-4xl mx-auto text-center reveal">
-            <p class="mono text-[10px] uppercase text-stone-400 tracking-[0.5em] mb-10">Second Brain Access</p>
-            <h2 class="text-6xl md:text-[7.5rem] font-bold tracking-tighter serif italic leading-none mb-12 text-pretty">Digital Garden</h2>
-            <p class="text-2xl text-stone-500 leading-relaxed font-light italic mb-16">
-                A public archive of research logs, daily reflections on papers, and experimental failures. The non-linear growth of thoughts behind the terminal.
+            <p class="section-lead">
+              I am a Software Engineering undergraduate at Shanghai Jiao Tong University. My research connects <strong>agent reliability</strong>, <strong>reinforcement learning for reasoning</strong>, and the systems needed to evaluate long-horizon behavior.
             </p>
-            <a href="https://notes-ten-sepia.vercel.app" target="_blank" class="inline-block px-20 py-8 bg-black text-white mono text-[10px] font-bold uppercase tracking-[0.4em] rounded-full hover:bg-yellow-400 hover:text-black transition-all shadow-2xl">
-                Enter Obsidian Archive
-            </a>
-        </div>
-    </section>
+          </div>
 
-    <!-- 4. Travel Mapping (词云交互) -->
-    <section id="travel" class="py-40 px-8 md:px-24 bg-stone-50">
-        <div class="max-w-2xl mx-auto text-center mb-24 reveal px-4">
-            <h2 class="text-6xl md:text-[7.5rem] font-bold tracking-tighter serif italic leading-none mb-12 text-pretty">Journey Lexicon</h2>
-            <p class="text-2xl text-stone-500 leading-relaxed font-light italic mb-16">
-                "I believe that happiness and freedom are the ultimate North Stars of a life well-lived. 
-                Striving for a perfect balance between work and adventure, my goal is to embrace 
-                the <span class="text-stone-900 font-medium">digital nomad</span> lifestyle—exploring every hidden corner of the globe 
-                with my partner, from the first light of dawn to the last glow of dusk."
+          <div class="about-grid">
+            <article class="thesis-card reveal">
+              <span class="thesis-label">Research thesis</span>
+              <blockquote>
+                Capable agents are not enough. We need to know <span>why they work, when they fail, and what survives deployment.</span>
+              </blockquote>
+            </article>
+
+            <div class="about-notes reveal">
+              <article class="about-note">
+                <h3><span>01</span> Reliable agent systems</h3>
+                <p>I design verifiers and evaluation workflows that separate semantic alignment, spatial correctness, physical validity, and task completion instead of compressing every failure into one score.</p>
+              </article>
+              <article class="about-note">
+                <h3><span>02</span> RL under deployment constraints</h3>
+                <p>I study how reinforcement learning objectives should change when the deployed policy runs under low-bit quantization, long rollouts, and imperfect numerical execution.</p>
+              </article>
+              <article class="about-note">
+                <h3><span>03</span> Long-horizon agents</h3>
+                <p>I am interested in agents that plan, use software, recover from failures, and retain useful evidence across extended trajectories.</p>
+              </article>
+              <div class="focus-list" aria-label="Research interests">
+                <span>LLM Agents</span>
+                <span>Reinforcement Learning</span>
+                <span>Agent Evaluation</span>
+                <span>Multimodal RAG</span>
+                <span>Low-bit Deployment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section works" id="work" aria-labelledby="work-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">02 · Selected work</p>
+              <h2 class="section-title" id="work-title">Public work, clearly labeled.</h2>
+            </div>
+            <p class="section-lead">
+              These are the three public papers and preprints currently listed on my CV. Ongoing double-blind work is represented only through research experience below.
             </p>
-            <div class="w-12 h-[1px] bg-stone-200 mx-auto"></div>
-        </div>
+          </div>
 
-        <div id="word-cloud" class="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 max-w-6xl mx-auto reveal">
+          <div class="works-list">
+            <article class="work-card reveal" style="--card-accent: #f47f62;">
+              <div class="work-index">01</div>
+              <div class="work-content">
+                <h3>G²-Reader: Dual Evolving Graphs for Multimodal Document QA</h3>
+                <p class="work-authors">Yaxin Du, Junru Song, Yifan Zhou, Cheng Wang, Jiahao Gu, <strong>Zimeng Chen</strong>, Menglan Chen, Wen Yao, Yang Yang, Ying Wen, Siheng Chen</p>
+                <p class="work-summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">ICML 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer">Paper</a>
+              </div>
+            </article>
+
+            <article class="work-card reveal" style="--card-accent: #e9b93f;">
+              <div class="work-index">02</div>
+              <div class="work-content">
+                <h3>DataMaster: Data-Centric Autonomous AI Research</h3>
+                <p class="work-authors">Yaxin Du, Xiyuan Yang, Zhifan Zhou, Wanxu Liu, Zixing Lei, <strong>Zimeng Chen</strong>, et al.</p>
+                <p class="work-summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">arXiv 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer">Paper</a>
+              </div>
+            </article>
+
+            <article class="work-card reveal" style="--card-accent: #6fb3cf;">
+              <div class="work-index">03</div>
+              <div class="work-content">
+                <h3>Agents' Last Exam</h3>
+                <p class="work-authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
+                <p class="work-summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">arXiv 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer">Paper</a>
+              </div>
+            </article>
+          </div>
+
+          <p class="confidentiality-note reveal"><span>↳</span><strong>Double-blind boundary:</strong> titles, manuscript links, author lists, and submission status for work under review are intentionally omitted from this public page.</p>
+        </div>
+      </section>
+
+      <section class="section research" id="research" aria-labelledby="research-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">03 · Research</p>
+              <h2 class="section-title" id="research-title">A research trail, not a project list.</h2>
             </div>
-    </section>
-
-    <!-- 5. Gastronomic Algorithms (堆叠海报) -->
-    <section id="food" class="py-40 px-8 md:px-24 bg-white">
-        <div class="flex items-center gap-10 mb-20 reveal">
-            <h2 class="text-6xl md:text-8xl font-bold tracking-tighter serif italic leading-none text-nowrap">Gastronomic <br>Algorithms</h2>
-            <div class="h-[1px] flex-grow bg-stone-100"></div>
-            <p class="mono text-[10px] uppercase tracking-[0.4em] text-stone-400">Palate Stack</p>
-        </div>
-
-        <div class="max-w-3xl mb-32 reveal">
-            <p class="text-xl md:text-2xl leading-relaxed text-stone-800 serif">
-                To me, tasting delicious food is one of life’s greatest blessings. I have an adventurous palate and a tradition of immersing myself in local food cultures whenever I travel. I also enjoy the creative process of cooking simple, soul-warming dishes at home. I’ve always held the belief that a well-prepared meal is the shortest path to pure happiness.
+            <p class="section-lead">
+              My current work has two active homes: <strong>SimWorld at UC San Diego's Q-Lab</strong> and <strong>reinforcement learning at APEX Lab</strong>. Earlier work includes CMIC Lab and the Agents' Last Exam collaboration with UC Berkeley.
             </p>
+          </div>
+
+          <div class="timeline">
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date">Jun 2026 — Present</p>
+                <p class="research-lab">Q-Lab</p>
+                <p class="research-place">UC San Diego · Prof. Lianhui Qin</p>
+                <span class="current-tag">Current</span>
+              </div>
+              <div class="research-body">
+                <h3>SimWorld · Unified evaluation of agent-generated 3D scenes</h3>
+                <p>Building a verifier and benchmark workflow for coding agents that generate and repair interactive scenes in Unreal Engine.</p>
+                <ul class="research-points">
+                  <li>Designed a staged evidence pipeline spanning deterministic scene-graph checks, UE-native physical probes, and evidence-grounded multi-view VLM judging.</li>
+                  <li>Separated semantic, spatial, surface, preservation, and physical validity from ground-truth restoration fidelity.</li>
+                  <li>Integrated evaluation into an agent-agnostic harness with provenance-tracked artifacts, explicit failure handling, and reproducible scoring.</li>
+                  <li>Analyzed model trajectories, human alignment, rerun behavior, and VLM judging instability across text-to-scene and image-to-scene tasks.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date">May 2026 — Present</p>
+                <p class="research-lab">APEX Lab</p>
+                <p class="research-place">Prof. Muning Wen</p>
+                <span class="current-tag">Current</span>
+              </div>
+              <div class="research-body">
+                <h3>Deployment-aware reinforcement learning for low-bit LLMs</h3>
+                <p>Studying how to optimize reasoning policies for the numerical path they actually use at deployment rather than treating quantization as an afterthought.</p>
+                <ul class="research-points">
+                  <li>Built an end-to-end W4A16 GRPO framework using verl, vLLM, Triton, and Marlin for systematic quantization-aware RL experiments.</li>
+                  <li>Extended training and evaluation from short-form reasoning to long-horizon mathematical trajectories and multi-checkpoint analysis.</li>
+                  <li>Investigating high-precision teacher guidance that selectively corrects reward-relevant errors in a quantized policy.</li>
+                  <li>All ongoing double-blind work in reinforcement learning is described here only at the research-program level.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date">Feb 2026 — May 2026</p>
+                <p class="research-lab">Agents' Last Exam</p>
+                <p class="research-place">Collaboration with UC Berkeley</p>
+              </div>
+              <div class="research-body">
+                <h3>Medical-software agent evaluation</h3>
+                <p>Translated professional medical-imaging procedures into long-horizon software tasks with structured inputs, hidden references, and verifiable deliverables.</p>
+                <ul class="research-points">
+                  <li>Designed the MicroDicom chest-X-ray annotation adjudication task featured in the public paper.</li>
+                  <li>Combined file and schema validation, case-level hidden references, and IoU-based localization metrics.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date">Oct 2025 — Feb 2026</p>
+                <p class="research-lab">CMIC Lab</p>
+                <p class="research-place">SJTU · Prof. Siheng Chen</p>
+              </div>
+              <div class="research-body">
+                <h3>Multimodal document QA and graph-based retrieval</h3>
+                <p>Worked on the research line that became G²-Reader, extending agentic RAG from unimodal retrieval to multimodal, multi-document question answering.</p>
+                <ul class="research-points">
+                  <li>Extended MA-RAG to jointly process textual and visual evidence and integrated LightRAG as a controlled baseline.</li>
+                  <li>Ran full-scale validation on 2,271 VisDoMBench samples across five domains using a fixed retrieval budget.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div id="collage-area" class="collage-container reveal">
+      <section class="section education" id="education" aria-labelledby="education-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">04 · Education</p>
+              <h2 class="section-title" id="education-title">Places that shaped the work.</h2>
             </div>
-    </section>
+            <p class="section-lead">My formal training spans software engineering, robotics, and artificial intelligence. High school is included as part of the full education path, not hidden in a miscellaneous section.</p>
+          </div>
 
-    <!-- 6. Cinema Section -->
-    <section id="cinema" class="py-40 px-8 md:px-24 cinema-bg relative">
-        <div class="grid lg:grid-cols-12 gap-20 items-center reveal">
-            <div class="lg:col-span-5">
-                <span class="mono text-[10px] text-yellow-500 tracking-[0.4em] uppercase mb-10 block">Systematic Deciphering</span>
-                <h2 class="text-6xl md:text-8xl font-bold serif italic mb-10 leading-none">Frames & <br>Narratives</h2>
-                <div class="space-y-8 text-stone-400 text-lg leading-relaxed font-light italic text-pretty">
-                    <p>Beyond the physical journeys, I find solace in the cinematic world. My heart beats for a well-crafted mystery—there is nothing quite like the thrill of piecing together a complex puzzle. If that suspense is laced with wit and comedy, it becomes my ultimate escape. My curiosity also extends to the realm of medicine; I am naturally drawn to stories that delve into the intricacies of healing and the human body. For me, every film and series is more than just a pastime—it’s a cherished moment of immersion and discovery.</p>
-                </div>
-                <div class="mt-16 flex gap-6">
-                    <div class="mono text-[9px] border border-white/20 px-4 py-2 rounded-full uppercase">Suspense</div>
-                    <div class="mono text-[9px] border border-white/20 px-4 py-2 rounded-full uppercase">Forensic</div>
-                    <div class="mono text-[9px] border border-white/20 px-4 py-2 rounded-full uppercase">Medical</div>
-                </div>
-            </div>
-            <div class="lg:col-span-7">
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- 【换图指引】：影视剧截图 -->
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="2caa60f3430185b03cb43821ad9ae394.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="b6aa47ffe34415ad36be6cf957225bb6.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group"><img src="d8351747698a4e75d0595ecf0351d9c8.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                    <div class="aspect-video bg-stone-900 rounded-sm overflow-hidden group translate-y-10"><img src="e5facae488f83451c3332cfe34c89405.jpg" class="w-full h-full object-cover opacity-40 hover:opacity-100 transition-all"></div>
-                </div>
-            </div>
+          <div class="education-list">
+            <article class="education-card reveal">
+              <span class="school-mark">SJTU</span>
+              <h3>Shanghai Jiao Tong University</h3>
+              <p class="school-cn">上海交通大学 · School of Computer Science</p>
+              <p class="degree">B.E. in Software Engineering<br>Core-course GPA: 88.2/100</p>
+              <p class="education-date">Aug 2023 — Jun 2027 (Expected)</p>
+            </article>
+
+            <article class="education-card reveal">
+              <span class="school-mark">CUHK</span>
+              <h3>The Chinese University of Hong Kong</h3>
+              <p class="school-cn">香港中文大学</p>
+              <p class="degree">Summer Exchange in Robotics and Artificial Intelligence<br>Final grade: A</p>
+              <p class="education-date">Jul 2025 — Aug 2025</p>
+            </article>
+
+            <article class="education-card reveal">
+              <span class="school-mark">RDFZ</span>
+              <h3>The High School Affiliated to Renmin University of China</h3>
+              <p class="school-cn">中国人民大学附属中学 · Beijing</p>
+              <p class="degree">High School</p>
+              <p class="education-date">Foundational education</p>
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer class="py-32 px-8 md:px-24 bg-black text-white overflow-hidden">
-        <div class="reveal">
-            <p class="mono text-brand-yellow text-[10px] tracking-[0.5em] uppercase mb-16 italic">Initialize Handshake</p>
-            <div class="grid lg:grid-cols-2 gap-20 border-t border-white/10 pt-20">
-                <div class="space-y-4">
-                    <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase mb-6 font-bold">Contact Channel</p>
-                    <a href="mailto:zimeng.chen@sjtu.edu.cn" class="text-3xl md:text-5xl hover:text-yellow-400 transition-all serif italic block border-b border-white/10 pb-4 truncate">zimeng_chen@sjtu.edu.cn</a>
-                </div>
-                <div class="grid grid-cols-2 gap-10">
-                    <div class="space-y-4">
-                        <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase font-bold">Digital Presence</p>
-                        <ul class="space-y-2 mono text-xs uppercase tracking-widest font-bold">
-                            <!-- 【GitHub跳转】：页脚链接 -->
-                            <li><a href="https://github.com/MieMieChen" target="_blank" class="text-stone-400 hover:text-white transition-colors">GitHub Profile →</a></li>
-                            <!-- <li><a href="#" target="_blank" class="text-stone-400 hover:text-white transition-colors">LinkedIn Connect →</a></li> -->
-                        </ul>
-                    </div>
-                    <div class="space-y-4">
-                        <p class="mono text-[10px] text-stone-500 tracking-[0.3em] uppercase font-bold">Location</p>
-                        <p class="text-stone-400 mono text-xs uppercase tracking-widest">SJTU Minhang <br>Shanghai, CN</p>
-                    </div>
-                </div>
+      <section class="section service" id="service" aria-labelledby="service-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">05 · Service</p>
+              <h2 class="section-title" id="service-title">Research community and public service.</h2>
             </div>
-            <div class="mt-40 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 mono text-[10px] text-stone-600 uppercase tracking-widest font-bold">
-                <p>© 2026 Zimeng Chen / SJTU SE '27</p>
-                <p>Designed for Precision & Autonomous Systems</p>
-            </div>
+            <p class="section-lead">Academic reviewing and benchmark organization sit beside long-term student leadership and volunteer work. The two forms of service are related, but not collapsed into the same label.</p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-column reveal">
+              <h3>Academic &amp; Research Community</h3>
+              <div class="service-entry">
+                <span class="service-year">2027</span>
+                <div>
+                  <h4>Reviewer · ICLR 2027</h4>
+                  <p>Peer review service for the International Conference on Learning Representations.</p>
+                </div>
+              </div>
+              <div class="service-entry">
+                <span class="service-year">2026</span>
+                <div>
+                  <h4>Organization &amp; Execution Team · Agents' Last Exam</h4>
+                  <p>Contributed to task development and verifiable evaluation for a large-scale benchmark of professional agents.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="service-column reveal">
+              <h3>Leadership &amp; Community</h3>
+              <div class="service-entry">
+                <span class="service-year">SJTU</span>
+                <div>
+                  <h4>Class Representative</h4>
+                  <p>Coordinated class communication, student affairs, and collective activities for the Software Engineering cohort.</p>
+                </div>
+              </div>
+              <div class="service-entry">
+                <span class="service-year">SJTU</span>
+                <div>
+                  <h4>Planning Division · Youth Volunteer Service Team</h4>
+                  <p>Planned and supported campus and community volunteer initiatives.</p>
+                </div>
+              </div>
+              <div class="service-entry">
+                <span class="service-year">VOL.</span>
+                <div>
+                  <h4>Shanghai Marathon &amp; Peking University A-Plan</h4>
+                  <p>Volunteer service supporting public events and student programs.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="honors-strip reveal">
+            <h3>Selected honors</h3>
+            <ul class="honors-list">
+              <li>SJTU Outstanding Student · 2024</li>
+              <li>SJTU Merit Scholarship (Class C) · 2024</li>
+              <li>IELTS 7.5</li>
+              <li>CET-6 625</li>
+            </ul>
+          </div>
         </div>
-    </footer>
+      </section>
 
-    <script>
-        lucide.createIcons();
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="section-inner">
+          <div class="contact-card reveal">
+            <div>
+              <p class="section-kicker">06 · Contact</p>
+              <h2 id="contact-title">Research starts with a precise question.</h2>
+              <p class="contact-copy">I am interested in LLM agents, reinforcement learning for reasoning, and reliable evaluation of long-horizon systems.</p>
+            </div>
+            <div class="contact-links">
+              <a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a>
+              <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">github.com/MieMieChen ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        /* --- 【换图指引】：1. 旅行城市与画廊数据 --- */
-        // 在这里修改或添加你想显示的城市，词云会自动渲染
-        const travelCities = [
-            { name: 'Beijing', size: '3.5rem', rotate: '-4deg' },
-            { name: 'Shanghai', size: '4.5rem', rotate: '2deg' },
-            { name: 'Hong Kong', size: '4rem', rotate: '-3deg' },
-            { name: 'Melbourne', size: '5rem', rotate: '6deg' },
-            { name: 'Brisbane', size: '3.5rem', rotate: '-5deg' },
-            { name: 'Orlando', size: '4.8rem', rotate: '8deg' },
-            { name: 'Gold Coast', size: '4.2rem', rotate: '0deg' },
-            { name: 'Sydney', size: '6rem', rotate: '-7deg' },
-            { name: 'Chengdu', size: '3.2rem', rotate: '5deg' },
-            { name: 'Beihai', size: '2.5rem', rotate: '-10deg' },
-            { name: 'Santiago', size: '4.4rem', rotate: '3deg' }
-        ];
+      <footer>
+        <span>© 2026 Zimeng Chen</span>
+        <span>Designed around sunlight, lilies, and legible research.</span>
+      </footer>
+    </main>
+  </div>
 
-        // 这里对应点击每个城市后弹出的照片列表
-        const cityGalleries = {
-            'Sydney': ['31f533890acf84ec5dbe29ac368ba367.jpg', '55fc95dd69b3aa57cf13b0c4ac2f78f2.jpg','e7b854d24044977bd7fb7f7e069e4664 copy.jpg'],
-            'Gold Coast':['b080543a040b6b503baa9b60d39c31b8.jpg','c7c41984d6cbbce3c1ed949dadb77319.jpg','636f6d4344cc00914f91f71952a48370.jpg'],
-            'Brisbane':['9a173d623310e4e91268d56b4b03bb34.jpg','b3831e2ce8de00f77e28bc21738e335c.jpg'],
-            'Shanghai': ['4c5115f6662a4952b9967ed767eeaba4.jpg','b566605b3e4a0d7b43063b3741d2ffb1.jpg'],
-            'Beijing': ['86892695268823d9dccac038c4d667c9.jpg','638d8b74f49b1520a0639ea9dc24c82e.jpg'],
-            'Melbourne': ['ceb2d5c58d19c969f02d73c57e9a7fd5.jpg','0a576ccb7f4de66e282e00f4709a067c.jpg','ff6fa1a3960db580dda50599f84d9186.jpg'],
-            'Chengdu':['2fe1b55a53bce75330ae54ba2b74b6dc.jpg'],
-            'Orlando':['dd526393983468274e80a1cae10039cd.jpg'],
-            'Santiago':['f74415c88f6c3378f2114efde87e685f.jpg'],
-            'Hong Kong':['d4fb8c2a24205679f60746f3f66e5eeb.jpg','d239b3dcc012a09e9e06bef3fe430633.jpg','0a209ab7845efc5114b03d98e3cb2626.jpg'],
-            'Beihai':['285778fafe167fc19feb91c04a9209a8.jpg']
-        };
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const navigation = document.querySelector('.rail-nav');
+    const navLinks = [...document.querySelectorAll('.rail-nav a')];
 
-        /* --- 【换图指引】：2. 美食照片墙数据 --- */
-        // src 替换为你的本地图片名，或者保持 Unsplash 链接做 Demo
-        const foodImages = [
-            { src: 'fb38ef47c5b75890ba5b7b0d71bf7d34.jpg', top: '5%', left: '12%', w: '400px', rotate: '-5deg', z: 10 },
-            { src: '7fffbc9e50eeac7d38d6e737c66dfbf4.jpg', top: '12%', left: '38%', w: '280px', rotate: '4deg', z: 15 },
-            { src: 'b124665e34454813428e86c08155de28.jpg', top: '38%', left: '8%', w: '260px', rotate: '7deg', z: 20 },
-            { src: '85a6ae4ad53415265383e448d7768aaa.jpg', top: '10%', left: '68%', w: '310px', rotate: '-12deg', z: 25 },
-            { src: '07f3bfb110353b2b05d79458114ae4f0.jpg', top: '45%', left: '32%', w: '300px', rotate: '-2deg', z: 30 },
-            { src: '77126af9b491c07eec234d8af46c9b7c.jpg', top: '32%', left: '58%', w: '270px', rotate: '5deg', z: 35 },
-            { src: '829eaf4034b686c6977daac6b728ac94.jpg', top: '60%', left: '55%', w: '350px', rotate: '-4deg', z: 40 },
-            { src: '5d583ca7da493e17aa88b3c2b0749e39.jpg', top: '55%', left: '12%', w: '230px', rotate: '15deg', z: 12 },
-            { src: 'b6817fd0e6add602a26c0d832e4340e6.jpg', top: '8%', left: '82%', w: '380px', rotate: '3deg', z: 5 },
-            { src: '8f1971083658d364b703abce95d97a42.jpg', top: '70%', left: '36%', w: '340px', rotate: '2deg', z: 45 }
-        ];
+    toggle?.addEventListener('click', () => {
+      const isOpen = navigation.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.textContent = isOpen ? 'Close' : 'Menu';
+    });
 
-        let currentGallery = [];
-        let currentIdx = 0;
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        navigation.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+        if (toggle) toggle.textContent = 'Menu';
+      });
+    });
 
-        // 渲染词云
-        const cloud = document.getElementById('word-cloud');
-        travelCities.forEach(city => {
-            const span = document.createElement('span');
-            span.className = 'city-tag serif font-bold';
-            span.style.fontSize = city.size;
-            span.style.transform = `rotate(${city.rotate})`;
-            span.innerText = city.name;
-            span.onclick = () => openGallery(city.name);
-            cloud.appendChild(span);
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => revealObserver.observe(element));
+
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const activeNavObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
         });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
 
-        // 渲染美食海报
-        const collage = document.getElementById('collage-area');
-        foodImages.forEach((img, idx) => {
-            const div = document.createElement('div');
-            div.className = 'food-poster overflow-hidden';
-            div.style.top = img.top; div.style.left = img.left;
-            div.style.width = img.w; div.style.transform = `rotate(${img.rotate})`;
-            div.style.zIndex = img.z;
-            div.innerHTML = `<img src="${img.src}" class="w-full h-full object-cover">`;
-            div.onclick = () => {
-                currentGallery = foodImages.map(f => f.src);
-                currentIdx = idx;
-                openGalleryModal('Culinary Selection');
-            };
-            collage.appendChild(div);
-        });
-
-        function openGallery(city) {
-            currentGallery = cityGalleries[city] || ['https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200'];
-            currentIdx = 0;
-            openGalleryModal(city);
-        }
-
-        function openGalleryModal(title) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('gallery-modal').style.display = 'flex';
-            updateModal();
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeGallery() {
-            document.getElementById('gallery-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function changeImage(dir) {
-            currentIdx = (currentIdx + dir + currentGallery.length) % currentGallery.length;
-            const img = document.getElementById('modal-img');
-            img.style.opacity = '0';
-            setTimeout(() => { img.src = currentGallery[currentIdx]; img.style.opacity = '1'; updateModal(); }, 200);
-        }
-
-        function updateModal() {
-            document.getElementById('modal-img').src = currentGallery[currentIdx];
-            document.getElementById('modal-counter').innerText = `${currentIdx + 1} / ${currentGallery.length}`;
-        }
-
-        // 揭示动画逻辑
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        // 动态粒子特效
-        const canvas = document.getElementById('canvas-container');
-        const ctx = canvas.getContext('2d');
-        let points = [];
-        function init() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            points = [];
-            for(let i=0; i<35; i++) {
-                points.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.1, vy: (Math.random() - 0.5) * 0.1, r: Math.random() * 1.5 + 0.5 });
-            }
-        }
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#FACC15';
-            points.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); });
-            requestAnimationFrame(draw);
-        }
-        window.addEventListener('resize', init); init(); draw();
-    </script>
+    sections.forEach((section) => activeNavObserver.observe(section));
+  </script>
 </body>
 </html>
