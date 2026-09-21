@@ -713,9 +713,9 @@
     .research-item {
       position: relative;
       display: grid;
-      grid-template-columns: 1.3rem 12.5rem minmax(0, 1fr);
-      gap: clamp(1rem, 3vw, 2.5rem);
-      padding: 0 0 2.6rem;
+      grid-template-columns: 1.3rem clamp(13.5rem, 17vw, 15.5rem) minmax(0, 1fr);
+      gap: clamp(1.25rem, 3vw, 2.75rem);
+      padding: 0 0 3rem;
     }
 
     .research-item:last-child { padding-bottom: 0; }
@@ -739,24 +739,35 @@
     .research-meta { padding-top: 0.15rem; }
 
     .research-date {
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.5rem;
       color: var(--coral);
       font-family: var(--mono);
-      font-size: 0.73rem;
-      font-weight: 500;
+      font-size: 0.86rem;
+      font-weight: 600;
       letter-spacing: 0.04em;
     }
 
     .research-lab {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 1.35rem;
       font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .research-role {
+      margin: 0.45rem 0 0;
+      color: var(--ink);
+      font-size: 1.04rem;
+      font-weight: 700;
+      line-height: 1.45;
     }
 
     .research-place {
-      margin: 0.3rem 0 0;
-      color: #788c92;
-      font-size: 0.88rem;
+      margin: 0.28rem 0 0;
+      color: #687f86;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
     .current-tag {
@@ -764,12 +775,12 @@
       align-items: center;
       gap: 0.35rem;
       margin-top: 0.7rem;
-      padding: 0.35rem 0.55rem;
+      padding: 0.4rem 0.65rem;
       border-radius: 999px;
       background: rgba(53, 110, 85, 0.1);
       color: var(--leaf);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.68rem;
       font-weight: 500;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -796,7 +807,7 @@
     .research-body h3 {
       margin: 0 0 0.65rem;
       font-family: var(--serif);
-      font-size: clamp(1.4rem, 2vw, 1.85rem);
+      font-size: clamp(1.55rem, 2.1vw, 2rem);
       font-weight: 600;
       line-height: 1.22;
       letter-spacing: -0.01em;
@@ -805,7 +816,8 @@
     .research-body > p {
       margin: 0 0 1.2rem;
       color: var(--ink-soft);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
     }
 
     .research-points {
@@ -821,7 +833,7 @@
       position: relative;
       padding-left: 1rem;
       color: #60767d;
-      font-size: 0.93rem;
+      font-size: 0.99rem;
       line-height: 1.65;
     }
 
@@ -1142,7 +1154,7 @@
       .work-index { font-size: 2.35rem; }
 
       .research-item {
-        grid-template-columns: 1.3rem 10rem minmax(0, 1fr);
+        grid-template-columns: 1.3rem 12rem minmax(0, 1fr);
       }
     }
 
@@ -1512,7 +1524,7 @@
               <h2 class="section-title" id="research-title">A research trail, not a project list.</h2>
             </div>
             <p class="section-lead">
-              My current work has two active homes: <strong>SimWorld at UC San Diego's Q-Lab</strong> and <strong>reinforcement learning at APEX Lab</strong>. Earlier work includes CMIC Lab and the Agents' Last Exam collaboration with UC Berkeley.
+              I am currently a <strong>Research Assistant at UC San Diego's Q-Lab</strong>, working on SimWorld, while continuing <strong>reinforcement-learning research at APEX Lab</strong>. Earlier work includes CMIC Lab and the Agents' Last Exam collaboration with UC Berkeley.
             </p>
           </div>
 
@@ -1522,6 +1534,7 @@
               <div class="research-meta">
                 <p class="research-date">Jun 2026 — Present</p>
                 <p class="research-lab">Q-Lab</p>
+                <p class="research-role">Research Assistant</p>
                 <p class="research-place">UC San Diego · Prof. Lianhui Qin</p>
                 <span class="current-tag">Current</span>
               </div>
