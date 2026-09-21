@@ -105,14 +105,24 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .portrait {
+    .portrait-frame {
+      display: block;
       width: 6.6rem;
       aspect-ratio: 1;
+      overflow: hidden;
       border: 3px solid rgba(255, 255, 255, 0.9);
       border-radius: 50%;
-      object-fit: cover;
-      object-position: 50% 26%;
       box-shadow: 0 8px 28px rgba(24, 55, 68, 0.18);
+    }
+
+    .portrait {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: 74% 50%;
+      transform: scale(2.05);
+      transform-origin: 74% 49%;
     }
 
     .identity-name {
@@ -240,8 +250,8 @@
       position: absolute;
       inset: 0;
       z-index: -3;
-      background-image: url("assets/lily-hero.webp");
-      background-position: 58% center;
+      background-image: url("assets/profile-coast.jpg");
+      background-position: center center;
       background-size: cover;
       transform: scale(1.01);
     }
@@ -252,7 +262,7 @@
       inset: 0;
       z-index: -2;
       background:
-        linear-gradient(90deg, rgba(237, 247, 251, 0.98) 0%, rgba(237, 247, 251, 0.82) 37%, rgba(237, 247, 251, 0.14) 68%, rgba(237, 247, 251, 0.02) 100%),
+        linear-gradient(90deg, rgba(237, 247, 251, 0.98) 0%, rgba(237, 247, 251, 0.9) 38%, rgba(237, 247, 251, 0.28) 64%, rgba(237, 247, 251, 0.03) 100%),
         linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 35%);
     }
 
@@ -284,7 +294,7 @@
     }
 
     .hero-content {
-      width: min(56rem, 78%);
+      width: min(50rem, 68%);
       padding: clamp(4.5rem, 7vw, 6.5rem) clamp(2rem, 6vw, 6.5rem);
     }
 
@@ -380,21 +390,6 @@
     .button:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 36px rgba(24, 55, 68, 0.16);
-    }
-
-    .hero-note {
-      position: absolute;
-      right: 1.8rem;
-      bottom: 1.5rem;
-      padding: 0.55rem 0.85rem;
-      border: 1px solid rgba(255, 255, 255, 0.52);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.54);
-      color: #274e5d;
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
     }
 
     .section {
@@ -1170,7 +1165,7 @@
         border: 0;
       }
 
-      .portrait {
+      .portrait-frame {
         width: 2.7rem;
         border-width: 2px;
       }
@@ -1212,7 +1207,7 @@
       .rail-nav.open { display: grid; }
       .rail-nav a { min-height: 2.8rem; }
       .hero { min-height: clamp(35rem, 78svh, 45rem); }
-      .hero::before { background-position: 63% center; }
+      .hero::before { background-position: 57% center; }
 
       .hero::after {
         background:
@@ -1272,7 +1267,7 @@
     }
 
     @media (max-width: 560px) {
-      .hero::before { background-position: 66% center; }
+      .hero::before { background-position: 59% center; }
 
       .hero::after {
         background:
@@ -1292,7 +1287,6 @@
         font-size: 0.96rem;
       }
 
-      .hero-note { display: none; }
       .section { padding-inline: 1.1rem; }
       .section-title { font-size: clamp(2.05rem, 10vw, 3rem); }
 
@@ -1346,7 +1340,9 @@
     <aside class="profile-rail" aria-label="Profile and site navigation">
       <div class="rail-inner">
         <a class="identity" href="#home" aria-label="Back to top">
-          <img class="portrait" src="6f77c944a2833ff2dbc68b852c9d6da1.jpg" alt="Portrait of Zimeng Chen">
+          <span class="portrait-frame">
+            <img class="portrait" src="assets/profile-coast.jpg" alt="Portrait of Zimeng Chen overlooking a coastline">
+          </span>
           <div>
             <p class="identity-name">Zimeng Chen</p>
             <span class="identity-cn">陈梓萌</span>
@@ -1395,7 +1391,6 @@
             <a class="button" href="mailto:zimeng_chen@sjtu.edu.cn">Get in touch</a>
           </div>
         </div>
-        <p class="hero-note">Coral Asiatic lilies · California light</p>
       </section>
 
       <section class="section about" id="about" aria-labelledby="about-title">
