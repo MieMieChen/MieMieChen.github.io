@@ -947,6 +947,10 @@
       background: transparent;
     }
 
+    .honors {
+      background: transparent;
+    }
+
     .service-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1002,21 +1006,12 @@
     }
 
     .honors-strip {
-      display: grid;
-      grid-template-columns: 10rem 1fr;
-      gap: clamp(1.5rem, 3vw, 3rem);
-      align-items: start;
       max-width: 68rem;
-      margin-top: 2.2rem;
+      margin: 0;
       padding: 1.35rem 0;
+      border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       background: transparent;
-    }
-
-    .honors-strip h3 {
-      margin: 0;
-      font-family: var(--serif);
-      font-size: 1.16rem;
     }
 
     .honors-list {
@@ -1324,7 +1319,6 @@
       .work-meta { grid-column: 1; }
       .research-points { grid-template-columns: 1fr; }
       .research-item { padding-bottom: 3.2rem; }
-      .honors-strip { grid-template-columns: 1fr; }
       .honors-list { grid-template-columns: 1fr; }
 
       .contact-card {
@@ -1383,7 +1377,8 @@
           <a href="#research"><span>03</span>Research</a>
           <a href="#education"><span>04</span>Education</a>
           <a href="#service"><span>05</span>Service</a>
-          <a href="#contact"><span>06</span>Contact</a>
+          <a href="#honors"><span>06</span>Honors</a>
+          <a href="#contact"><span>07</span>Contact</a>
         </nav>
 
         <div class="rail-bottom">
@@ -1661,9 +1656,9 @@
           <div class="section-heading reveal">
             <div>
               <p class="section-kicker">05 · Service</p>
-              <h2 class="section-title" id="service-title">Academic service &amp; honors.</h2>
+              <h2 class="section-title" id="service-title">Service</h2>
             </div>
-            <p class="section-lead">Peer-review service and selected university honors.</p>
+            <p class="section-lead">Academic peer-review service.</p>
           </div>
 
           <div class="service-grid">
@@ -1678,10 +1673,22 @@
             </article>
           </div>
 
+        </div>
+      </section>
+
+      <section class="section honors" id="honors" aria-labelledby="honors-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker">06 · Honors</p>
+              <h2 class="section-title" id="honors-title">Honors</h2>
+            </div>
+            <p class="section-lead">Selected university honors.</p>
+          </div>
+
           <div class="honors-strip reveal">
-            <h3>Selected honors</h3>
             <ul class="honors-list">
-              <li><strong>SJTU Outstanding Student</strong><span>2024</span></li>
+              <li><strong>SJTU Outstanding Student</strong><span>2023–2025</span></li>
               <li><strong>SJTU Merit Scholarship (Class C)</strong><span>2023–2025</span></li>
             </ul>
           </div>
@@ -1692,7 +1699,7 @@
         <div class="section-inner">
           <div class="contact-card reveal">
             <div>
-              <p class="section-kicker">06 · Contact</p>
+              <p class="section-kicker">07 · Contact</p>
               <h2 id="contact-title">Open to research conversations.</h2>
               <p class="contact-copy">I am interested in LLM agents, reinforcement learning for reasoning, and reliable evaluation of long-horizon systems.</p>
             </div>
