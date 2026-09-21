@@ -634,6 +634,29 @@
       font-weight: 700;
     }
 
+    .work-figure {
+      display: block;
+      margin: 0 0 1.15rem;
+      padding: 0.55rem;
+      overflow: hidden;
+      border: 1px solid rgba(24, 55, 68, 0.1);
+      border-radius: 0.9rem;
+      background: #fff;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .work-figure:hover {
+      border-color: color-mix(in srgb, var(--card-accent, var(--coral)) 55%, white);
+      box-shadow: 0 12px 28px rgba(24, 55, 68, 0.09);
+    }
+
+    .work-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+    }
+
     .work-summary {
       max-width: 48rem;
       margin: 0;
@@ -1472,6 +1495,9 @@
               <div class="work-content">
                 <h3>G²-Reader: Dual Evolving Graphs for Multimodal Document QA</h3>
                 <p class="work-authors">Yaxin Du, Junru Song, Yifan Zhou, Cheng Wang, Jiahao Gu, <strong>Zimeng Chen</strong>, Menglan Chen, Wen Yao, Yang Yang, Ying Wen, Siheng Chen</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" aria-label="Open the G²-Reader paper">
+                  <img src="assets/g2-reader-overview.webp" alt="Overview of the G²-Reader dual-graph framework" loading="lazy" decoding="async">
+                </a>
                 <p class="work-summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
               </div>
               <div class="work-meta">
@@ -1485,6 +1511,9 @@
               <div class="work-content">
                 <h3>DataMaster: Data-Centric Autonomous AI Research</h3>
                 <p class="work-authors">Yaxin Du, Xiyuan Yang, Zhifan Zhou, Wanxu Liu, Zixing Lei, <strong>Zimeng Chen</strong>, et al.</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" aria-label="Open the DataMaster paper">
+                  <img src="assets/datamaster-overview.webp" alt="Overview of the DataMaster DataTree, Global Memory, and Data Pool" loading="lazy" decoding="async">
+                </a>
                 <p class="work-summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
               </div>
               <div class="work-meta">
@@ -1498,6 +1527,9 @@
               <div class="work-content">
                 <h3>Agents' Last Exam</h3>
                 <p class="work-authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" aria-label="Open the Agents' Last Exam paper">
+                  <img src="assets/agents-last-exam-overview.webp" alt="Agents' Last Exam professional task taxonomy and representative workflows" loading="lazy" decoding="async">
+                </a>
                 <p class="work-summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
               </div>
               <div class="work-meta">
