@@ -1,861 +1,2050 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Zimeng Chen is an undergraduate researcher at Shanghai Jiao Tong University working on LLM agents, reinforcement learning, and reliable evaluation.">
-  <meta name="theme-color" content="#17375e">
-  <meta property="og:title" content="Zimeng Chen | Academic Homepage">
-  <meta property="og:description" content="Research in LLM agents, reinforcement learning, and reliable evaluation.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/profile-coast.jpg">
-  <title>Zimeng Chen | Academic Homepage</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zimeng Chen is an undergraduate at the School of Computer Science, Shanghai Jiao Tong University, researching LLM agents, reinforcement learning, and reliable agent evaluation.">
+  <meta name="theme-color" content="#f4a261">
+  <title>Zimeng Chen — LLM Agents &amp; Reinforcement Learning</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c4051'/%3E%3Cpath d='M32 49c-2-10-1-19 0-29M32 34c-9-1-15-6-17-13 9-1 16 3 17 13Zm0-5c8-1 14-6 16-13-8-1-14 4-16 13Z' fill='none' stroke='%23ffd166' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='17' r='4' fill='%23f47f62'/%3E%3C/svg%3E">
   <style>
     :root {
-      --navy: #17375e;
-      --navy-dark: #102944;
-      --blue: #245c96;
-      --ink: #1f2933;
-      --muted: #5d6975;
-      --line: #dbe2e8;
-      --line-light: #edf1f4;
-      --paper: #ffffff;
-      --soft: #f6f8fa;
-      --max-width: 1160px;
+      --ink: #183744;
+      --ink-soft: #49646d;
+      --paper: #fffdf7;
+      --paper-blue: #edf7fb;
+      --sky: #acd8ee;
+      --sun: #ffd166;
+      --coral: #f47f62;
+      --leaf: #356e55;
+      --line: rgba(24, 55, 68, 0.14);
+      --white: #ffffff;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --serif: var(--sans);
+      --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --rail: 21rem;
+      --shadow: 0 24px 80px rgba(24, 55, 68, 0.12);
     }
 
     * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 78px;
+      scroll-padding-top: 2rem;
     }
 
     body {
       margin: 0;
-      color: var(--ink);
       background: var(--paper);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      font-family: var(--sans);
       font-size: 17px;
       line-height: 1.7;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      color: var(--ink);
+      background: rgba(255, 209, 102, 0.7);
     }
 
     a {
-      color: var(--blue);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 0.18em;
+      color: inherit;
+      text-decoration: none;
     }
 
-    a:hover { color: var(--navy-dark); }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    strong { font-weight: 650; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { display: block; max-width: 100%; }
 
     .skip-link {
       position: fixed;
-      z-index: 100;
       top: 0.75rem;
       left: 0.75rem;
-      padding: 0.55rem 0.8rem;
-      color: #fff;
-      background: var(--navy-dark);
+      z-index: 1000;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: var(--shadow);
       transform: translateY(-180%);
+      transition: transform 180ms ease;
     }
 
     .skip-link:focus { transform: translateY(0); }
 
-    .site-header {
+    .site-shell {
+      display: grid;
+      grid-template-columns: var(--rail) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .profile-rail {
       position: sticky;
-      z-index: 50;
       top: 0;
-      color: #fff;
-      background: var(--navy);
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+      z-index: 30;
+      height: 100vh;
+      padding: 1.65rem 1.8rem;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 18% 6%, rgba(255, 209, 102, 0.22), transparent 24%),
+        linear-gradient(180deg, rgba(255, 253, 247, 0.97), rgba(245, 251, 250, 0.96));
     }
 
-    .header-inner {
+    .rail-inner {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: min(calc(100% - 2.5rem), var(--max-width));
-      min-height: 58px;
-      margin: 0 auto;
+      flex-direction: column;
+      height: 100%;
     }
 
-    .site-name {
-      color: #fff;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      text-decoration: none;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.55rem;
-    }
-
-    .site-nav a {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.91rem;
-      font-weight: 550;
-      text-decoration: none;
-    }
-
-    .site-nav a:hover,
-    .site-nav a[aria-current="true"] {
-      color: #fff;
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 0.4rem;
-    }
-
-    .nav-toggle {
-      display: none;
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      border-radius: 4px;
-      padding: 0.4rem 0.65rem;
-      color: #fff;
-      background: transparent;
-      font: inherit;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .page-shell {
+    .identity {
       display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-      gap: 4.5rem;
-      width: min(calc(100% - 2.5rem), var(--max-width));
-      margin: 0 auto;
-      padding: 2.25rem 0 4rem;
-    }
-
-    .profile { align-self: start; }
-
-    .profile-inner {
-      position: sticky;
-      top: 86px;
-    }
-
-    .profile-photo {
-      width: 230px;
-      aspect-ratio: 1;
-      border-radius: 8px;
-      object-fit: cover;
-      object-position: 78% 52%;
-      box-shadow: 0 0 0 1px rgba(23, 55, 94, 0.12);
-    }
-
-    .profile h1 {
-      margin: 1.15rem 0 0;
-      color: var(--navy-dark);
-      font-size: 1.9rem;
-      line-height: 1.18;
-      letter-spacing: -0.02em;
-    }
-
-    .name-cn {
-      display: block;
-      margin-top: 0.15rem;
-      color: var(--muted);
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-    }
-
-    .profile-role {
-      margin: 0.85rem 0 0;
-      font-size: 0.97rem;
-      line-height: 1.55;
-    }
-
-    .profile-role span {
-      display: block;
-      color: var(--muted);
-    }
-
-    .application-note {
-      margin: 1rem 0 0;
-      border-left: 3px solid var(--blue);
-      padding: 0.62rem 0.78rem;
-      color: var(--navy-dark);
-      background: var(--soft);
-      font-size: 0.93rem;
-      line-height: 1.5;
-    }
-
-    .profile-links {
-      display: grid;
-      gap: 0.32rem;
-      margin-top: 1.1rem;
-      font-size: 0.94rem;
-    }
-
-    .profile-links a { width: fit-content; }
-
-    .content { min-width: 0; }
-
-    .section {
-      padding: 0.1rem 0 2.55rem;
+      grid-template-columns: 6.6rem 1fr;
+      align-items: center;
+      gap: 1.15rem;
+      padding-bottom: 1.45rem;
       border-bottom: 1px solid var(--line);
-      margin-bottom: 2.35rem;
     }
 
-    .section:last-of-type { margin-bottom: 0; }
+    .portrait-frame {
+      display: block;
+      width: 6.6rem;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      box-shadow: 0 8px 28px rgba(24, 55, 68, 0.18);
+    }
 
-    .section-title {
-      display: flex;
-      align-items: baseline;
-      gap: 0.65rem;
-      margin: 0 0 1rem;
-      color: var(--navy-dark);
-      font-size: 1.45rem;
-      line-height: 1.3;
+    .portrait {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: 74% 50%;
+      transform: scale(2.05);
+      transform-origin: 74% 49%;
+    }
+
+    .identity-name {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.05;
       letter-spacing: -0.015em;
     }
 
-    .section-title::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--line);
+    .identity-cn {
+      display: block;
+      margin-top: 0.28rem;
+      color: var(--coral);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
     }
 
-    .intro {
-      max-width: 790px;
-      padding-top: 0.05rem;
-    }
-
-    .intro-lead {
-      margin: 0;
-      color: #2d3944;
-      font-size: 1.13rem;
+    .rail-copy {
+      margin: 1.35rem 0 1.25rem;
+      color: var(--ink-soft);
+      font-size: 1rem;
       line-height: 1.72;
     }
 
-    .intro p + p { margin-top: 0.95rem; }
-
-    .subheading {
-      margin: 1.55rem 0 0.45rem;
-      color: var(--navy-dark);
-      font-size: 1.02rem;
-      line-height: 1.4;
+    .rail-copy strong {
+      color: var(--ink);
+      font-weight: 700;
     }
 
-    .interest-line {
-      margin: 0;
-      color: #334353;
-      font-size: 0.98rem;
-    }
-
-    .interest-line span:not(:last-child)::after {
-      content: " · ";
-      color: #8b97a3;
-    }
-
-    .direction-note {
-      margin: 0.75rem 0 0;
-      border-left: 2px solid #aec4d9;
-      padding-left: 0.85rem;
-      color: var(--muted);
-      font-size: 0.97rem;
-    }
-
-    .publication-list {
+    .language-switcher {
       display: grid;
-      gap: 1.45rem;
-    }
-
-    .publication {
-      display: grid;
-      grid-template-columns: 186px minmax(0, 1fr);
-      gap: 1.25rem;
-      padding-bottom: 1.45rem;
-      border-bottom: 1px solid var(--line-light);
-    }
-
-    .publication:last-child {
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    .publication-thumb {
-      align-self: start;
-      overflow: hidden;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 8.4rem;
+      margin: -0.25rem 0 0.9rem;
+      padding: 0.2rem;
       border: 1px solid var(--line);
-      border-radius: 4px;
-      background: #fff;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.62);
     }
 
-    .publication-thumb img {
-      width: 100%;
-      height: 112px;
-      object-fit: contain;
-      padding: 0.35rem;
-      background: #fff;
-    }
-
-    .publication h3 {
-      margin: -0.1rem 0 0.3rem;
-      color: var(--navy-dark);
-      font-size: 1.08rem;
-      line-height: 1.38;
-    }
-
-    .authors,
-    .publication-summary {
-      margin: 0;
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-
-    .authors { color: #40505f; }
-
-    .publication-summary {
-      margin-top: 0.36rem;
-      color: var(--muted);
-    }
-
-    .publication-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.6rem 0.9rem;
-      margin-top: 0.48rem;
-      font-size: 0.9rem;
-    }
-
-    .venue {
-      color: var(--navy);
-      font-weight: 700;
-    }
-
-    .experience-list,
-    .education-list { display: grid; }
-
-    .experience-item {
-      display: grid;
-      grid-template-columns: 145px minmax(0, 1fr);
-      gap: 1.25rem;
-      padding: 1.2rem 0;
-      border-bottom: 1px solid var(--line-light);
-    }
-
-    .experience-item:first-child { padding-top: 0; }
-
-    .experience-item:last-child {
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    .date {
-      color: var(--muted);
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.5;
-    }
-
-    .experience-heading {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.45rem 0.7rem;
-    }
-
-    .experience-heading h3 {
-      margin: 0;
-      color: var(--navy-dark);
-      font-size: 1.09rem;
-      line-height: 1.35;
-    }
-
-    .current {
-      border: 1px solid #b9cbe0;
-      border-radius: 3px;
-      padding: 0.08rem 0.38rem;
-      color: var(--blue);
+    .language-option {
+      min-height: 2rem;
+      padding: 0.25rem 0.65rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #6a7c82;
+      font-family: var(--mono);
       font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      line-height: 1.4;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    .language-option:hover { color: var(--ink); }
+
+    .language-option.is-active {
+      background: var(--white);
+      color: var(--ink);
+      box-shadow: 0 3px 10px rgba(24, 55, 68, 0.1);
+    }
+
+    .nav-toggle { display: none; }
+
+    .rail-nav {
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    .rail-nav a {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      align-items: center;
+      min-height: 2.55rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 0.85rem;
+      color: #6a7c82;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.015em;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .rail-nav a span {
+      color: #9ba9ad;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+    }
+
+    .rail-nav a:hover,
+    .rail-nav a.active {
+      color: var(--ink);
+      background: rgba(172, 216, 238, 0.25);
+      transform: translateX(0.2rem);
+    }
+
+    .rail-nav a.active span { color: var(--coral); }
+
+    .rail-bottom {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .social-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .social-row a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.45rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .social-row a:hover {
+      border-color: rgba(244, 127, 98, 0.65);
+      background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .rail-location {
+      margin: 0.85rem 0 0;
+      color: #788c92;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
-    .affiliation {
-      margin: 0.15rem 0 0;
-      color: #465666;
-      font-size: 0.94rem;
+    main {
+      min-width: 0;
+      background: linear-gradient(
+        180deg,
+        #eef7fb 0%,
+        #f8fbf9 18%,
+        #f4fafc 38%,
+        #fffdf7 60%,
+        #f7fbfc 80%,
+        #fff8f1 100%
+      );
     }
 
-    .experience-summary {
-      margin: 0.42rem 0 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.58;
-    }
-
-    .experience-points {
-      margin: 0.45rem 0 0;
-      padding-left: 1.2rem;
-      color: #485765;
-      font-size: 0.9rem;
-      line-height: 1.55;
-    }
-
-    .experience-points li + li { margin-top: 0.18rem; }
-
-    .education-item {
-      display: grid;
-      grid-template-columns: 66px 145px minmax(0, 1fr);
-      gap: 1rem 1.25rem;
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: clamp(38rem, 78svh, 49rem);
       align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--line-light);
+      overflow: hidden;
+      isolation: isolate;
+      background: #b4dcf0;
     }
 
-    .education-item:first-child { padding-top: 0; }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background-image: url("assets/profile-coast.jpg");
+      background-position: center center;
+      background-size: cover;
+      transform: scale(1.01);
+    }
 
-    .education-item:last-child {
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.25) 82%, #f8fbf9 100%),
+        linear-gradient(90deg, rgba(237, 247, 251, 0.98) 0%, rgba(237, 247, 251, 0.9) 38%, rgba(237, 247, 251, 0.28) 64%, rgba(237, 247, 251, 0.03) 100%),
+        linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 35%);
+    }
+
+    .hero-sun {
+      position: absolute;
+      top: 9%;
+      left: 7%;
+      z-index: -1;
+      width: 13rem;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      background: rgba(255, 244, 194, 0.22);
+      box-shadow: 0 0 80px rgba(255, 239, 168, 0.55), inset 0 0 48px rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(2px);
+      opacity: 0.55;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.32) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px);
+      background-size: 5rem 5rem;
+      mask-image: linear-gradient(90deg, black, transparent 58%);
+    }
+
+    .hero-content {
+      width: min(50rem, 68%);
+      padding: clamp(4.5rem, 7vw, 6.5rem) clamp(2rem, 6vw, 6.5rem);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 1.35rem;
+      color: var(--leaf);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 2.3rem;
+      height: 0.18rem;
+      border-radius: 999px;
+      background: var(--sun);
+    }
+
+    .hero h1 {
+      max-width: 11ch;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(3.7rem, 6.1vw, 6.5rem);
+      font-weight: 600;
+      line-height: 0.84;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .hero h1 em {
+      display: block;
+      color: var(--coral);
+      font-size: 0.34em;
+      font-style: normal;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+    }
+
+    .hero-intro {
+      max-width: 40rem;
+      margin: 2rem 0 0;
+      color: #274e5d;
+      font-size: clamp(1.08rem, 1.3vw, 1.24rem);
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .hero-intro strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 3rem;
+      padding: 0.8rem 1.2rem;
+      border: 1px solid rgba(24, 55, 68, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 0.77rem;
+      font-weight: 700;
+      box-shadow: 0 8px 28px rgba(24, 55, 68, 0.08);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .button::after {
+      content: "↗";
+      font-size: 0.95rem;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(24, 55, 68, 0.16);
+    }
+
+    .section {
+      position: relative;
+      padding: clamp(3rem, 4.5vw, 4.6rem) clamp(2rem, 6vw, 6rem);
+    }
+
+    .section-inner {
+      width: min(75rem, 100%);
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(14rem, 0.38fr) 1fr;
+      gap: clamp(2rem, 3.5vw, 3.8rem);
+      align-items: start;
+      margin-bottom: clamp(1.9rem, 3vw, 2.8rem);
+    }
+
+    .section-kicker {
+      margin: 0 0 0.8rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.2vw, 3.1rem);
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -0.015em;
+    }
+
+    .section-lead {
+      max-width: 43rem;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.12rem, 1.32vw, 1.24rem);
+      line-height: 1.7;
+      text-wrap: pretty;
+    }
+
+    .section-lead strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .about {
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    .about-primary {
+      display: grid;
+      gap: 1.15rem;
+      align-content: start;
+    }
+
+    .thesis-card {
+      position: relative;
+      min-height: 0;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      overflow: hidden;
+      border: 1px solid rgba(24, 55, 68, 0.12);
+      border-radius: 1.4rem;
+      background: var(--paper-blue);
+      color: var(--ink);
+      box-shadow: 0 16px 44px rgba(24, 55, 68, 0.08);
+    }
+
+    .thesis-card::after { display: none; }
+
+    .thesis-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .thesis-label::before {
+      content: "";
+      width: 0.55rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--sun);
+      box-shadow: 0 0 0 0.3rem rgba(255, 209, 102, 0.13);
+    }
+
+    .thesis-card blockquote {
+      position: relative;
+      z-index: 1;
+      margin: 2rem 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 2.25vw, 2.15rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+    }
+
+    .thesis-card blockquote span { color: var(--coral); }
+
+    .about-notes {
+      display: grid;
+      align-content: start;
+      gap: 0;
+    }
+
+    .about-note {
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about-note:first-child { padding-top: 0.2rem; }
+
+    .about-note h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      margin: 0 0 0.6rem;
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .about-note h3 span {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.08em;
+    }
+
+    .about-note p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.03rem;
+    }
+
+    .focus-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0;
+    }
+
+    .focus-list span {
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.6);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+    }
+
+    .works {
+      background: transparent;
+    }
+
+    .works-list {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .work-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 4.2rem minmax(0, 1fr) 8rem;
+      gap: clamp(1rem, 2.5vw, 2.2rem);
+      align-items: start;
+      padding: clamp(1.25rem, 2.2vw, 1.75rem);
+      overflow: hidden;
+      border: 1px solid rgba(24, 55, 68, 0.12);
+      border-radius: 1.15rem;
+      background: rgba(255, 255, 255, 0.84);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .work-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 0.28rem;
+      background: var(--card-accent, var(--coral));
+    }
+
+    .work-card:hover {
+      border-color: rgba(24, 55, 68, 0.24);
+      box-shadow: 0 22px 60px rgba(24, 55, 68, 0.1);
+      transform: translateY(-4px);
+    }
+
+    .work-index {
+      padding-top: 0.2rem;
+      color: var(--card-accent, var(--coral));
+      font-family: var(--serif);
+      font-size: 2.15rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .work-content h3 {
+      margin: 0 0 0.6rem;
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.025em;
+    }
+
+    .work-authors {
+      margin: 0 0 1.15rem;
+      color: #71848a;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .work-authors strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .work-figure {
+      display: block;
+      margin: 0 0 1.15rem;
+      padding: 0.55rem;
+      overflow: hidden;
+      border: 1px solid rgba(24, 55, 68, 0.1);
+      border-radius: 0.9rem;
+      background: #fff;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .work-figure:hover {
+      border-color: color-mix(in srgb, var(--card-accent, var(--coral)) 55%, white);
+      box-shadow: 0 12px 28px rgba(24, 55, 68, 0.09);
+    }
+
+    .work-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+    }
+
+    .work-summary {
+      max-width: 48rem;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.04rem;
+    }
+
+    .work-meta {
+      display: grid;
+      justify-items: end;
+      gap: 1rem;
+      text-align: right;
+    }
+
+    .venue {
+      display: inline-block;
+      padding: 0.48rem 0.72rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card-accent, var(--coral)) 16%, white);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      font-weight: 500;
+    }
+
+    .paper-link {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: var(--card-accent, var(--coral));
+      text-decoration-thickness: 0.12rem;
+      text-underline-offset: 0.3rem;
+    }
+
+    .paper-link::after { content: " ↗"; }
+
+    .confidentiality-note {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      margin-top: 1.4rem;
+      padding: 1rem 1.15rem;
+      border: 1px dashed rgba(24, 55, 68, 0.2);
+      border-radius: 1rem;
+      color: #60767d;
+      font-size: 0.86rem;
+    }
+
+    .confidentiality-note strong { color: var(--ink); }
+
+    .confidentiality-note span {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    .research { background: transparent; }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 0;
+      margin-left: 0.55rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0.75rem;
+      bottom: 0.75rem;
+      left: 0.48rem;
+      width: 1px;
+      background: linear-gradient(var(--coral), var(--sky), var(--leaf));
+    }
+
+    .research-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.3rem clamp(13.5rem, 17vw, 15.5rem) minmax(0, 1fr);
+      gap: clamp(1.25rem, 3vw, 2.75rem);
+      padding: 0 0 3rem;
+    }
+
+    .research-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 1rem;
+      aspect-ratio: 1;
+      margin-top: 0.55rem;
+      border: 0.25rem solid #fffdf7;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 1px rgba(24, 55, 68, 0.15);
+    }
+
+    .research-item:nth-child(2) .timeline-dot { background: var(--sun); }
+    .research-item:nth-child(3) .timeline-dot { background: var(--sky); }
+    .research-item:nth-child(4) .timeline-dot { background: var(--leaf); }
+
+    .research-meta { padding-top: 0.15rem; }
+
+    .research-date {
+      margin: 0 0 0.5rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .research-lab {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .research-role {
+      margin: 0.45rem 0 0;
+      color: var(--ink);
+      font-size: 1.04rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .research-place {
+      margin: 0.28rem 0 0;
+      color: #687f86;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .current-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.7rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(53, 110, 85, 0.1);
+      color: var(--leaf);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .current-tag::before {
+      content: "";
+      width: 0.42rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .research-body {
+      padding-bottom: 2.4rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .research-item:last-child .research-body {
       padding-bottom: 0;
       border-bottom: 0;
     }
 
-    .school-logo {
-      width: 62px;
-      height: 62px;
-      object-fit: contain;
+    .research-body h3 {
+      margin: 0 0 0.65rem;
+      font-family: var(--serif);
+      font-size: clamp(1.55rem, 2.1vw, 2rem);
+      font-weight: 600;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
     }
 
-    .education-item h3 {
-      margin: 0;
-      color: var(--navy-dark);
-      font-size: 1.05rem;
-      line-height: 1.35;
+    .research-body > p {
+      margin: 0 0 1.2rem;
+      color: var(--ink-soft);
+      font-size: 1.1rem;
+      line-height: 1.7;
     }
 
-    .education-item p {
-      margin: 0.16rem 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    .compact-grid {
+    .research-points {
       display: grid;
-      grid-template-columns: 1fr 1.35fr;
-      gap: 3.25rem;
-    }
-
-    .compact-section { padding-bottom: 0.35rem; }
-
-    .compact-section .section-title { font-size: 1.3rem; }
-
-    .plain-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 1.3rem;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .plain-list li {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 1rem;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid var(--line-light);
-      font-size: 0.94rem;
-      line-height: 1.5;
+    .research-points li {
+      position: relative;
+      padding-left: 1rem;
+      color: #60767d;
+      font-size: 0.99rem;
+      line-height: 1.65;
     }
 
-    .plain-list li:last-child { border-bottom: 0; }
+    .research-points li::before {
+      content: "";
+      position: absolute;
+      top: 0.63rem;
+      left: 0;
+      width: 0.34rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--sun);
+    }
 
-    .plain-list time {
-      color: var(--muted);
+    .education {
+      overflow: hidden;
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .education::before {
+      display: none;
+    }
+
+    .education .section-kicker { color: var(--coral); }
+    .education .section-lead { color: var(--ink-soft); }
+
+    .education-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      max-width: 68rem;
+      gap: 0;
+      --education-logo-size: 6rem;
+    }
+
+    .education-list::before {
+      content: "";
+      position: absolute;
+      top: 2.3rem;
+      bottom: 2.3rem;
+      left: calc(var(--education-logo-size) / 2);
+      width: 1px;
+      background: linear-gradient(var(--coral), var(--sky), var(--leaf));
+    }
+
+    .education-card {
+      display: grid;
+      grid-template-columns: var(--education-logo-size) 10.5rem minmax(0, 1fr);
+      gap: clamp(1rem, 2.4vw, 2rem);
+      align-items: start;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .education-card:last-child { border-bottom: 0; }
+
+    .school-logo-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: var(--education-logo-size);
+      aspect-ratio: 1;
+      place-items: center;
+      padding: 0.45rem;
+      border: 1px solid rgba(24, 55, 68, 0.13);
+      border-radius: 1.1rem;
+      background: var(--white);
+      box-shadow: 0 8px 24px rgba(24, 55, 68, 0.08);
+    }
+
+    .school-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .education-content { min-width: 0; }
+
+    .education-card h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .school-abbr {
+      display: inline-block;
+      margin-left: 0.45rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.62em;
+      font-weight: 600;
+      letter-spacing: 0.04em;
       white-space: nowrap;
     }
 
-    .contact-copy {
-      margin: 0;
-      color: #40505f;
-      font-size: 1rem;
+    .school-cn {
+      margin: 0 0 0.55rem;
+      color: #72868c;
+      font-size: 0.9rem;
     }
 
-    .contact-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem 1.15rem;
-      margin-top: 0.85rem;
-      font-size: 0.94rem;
+    .degree {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.04rem;
+    }
+
+    .education-date {
+      margin: 0;
+      padding-top: 0.2rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
+    .service {
+      background: transparent;
+    }
+
+    .honors {
+      background: transparent;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 68rem;
+    }
+
+    .service-column {
+      padding: 1.35rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .service-column h3 {
+      margin: 0 0 1.8rem;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      letter-spacing: -0.03em;
+    }
+
+    .service-entry {
+      display: grid;
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 1.4rem;
+      padding: 0;
+      border-top: 0;
+    }
+
+    .service-entry:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .service-year {
+      padding-top: 0.1rem;
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    .service-entry h4 {
+      margin: 0 0 0.25rem;
+      font-size: 1.16rem;
+      font-weight: 700;
+    }
+
+    .service-entry p {
+      margin: 0;
+      color: #70848a;
+      font-size: 0.98rem;
+      line-height: 1.65;
+    }
+
+    .honors-strip {
+      max-width: 68rem;
+      margin: 0;
+      padding: 1.35rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .honors-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem 2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .honors-list li {
+      display: grid;
+      gap: 0.1rem;
+      padding-left: 0.9rem;
+      border-left: 0.2rem solid var(--sky);
+      font-size: 0.97rem;
+      line-height: 1.45;
+    }
+
+    .honors-list li strong { font-weight: 700; }
+
+    .honors-list li span {
+      color: #71848a;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+    }
+
+    .contact {
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .contact::before {
+      display: none;
+    }
+
+    .contact-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+      padding: clamp(2rem, 3.5vw, 3.2rem);
+      border: 1px solid rgba(24, 55, 68, 0.14);
+      border-radius: 1.4rem;
+      background: rgba(255, 255, 255, 0.52);
+      box-shadow: 0 18px 55px rgba(24, 55, 68, 0.08);
+    }
+
+    .contact-card h2 {
+      max-width: 12ch;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2.35rem, 4.5vw, 4.2rem);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+    }
+
+    .contact-copy {
+      max-width: 39rem;
+      margin: 1.4rem 0 0;
+      color: #46616a;
+      font-size: 1.08rem;
+    }
+
+    .contact-links {
+      display: grid;
+      justify-items: end;
+      gap: 0.6rem;
+    }
+
+    .contact-links a {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      padding: 0.65rem 1rem;
+      border: 1px solid rgba(24, 55, 68, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.64);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .contact-links a:hover {
+      background: var(--white);
+      transform: translateX(-3px);
     }
 
     footer {
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding-top: 0.35rem;
-      color: #7a8691;
-      font-size: 0.82rem;
+      padding: 1.2rem clamp(2rem, 7vw, 7rem);
+      border-top: 1px solid rgba(24, 55, 68, 0.1);
+      background: transparent;
+      color: rgba(24, 55, 68, 0.68);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
     }
 
     :focus-visible {
-      outline: 3px solid #72a7db;
-      outline-offset: 3px;
+      outline: 3px solid var(--sun);
+      outline-offset: 4px;
     }
 
-    @media (max-width: 980px) {
-      .site-nav { gap: 1rem; }
-      .site-nav a { font-size: 0.84rem; }
-      .page-shell {
-        grid-template-columns: 220px minmax(0, 1fr);
-        gap: 2.6rem;
+    @media (max-width: 1100px) {
+      :root { --rail: 18.5rem; }
+
+      .hero-content {
+        width: min(51rem, 82%);
+        padding-left: clamp(2rem, 5vw, 5rem);
       }
-      .profile-photo { width: 210px; }
-      .publication { grid-template-columns: 150px minmax(0, 1fr); }
-      .publication-thumb img { height: 100px; }
-      .education-item { grid-template-columns: 58px 120px minmax(0, 1fr); }
-      .school-logo { width: 54px; height: 54px; }
+
+      .section { padding-inline: clamp(1.6rem, 5vw, 4rem); }
+
+      .work-card {
+        grid-template-columns: 4rem minmax(0, 1fr) 7.5rem;
+      }
+
+      .work-index { font-size: 2.35rem; }
+
+      .research-item {
+        grid-template-columns: 1.3rem 12rem minmax(0, 1fr);
+      }
     }
 
-    @media (max-width: 800px) {
-      html { scroll-padding-top: 64px; }
-      .header-inner { width: min(calc(100% - 1.5rem), var(--max-width)); }
-      .nav-toggle { display: block; }
-      .site-nav {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        padding: 0.55rem 1rem 0.8rem;
-        background: var(--navy-dark);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
-      }
-      .site-nav.is-open { display: flex; }
-      .site-nav a {
-        width: 100%;
-        padding: 0.52rem 0;
-        font-size: 0.94rem;
-      }
-      .page-shell {
-        display: block;
-        width: min(calc(100% - 2rem), 720px);
-        padding-top: 1.6rem;
-      }
-      .profile-inner {
-        position: static;
-        display: grid;
-        grid-template-columns: 190px minmax(0, 1fr);
-        gap: 0 1.5rem;
-        align-items: start;
-        padding-bottom: 2rem;
+    @media (max-width: 940px) {
+      html { scroll-padding-top: 6rem; }
+      .site-shell { display: block; }
+
+      .profile-rail {
+        position: sticky;
+        top: 0;
+        height: auto;
+        padding: 0.75rem 1rem;
+        border-right: 0;
         border-bottom: 1px solid var(--line);
-        margin-bottom: 2.25rem;
       }
-      .profile-photo {
-        grid-row: 1 / span 5;
-        width: 190px;
-      }
-      .profile h1 { margin-top: 0; }
-      .profile-links {
-        grid-template-columns: repeat(2, max-content);
-        column-gap: 1rem;
-      }
-    }
 
-    @media (max-width: 600px) {
-      body { font-size: 16px; }
-      .page-shell { width: min(calc(100% - 1.35rem), 720px); }
-      .profile-inner { display: block; }
-      .profile-photo {
-        width: min(100%, 320px);
-        aspect-ratio: 4 / 3;
-        margin: 0 auto 1rem;
-        object-position: 74% 50%;
+      .rail-inner {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 0.55rem;
+        align-items: center;
       }
-      .profile h1,
-      .profile-role,
-      .application-note,
-      .profile-links {
-        width: min(100%, 420px);
-        margin-right: auto;
-        margin-left: auto;
+
+      .identity {
+        grid-template-columns: 2.7rem 1fr;
+        gap: 0.65rem;
+        padding: 0;
+        border: 0;
       }
-      .profile-links { grid-template-columns: repeat(2, minmax(0, max-content)); }
-      .section { padding-bottom: 2.1rem; margin-bottom: 2rem; }
-      .section-title { font-size: 1.35rem; }
-      .intro-lead { font-size: 1.04rem; }
-      .publication { grid-template-columns: 1fr; gap: 0.8rem; }
-      .publication-thumb { width: min(100%, 360px); }
-      .publication-thumb img { height: auto; max-height: 170px; }
-      .experience-item { grid-template-columns: 1fr; gap: 0.3rem; }
-      .education-item {
-        grid-template-columns: 56px minmax(0, 1fr);
-        gap: 0.2rem 0.9rem;
+
+      .portrait-frame {
+        width: 2.7rem;
+        border-width: 2px;
+      }
+
+      .identity-name { font-size: 1rem; }
+
+      .identity-cn,
+      .rail-copy,
+      .rail-bottom { display: none; }
+
+      .language-switcher {
+        width: auto;
+        min-width: 6.4rem;
+        margin: 0;
+      }
+
+      .language-option {
+        min-height: 2.4rem;
+        padding-inline: 0.55rem;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+        width: 2.8rem;
+        aspect-ratio: 1;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        cursor: pointer;
+      }
+
+      .rail-nav {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0.75rem;
+        display: none;
+        width: min(19rem, calc(100vw - 1.5rem));
+        padding: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: rgba(255, 253, 247, 0.97);
+        box-shadow: var(--shadow);
+      }
+
+      .rail-nav.open { display: grid; }
+      .rail-nav a { min-height: 2.8rem; }
+      .hero { min-height: clamp(35rem, 78svh, 45rem); }
+      .hero::before { background-position: 57% center; }
+
+      .hero::after {
+        background:
+          linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.28) 84%, #f8fbf9 100%),
+          linear-gradient(90deg, rgba(237, 247, 251, 0.96), rgba(237, 247, 251, 0.66) 58%, rgba(237, 247, 251, 0.1)),
+          linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
+      }
+
+      .hero-content {
+        width: 86%;
+        padding: 5rem 1.6rem 6rem;
+      }
+
+      .hero h1 { font-size: clamp(3.4rem, 10vw, 5.2rem); }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 1.7rem;
+      }
+
+      .about-grid,
+      .service-grid { grid-template-columns: 1fr; }
+
+      .work-card {
+        grid-template-columns: 3.3rem minmax(0, 1fr);
+      }
+
+      .work-meta {
+        grid-column: 2;
+        grid-template-columns: auto 1fr;
+        justify-items: start;
+        align-items: center;
+        text-align: left;
+      }
+
+      .research-item {
+        grid-template-columns: 1.3rem minmax(0, 1fr);
+        gap: 0.9rem 1.2rem;
+      }
+
+      .research-meta,
+      .research-body { grid-column: 2; }
+
+      .education-list { --education-logo-size: 5.25rem; }
+
+      .education-card {
+        grid-template-columns: var(--education-logo-size) minmax(0, 1fr);
+        gap: 0.7rem 1.2rem;
+      }
+
+      .education-date,
+      .education-content { grid-column: 2; }
+
+      .contact-card {
+        grid-template-columns: 1fr;
         align-items: start;
       }
-      .education-item .date {
-        grid-column: 2;
-        grid-row: 1;
-        margin-bottom: 0.24rem;
+
+      .contact-links { justify-items: start; }
+    }
+
+    @media (max-width: 560px) {
+      .hero::before { background-position: 59% center; }
+
+      .hero::after {
+        background:
+          linear-gradient(180deg, transparent 67%, rgba(248, 251, 249, 0.3) 84%, #f8fbf9 100%),
+          linear-gradient(90deg, rgba(237, 247, 251, 0.97), rgba(237, 247, 251, 0.75) 67%, rgba(237, 247, 251, 0.18)),
+          linear-gradient(0deg, rgba(24, 55, 68, 0.08), transparent 45%);
       }
-      .school-logo { grid-row: 1 / span 2; }
-      .education-content { grid-column: 2; }
-      .compact-grid { grid-template-columns: 1fr; gap: 2rem; }
-      footer { display: block; }
-      footer span { display: block; }
+
+      .hero-content {
+        width: 96%;
+        padding-inline: 1.15rem;
+      }
+
+      .hero h1 { font-size: clamp(3rem, 14vw, 4.3rem); }
+
+      .hero-intro {
+        max-width: 27rem;
+        font-size: 1.02rem;
+      }
+
+      .section { padding-inline: 1.1rem; }
+      .section-title { font-size: clamp(2.05rem, 10vw, 3rem); }
+
+      .thesis-card {
+        border-radius: 1.4rem;
+      }
+
+      .work-card {
+        grid-template-columns: 1fr;
+        border-radius: 1.2rem;
+      }
+
+      .work-index { font-size: 1.8rem; }
+      .work-meta { grid-column: 1; }
+      .research-points { grid-template-columns: 1fr; }
+      .research-item { padding-bottom: 3.2rem; }
+      .honors-list { grid-template-columns: 1fr; }
+
+      .contact-card {
+        padding: 1.5rem;
+        border-radius: 1.4rem;
+      }
+
+      footer {
+        flex-direction: column;
+        padding-inline: 1.1rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Zimeng Chen",
-    "alternateName": "陈梓萌",
-    "affiliation": {
-      "@type": "CollegeOrUniversity",
-      "name": "Shanghai Jiao Tong University"
-    },
-    "url": "https://miemiechen.github.io/",
-    "sameAs": [
-      "https://scholar.google.com/citations?user=lk7U-JQAAAAJ&hl=en",
-      "https://github.com/MieMieChen",
-      "https://x.com/MieMie_Meng"
-    ],
-    "knowsAbout": ["LLM Agents", "Reinforcement Learning", "Agent Evaluation", "Agent Memory", "Recursive Self-Improvement"]
-  }
-  </script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="site-name" href="#about">Zimeng Chen</a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button>
-      <nav class="site-nav" id="site-navigation" aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#publications">Publications</a>
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#service">Service</a>
-        <a href="#honors">Honors</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
+  <a class="skip-link" href="#main-content" data-i18n="skipLink">Skip to content</a>
 
-  <div class="page-shell">
-    <aside class="profile" aria-label="Profile">
-      <div class="profile-inner">
-        <img class="profile-photo" src="assets/profile-coast.jpg" alt="Zimeng Chen overlooking a coastline">
-        <h1>Zimeng Chen <span class="name-cn">陈梓萌</span></h1>
-        <p class="profile-role">
-          Undergraduate Researcher
-          <span>School of Computer Science</span>
-          <span>Shanghai Jiao Tong University</span>
+  <div class="site-shell">
+    <aside class="profile-rail" aria-label="Profile and site navigation">
+      <div class="rail-inner">
+        <a class="identity" href="#home" aria-label="Back to top">
+          <span class="portrait-frame">
+            <img class="portrait" src="assets/profile-coast.jpg" alt="Portrait of Zimeng Chen overlooking a coastline">
+          </span>
+          <div>
+            <p class="identity-name">Zimeng Chen</p>
+            <span class="identity-cn">陈梓萌</span>
+          </div>
+        </a>
+
+        <p class="rail-copy" data-i18n="railCopy">
+          Undergraduate at the <strong>School of Computer Science, Shanghai Jiao Tong University</strong>. Researching LLM agents, reinforcement learning, and verifiable systems. <strong>Applying to graduate programs for Fall 2027.</strong>
         </p>
-        <p class="application-note"><strong>Fall 2027:</strong> Preparing applications for graduate programs and open to research opportunities.</p>
-        <div class="profile-links" aria-label="Contact and academic profiles">
-          <a href="mailto:zimeng_chen@sjtu.edu.cn">Email</a>
-          <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
-          <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X / Twitter</a>
+
+        <div class="language-switcher" role="group" aria-label="Choose language">
+          <button class="language-option is-active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="language-option" type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="rail-navigation" aria-label="Open navigation" data-i18n="menu">Menu</button>
+
+        <nav class="rail-nav" id="rail-navigation" aria-label="Main navigation">
+          <a href="#about" data-i18n="navAbout"><span>01</span>About</a>
+          <a href="#work" data-i18n="navWork"><span>02</span>Selected Work</a>
+          <a href="#research" data-i18n="navResearch"><span>03</span>Research</a>
+          <a href="#education" data-i18n="navEducation"><span>04</span>Education</a>
+          <a href="#service" data-i18n="navService"><span>05</span>Service</a>
+          <a href="#honors" data-i18n="navHonors"><span>06</span>Honors</a>
+          <a href="#contact" data-i18n="navContact"><span>07</span>Contact</a>
+        </nav>
+
+        <div class="rail-bottom">
+          <div class="social-row" aria-label="External profiles">
+            <a href="mailto:zimeng_chen@sjtu.edu.cn" data-i18n="emailLabel">Email</a>
+            <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer" data-i18n="scholarLabel">Scholar</a>
+            <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X</a>
+          </div>
+          <p class="rail-location" data-i18n="railLocation">Shanghai · San Diego · Building toward reliable agents</p>
         </div>
       </div>
     </aside>
 
-    <main class="content" id="main-content">
-      <section class="section intro" id="about" aria-labelledby="about-title">
-        <h2 class="section-title" id="about-title">About</h2>
-        <p class="intro-lead">I am an undergraduate researcher at the <strong>School of Computer Science, Shanghai Jiao Tong University</strong>. I study how long-horizon AI agents can be evaluated and improved when they operate in interactive environments or under deployment constraints.</p>
-        <p>I am currently a <strong>Research Assistant at UC San Diego's Q-Lab</strong>, working on reliable evaluation for coding agents that build interactive 3D worlds in SimWorld. I also conduct research at <strong>APEX Lab</strong> on deployment-aware reinforcement learning for low-bit language models.</p>
-        <h3 class="subheading">Research interests</h3>
-        <p class="interest-line" aria-label="Research interests"><span>LLM Agents</span><span>Agent Memory</span><span>Recursive Self-Improvement</span><span>Reinforcement Learning</span><span>Agent Evaluation</span><span>Multimodal RAG</span><span>Low-bit Deployment</span></p>
-        <p class="direction-note">I am especially interested in agent memory and recursive self-improvement (RSI), and I am actively looking for research opportunities and collaborators in these directions.</p>
-      </section>
-
-      <section class="section" id="publications" aria-labelledby="publications-title">
-        <h2 class="section-title" id="publications-title">Publications &amp; Preprints</h2>
-        <div class="publication-list">
-          <article class="publication">
-            <a class="publication-thumb" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" aria-label="Read G²-Reader"><img src="assets/g2-reader-overview.webp" alt="Overview of the G²-Reader framework" loading="lazy" decoding="async"></a>
-            <div>
-              <h3>G²-Reader: Dual Evolving Graphs for Multimodal Document QA</h3>
-              <p class="authors">Yaxin Du, Junru Song, Yifan Zhou, Cheng Wang, Jiahao Gu, <strong>Zimeng Chen</strong>, Menglan Chen, Wen Yao, Yang Yang, Ying Wen, Siheng Chen</p>
-              <p class="publication-summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
-              <div class="publication-meta"><span class="venue">ICML 2026</span><a href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer">Paper</a></div>
-            </div>
-          </article>
-
-          <article class="publication">
-            <a class="publication-thumb" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" aria-label="Read DataMaster"><img src="assets/datamaster-overview.webp" alt="Overview of the DataMaster framework" loading="lazy" decoding="async"></a>
-            <div>
-              <h3>DataMaster: Data-Centric Autonomous AI Research</h3>
-              <p class="authors">Yaxin Du, Xiyuan Yang, Zhifan Zhou, Wanxu Liu, Zixing Lei, <strong>Zimeng Chen</strong>, et al.</p>
-              <p class="publication-summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
-              <div class="publication-meta"><span class="venue">arXiv 2026</span><a href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer">Paper</a></div>
-            </div>
-          </article>
-
-          <article class="publication">
-            <a class="publication-thumb" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" aria-label="Read Agents' Last Exam"><img src="assets/agents-last-exam-overview.webp" alt="Agents' Last Exam task taxonomy and workflows" loading="lazy" decoding="async"></a>
-            <div>
-              <h3>Agents' Last Exam</h3>
-              <p class="authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
-              <p class="publication-summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
-              <div class="publication-meta"><span class="venue">arXiv 2026</span><a href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer">Paper</a></div>
-            </div>
-          </article>
+    <main id="main-content">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-sun" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-content reveal is-visible">
+          <p class="eyebrow" data-i18n="heroEyebrow">LLM agents · RL · evaluation</p>
+          <h1 id="hero-title" data-i18n="heroTitle">Zimeng Chen <em>陈梓萌</em></h1>
+          <p class="hero-intro" data-i18n="heroIntro">
+            I study how AI agents can be <strong>evaluated and improved under long-horizon and deployment constraints</strong>. My current work focuses on reliable evaluation of coding agents that build interactive 3D worlds at UC San Diego's Q-Lab and deployment-aware reinforcement learning for language models at APEX Lab.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work" data-i18n="heroWork">Selected work</a>
+            <a class="button" href="mailto:zimeng_chen@sjtu.edu.cn" data-i18n="heroContact">Get in touch</a>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="experience" aria-labelledby="experience-title">
-        <h2 class="section-title" id="experience-title">Research Experience</h2>
-        <div class="experience-list">
-          <article class="experience-item">
-            <time class="date" datetime="2026-06">Jun 2026 — Present</time>
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
             <div>
-              <div class="experience-heading"><h3>Research Assistant · Q-Lab</h3><span class="current">Current</span></div>
-              <p class="affiliation">University of California San Diego · Prof. Lianhui Qin</p>
-              <p class="experience-summary"><strong>SimWorld:</strong> reliable evaluation for coding agents that generate and repair interactive 3D scenes in Unreal Engine.</p>
-              <ul class="experience-points">
-                <li>Designed a staged evidence pipeline spanning deterministic scene-graph checks, UE-native physical probes, and evidence-grounded multi-view VLM judging.</li>
-                <li>Integrated evaluation into an agent-agnostic harness with provenance-tracked artifacts, explicit failure handling, and reproducible scoring.</li>
-              </ul>
+              <p class="section-kicker" data-i18n="aboutKicker">01 · About</p>
+              <h2 class="section-title" id="about-title" data-i18n="aboutTitle">What I care about.</h2>
             </div>
-          </article>
+            <p class="section-lead" data-i18n="aboutLead">
+              I am an undergraduate at the School of Computer Science, Shanghai Jiao Tong University. My research connects <strong>agent reliability</strong>, <strong>reinforcement learning for reasoning</strong>, and the systems needed to evaluate long-horizon behavior.
+            </p>
+          </div>
 
-          <article class="experience-item">
-            <time class="date" datetime="2026-05">May 2026 — Present</time>
-            <div>
-              <div class="experience-heading"><h3>APEX Lab</h3><span class="current">Current</span></div>
-              <p class="affiliation">Prof. Muning Wen</p>
-              <p class="experience-summary"><strong>Deployment-aware reinforcement learning for low-bit LLMs:</strong> optimizing reasoning policies for the numerical path used at deployment.</p>
-              <ul class="experience-points">
-                <li>Built an end-to-end W4A16 GRPO framework using verl, vLLM, Triton, and Marlin for quantization-aware RL experiments.</li>
-                <li>Extended training and evaluation to long-horizon mathematical trajectories and multi-checkpoint analysis.</li>
-              </ul>
+          <div class="about-grid">
+            <div class="about-primary">
+              <article class="thesis-card reveal">
+                <span class="thesis-label" data-i18n="thesisLabel">Research thesis</span>
+                <blockquote data-i18n="thesisQuote">
+                  Capable agents are not enough. We need to know <span>why they work, when they fail, and what survives deployment.</span>
+                </blockquote>
+              </article>
+              <div class="focus-list reveal" aria-label="Research interests">
+                <span data-i18n="focusAgents">LLM Agents</span>
+                <span data-i18n="focusMemory">Agent Memory</span>
+                <span data-i18n="focusRsi">Recursive Self-Improvement</span>
+                <span data-i18n="focusRl">Reinforcement Learning</span>
+                <span data-i18n="focusEvaluation">Agent Evaluation</span>
+                <span data-i18n="focusRag">Multimodal RAG</span>
+                <span data-i18n="focusLowBit">Low-bit Deployment</span>
+              </div>
             </div>
-          </article>
 
-          <article class="experience-item">
-            <time class="date" datetime="2026-02">Feb 2026 — May 2026</time>
-            <div>
-              <div class="experience-heading"><h3>Agents' Last Exam</h3></div>
-              <p class="affiliation">Collaboration with UC Berkeley</p>
-              <p class="experience-summary">Translated professional medical-imaging procedures into long-horizon software tasks with structured inputs, hidden references, and verifiable deliverables.</p>
-              <ul class="experience-points"><li>Designed the MicroDicom chest-X-ray annotation adjudication task featured in the public paper.</li></ul>
+            <div class="about-notes reveal">
+              <article class="about-note">
+                <h3 data-i18n="aboutNote1Title"><span>01</span> Reliable agent systems</h3>
+                <p data-i18n="aboutNote1Body">I design verifiers and evaluation workflows that separate semantic alignment, spatial correctness, physical validity, and task completion instead of compressing every failure into one score.</p>
+              </article>
+              <article class="about-note">
+                <h3 data-i18n="aboutNote2Title"><span>02</span> RL under deployment constraints</h3>
+                <p data-i18n="aboutNote2Body">I study how reinforcement learning objectives should change when the deployed policy runs under low-bit quantization, long rollouts, and imperfect numerical execution.</p>
+              </article>
+              <article class="about-note">
+                <h3 data-i18n="aboutNote3Title"><span>03</span> Agent memory &amp; self-improvement</h3>
+                <p data-i18n="aboutNote3Body">I am particularly interested in agent memory and recursive self-improvement (RSI): how agents retain experience and improve their own strategies over long horizons. I am actively looking for research opportunities and potential co-authors in these directions.</p>
+              </article>
             </div>
-          </article>
-
-          <article class="experience-item">
-            <time class="date" datetime="2025-10">Oct 2025 — Feb 2026</time>
-            <div>
-              <div class="experience-heading"><h3>CMIC Lab</h3></div>
-              <p class="affiliation">Shanghai Jiao Tong University · Prof. Siheng Chen</p>
-              <p class="experience-summary">Worked on the research line that became G²-Reader, extending agentic RAG from unimodal retrieval to multimodal, multi-document question answering.</p>
-              <ul class="experience-points"><li>Extended MA-RAG to jointly process textual and visual evidence and ran full-scale validation on 2,271 VisDoMBench samples across five domains.</li></ul>
-            </div>
-          </article>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="education" aria-labelledby="education-title">
-        <h2 class="section-title" id="education-title">Education</h2>
-        <p>My training in software engineering gave me a foundation in systems, algorithms, and reliable software development. I have since moved toward artificial intelligence research, bringing that engineering perspective to LLM agents, reinforcement learning, and embodied systems.</p>
-        <div class="education-list">
-          <article class="education-item">
-            <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/zh/thumb/d/d5/SJTU_emblem.svg/250px-SJTU_emblem.svg.png" alt="Shanghai Jiao Tong University emblem" loading="lazy" decoding="async">
-            <time class="date" datetime="2023-08">Aug 2023 — Jun 2027</time>
-            <div class="education-content"><h3>Shanghai Jiao Tong University (SJTU)</h3><p>B.E. in Software Engineering · School of Computer Science · Expected Jun 2027</p></div>
-          </article>
+      <section class="section works" id="work" aria-labelledby="work-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker" data-i18n="workKicker">02 · Selected work</p>
+              <h2 class="section-title" id="work-title" data-i18n="workTitle">Publications &amp; preprints.</h2>
+            </div>
+          </div>
 
-          <article class="education-item">
-            <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Emblem_of_CU.png/250px-Emblem_of_CU.png" alt="The Chinese University of Hong Kong emblem" loading="lazy" decoding="async">
-            <time class="date" datetime="2025-07">Jul 2025 — Aug 2025</time>
-            <div class="education-content"><h3>The Chinese University of Hong Kong (CUHK)</h3><p>Summer Exchange in Robotics and Artificial Intelligence</p></div>
-          </article>
+          <div class="works-list">
+            <article class="work-card reveal" style="--card-accent: #f47f62;">
+              <div class="work-index">01</div>
+              <div class="work-content">
+                <h3>G²-Reader: Dual Evolving Graphs for Multimodal Document QA</h3>
+                <p class="work-authors">Yaxin Du, Junru Song, Yifan Zhou, Cheng Wang, Jiahao Gu, <strong>Zimeng Chen</strong>, Menglan Chen, Wen Yao, Yang Yang, Ying Wen, Siheng Chen</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" aria-label="Open the G²-Reader paper">
+                  <img src="assets/g2-reader-overview.webp" alt="Overview of the G²-Reader dual-graph framework" loading="lazy" decoding="async">
+                </a>
+                <p class="work-summary" data-i18n="work1Summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">ICML 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+              </div>
+            </article>
 
-          <article class="education-item">
-            <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/en/thumb/7/7a/The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png/250px-The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png" alt="The High School Affiliated to Renmin University of China logo" loading="lazy" decoding="async">
-            <span class="date">High School</span>
-            <div class="education-content"><h3>The High School Affiliated to Renmin University of China (RDFZ)</h3><p>Secondary education · Beijing</p></div>
-          </article>
+            <article class="work-card reveal" style="--card-accent: #e9b93f;">
+              <div class="work-index">02</div>
+              <div class="work-content">
+                <h3>DataMaster: Data-Centric Autonomous AI Research</h3>
+                <p class="work-authors">Yaxin Du, Xiyuan Yang, Zhifan Zhou, Wanxu Liu, Zixing Lei, <strong>Zimeng Chen</strong>, et al.</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" aria-label="Open the DataMaster paper">
+                  <img src="assets/datamaster-overview.webp" alt="Overview of the DataMaster DataTree, Global Memory, and Data Pool" loading="lazy" decoding="async">
+                </a>
+                <p class="work-summary" data-i18n="work2Summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">arXiv 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+              </div>
+            </article>
+
+            <article class="work-card reveal" style="--card-accent: #6fb3cf;">
+              <div class="work-index">03</div>
+              <div class="work-content">
+                <h3>Agents' Last Exam</h3>
+                <p class="work-authors" data-i18n="work3Authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
+                <a class="work-figure" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" aria-label="Open the Agents' Last Exam paper">
+                  <img src="assets/agents-last-exam-overview.webp" alt="Agents' Last Exam professional task taxonomy and representative workflows" loading="lazy" decoding="async">
+                </a>
+                <p class="work-summary" data-i18n="work3Summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
+              </div>
+              <div class="work-meta">
+                <span class="venue">arXiv 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+              </div>
+            </article>
+          </div>
+
         </div>
       </section>
 
-      <div class="section compact-grid">
-        <section class="compact-section" id="service" aria-labelledby="service-title">
-          <h2 class="section-title" id="service-title">Service</h2>
-          <ul class="plain-list"><li><span>Reviewer · ICLR</span><time>2027</time></li></ul>
-        </section>
-        <section class="compact-section" id="honors" aria-labelledby="honors-title">
-          <h2 class="section-title" id="honors-title">Honors</h2>
-          <ul class="plain-list">
-            <li><span>SJTU Outstanding Student</span><time>2023–2025</time></li>
-            <li><span>SJTU Merit Scholarship</span><time>2023–2025</time></li>
-          </ul>
-        </section>
-      </div>
+      <section class="section research" id="research" aria-labelledby="research-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker" data-i18n="researchKicker">03 · Research</p>
+              <h2 class="section-title" id="research-title" data-i18n="researchTitle">Experience</h2>
+            </div>
+            <p class="section-lead" data-i18n="researchLead">
+              I am currently a <strong>Research Assistant at UC San Diego's Q-Lab</strong>, working on SimWorld, while continuing <strong>reinforcement-learning research at APEX Lab</strong>. Earlier work includes CMIC Lab and the Agents' Last Exam collaboration with UC Berkeley.
+            </p>
+          </div>
 
-      <section class="section" id="contact" aria-labelledby="contact-title">
-        <h2 class="section-title" id="contact-title">Contact</h2>
-        <p class="contact-copy">I am always happy to hear from people who reach out—whether for academic discussions, potential collaborations, or conversations beyond research. I am preparing for Fall 2027 graduate applications and welcome relevant opportunities.</p>
-        <div class="contact-row">
-          <a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a>
-          <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
-          <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X / Twitter</a>
+          <div class="timeline">
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date" data-i18n="qDate">Jun 2026 — Present</p>
+                <p class="research-lab">Q-Lab</p>
+                <p class="research-role" data-i18n="researchAssistant">Research Assistant</p>
+                <p class="research-place" data-i18n="qPlace">UC San Diego · Prof. Lianhui Qin</p>
+                <span class="current-tag" data-i18n="current">Current</span>
+              </div>
+              <div class="research-body">
+                <h3 data-i18n="qTitle">SimWorld · Unified evaluation of agent-generated 3D scenes</h3>
+                <p data-i18n="qSummary">Building a verifier and benchmark workflow for coding agents that generate and repair interactive scenes in Unreal Engine.</p>
+                <ul class="research-points">
+                  <li data-i18n="qPoint1">Designed a staged evidence pipeline spanning deterministic scene-graph checks, UE-native physical probes, and evidence-grounded multi-view VLM judging.</li>
+                  <li data-i18n="qPoint2">Separated semantic, spatial, surface, preservation, and physical validity from ground-truth restoration fidelity.</li>
+                  <li data-i18n="qPoint3">Integrated evaluation into an agent-agnostic harness with provenance-tracked artifacts, explicit failure handling, and reproducible scoring.</li>
+                  <li data-i18n="qPoint4">Analyzed model trajectories, human alignment, rerun behavior, and VLM judging instability across text-to-scene and image-to-scene tasks.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date" data-i18n="apexDate">May 2026 — Present</p>
+                <p class="research-lab">APEX Lab</p>
+                <p class="research-place" data-i18n="apexPlace">Prof. Muning Wen</p>
+                <span class="current-tag" data-i18n="current">Current</span>
+              </div>
+              <div class="research-body">
+                <h3 data-i18n="apexTitle">Deployment-aware reinforcement learning for low-bit LLMs</h3>
+                <p data-i18n="apexSummary">Studying how to optimize reasoning policies for the numerical path they actually use at deployment rather than treating quantization as an afterthought.</p>
+                <ul class="research-points">
+                  <li data-i18n="apexPoint1">Built an end-to-end W4A16 GRPO framework using verl, vLLM, Triton, and Marlin for systematic quantization-aware RL experiments.</li>
+                  <li data-i18n="apexPoint2">Extended training and evaluation from short-form reasoning to long-horizon mathematical trajectories and multi-checkpoint analysis.</li>
+                  <li data-i18n="apexPoint3">Investigating high-precision teacher guidance that selectively corrects reward-relevant errors in a quantized policy.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date" data-i18n="aleDate">Feb 2026 — May 2026</p>
+                <p class="research-lab">Agents' Last Exam</p>
+                <p class="research-place" data-i18n="alePlace">Collaboration with UC Berkeley</p>
+              </div>
+              <div class="research-body">
+                <h3 data-i18n="aleTitle">Medical-software agent evaluation</h3>
+                <p data-i18n="aleSummary">Translated professional medical-imaging procedures into long-horizon software tasks with structured inputs, hidden references, and verifiable deliverables.</p>
+                <ul class="research-points">
+                  <li data-i18n="alePoint1">Designed the MicroDicom chest-X-ray annotation adjudication task featured in the public paper.</li>
+                  <li data-i18n="alePoint2">Combined file and schema validation, case-level hidden references, and IoU-based localization metrics.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="research-item reveal">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="research-meta">
+                <p class="research-date" data-i18n="cmicDate">Oct 2025 — Feb 2026</p>
+                <p class="research-lab">CMIC Lab</p>
+                <p class="research-place" data-i18n="cmicPlace">SJTU · Prof. Siheng Chen</p>
+              </div>
+              <div class="research-body">
+                <h3 data-i18n="cmicTitle">Multimodal document QA and graph-based retrieval</h3>
+                <p data-i18n="cmicSummary">Worked on the research line that became G²-Reader, extending agentic RAG from unimodal retrieval to multimodal, multi-document question answering.</p>
+                <ul class="research-points">
+                  <li data-i18n="cmicPoint1">Extended MA-RAG to jointly process textual and visual evidence and integrated LightRAG as a controlled baseline.</li>
+                  <li data-i18n="cmicPoint2">Ran full-scale validation on 2,271 VisDoMBench samples across five domains using a fixed retrieval budget.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section education" id="education" aria-labelledby="education-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker" data-i18n="educationKicker">04 · Education</p>
+              <h2 class="section-title" id="education-title" data-i18n="educationTitle">Education</h2>
+            </div>
+            <p class="section-lead" data-i18n="educationLead">My software engineering training gave me a strong foundation in systems, algorithms, and building reliable software. I have since transitioned into artificial intelligence research, applying that engineering perspective to LLM agents, reinforcement learning, and embodied systems.</p>
+          </div>
+
+          <div class="education-list">
+            <article class="education-card reveal">
+              <span class="school-logo-wrap">
+                <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/zh/thumb/d/d5/SJTU_emblem.svg/250px-SJTU_emblem.svg.png" alt="Shanghai Jiao Tong University emblem" loading="lazy" decoding="async">
+              </span>
+              <p class="education-date" data-i18n="sjtuDate">Aug 2023 — Jun 2027 (Expected)</p>
+              <div class="education-content">
+                <h3 data-i18n="sjtuName">Shanghai Jiao Tong University <span class="school-abbr">(SJTU)</span></h3>
+                <p class="school-cn" data-i18n="sjtuSub">上海交通大学 · School of Computer Science</p>
+                <p class="degree" data-i18n="sjtuDegree">B.E. in Software Engineering</p>
+              </div>
+            </article>
+
+            <article class="education-card reveal">
+              <span class="school-logo-wrap">
+                <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Emblem_of_CU.png/250px-Emblem_of_CU.png" alt="The Chinese University of Hong Kong emblem" loading="lazy" decoding="async">
+              </span>
+              <p class="education-date" data-i18n="cuhkDate">Jul 2025 — Aug 2025</p>
+              <div class="education-content">
+                <h3 data-i18n="cuhkName">The Chinese University of Hong Kong <span class="school-abbr">(CUHK)</span></h3>
+                <p class="school-cn" data-i18n="cuhkSub">香港中文大学</p>
+                <p class="degree" data-i18n="cuhkDegree">Summer Exchange in Robotics and Artificial Intelligence</p>
+              </div>
+            </article>
+
+            <article class="education-card reveal">
+              <span class="school-logo-wrap">
+                <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/en/thumb/7/7a/The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png/250px-The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png" alt="The High School Affiliated to Renmin University of China logo" loading="lazy" decoding="async">
+              </span>
+              <p class="education-date" data-i18n="rdfzDate">High School</p>
+              <div class="education-content">
+                <h3 data-i18n="rdfzName">The High School Affiliated to Renmin University of China <span class="school-abbr">(RDFZ)</span></h3>
+                <p class="school-cn" data-i18n="rdfzSub">中国人民大学附属中学 · Beijing</p>
+                <p class="degree" data-i18n="rdfzDegree">Secondary education</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section service" id="service" aria-labelledby="service-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker" data-i18n="serviceKicker">05 · Service</p>
+              <h2 class="section-title" id="service-title" data-i18n="serviceTitle">Service</h2>
+            </div>
+            <p class="section-lead" data-i18n="serviceLead">Academic peer-review service.</p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-column reveal">
+              <div class="service-entry">
+                <span class="service-year">2027</span>
+                <div>
+                  <h4 data-i18n="serviceEntry">Reviewer · ICLR 2027</h4>
+                  <p data-i18n="serviceBody">Peer review service for the International Conference on Learning Representations.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section honors" id="honors" aria-labelledby="honors-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-kicker" data-i18n="honorsKicker">06 · Honors</p>
+              <h2 class="section-title" id="honors-title" data-i18n="honorsTitle">Honors</h2>
+            </div>
+            <p class="section-lead" data-i18n="honorsLead">Selected university honors.</p>
+          </div>
+
+          <div class="honors-strip reveal">
+            <ul class="honors-list">
+              <li><strong data-i18n="honor1">SJTU Outstanding Student</strong><span>2023–2025</span></li>
+              <li><strong data-i18n="honor2">SJTU Merit Scholarship</strong><span>2023–2025</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="section-inner">
+          <div class="contact-card reveal">
+            <div>
+              <p class="section-kicker" data-i18n="contactKicker">07 · Contact</p>
+              <h2 id="contact-title" data-i18n="contactTitle">Always happy to connect.</h2>
+              <p class="contact-copy" data-i18n="contactCopy">I am always happy to hear from people who reach out, whether for academic discussions, research collaborations, or conversations beyond academia. I am currently open to Fall 2027 graduate opportunities.</p>
+            </div>
+            <div class="contact-links">
+              <a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a>
+              <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer" data-i18n="googleScholarLabel">Google Scholar ↗</a>
+              <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">github.com/MieMieChen ↗</a>
+              <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X · @MieMie_Meng ↗</a>
+            </div>
+          </div>
         </div>
       </section>
 
       <footer>
         <span>© 2026 Zimeng Chen</span>
-        <span>LLM agents · reinforcement learning · reliable evaluation</span>
+        <span data-i18n="footerFocus">LLM agents · reinforcement learning · reliable evaluation</span>
       </footer>
     </main>
   </div>
 
   <script>
-    const menuButton = document.querySelector('.nav-toggle');
-    const navigation = document.querySelector('.site-nav');
-    const navLinks = [...navigation.querySelectorAll('a')];
+    const toggle = document.querySelector('.nav-toggle');
+    const navigation = document.querySelector('.rail-nav');
+    const navLinks = [...document.querySelectorAll('.rail-nav a')];
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const languageOptions = [...document.querySelectorAll('.language-option')];
+    const translatableElements = [...document.querySelectorAll('[data-i18n]')];
+    const defaultContent = new Map(translatableElements.map((element) => [element, element.innerHTML]));
+    const descriptionMeta = document.querySelector('meta[name="description"]');
 
-    menuButton.addEventListener('click', () => {
-      const open = navigation.classList.toggle('is-open');
-      menuButton.setAttribute('aria-expanded', String(open));
+    const chineseCopy = {
+      skipLink: '跳至正文',
+      railCopy: '上海交通大学<strong>计算机学院</strong>本科生，研究 LLM 智能体、强化学习与可验证系统。<strong>正在申请 2027 年秋季入学的研究生项目。</strong>',
+      menu: '菜单',
+      navAbout: '<span>01</span>关于我',
+      navWork: '<span>02</span>代表工作',
+      navResearch: '<span>03</span>科研经历',
+      navEducation: '<span>04</span>教育经历',
+      navService: '<span>05</span>学术服务',
+      navHonors: '<span>06</span>荣誉',
+      navContact: '<span>07</span>联系',
+      emailLabel: '邮箱',
+      scholarLabel: '学术主页',
+      googleScholarLabel: '谷歌学术 ↗',
+      railLocation: '上海 · 圣迭戈 · 致力于构建可靠的智能体',
+      heroEyebrow: 'LLM 智能体 · 强化学习 · 评测',
+      heroTitle: '陈梓萌 <em>Zimeng Chen</em>',
+      heroIntro: '我研究如何在长程任务与部署约束下<strong>评测并改进 AI 智能体</strong>。目前，我在加州大学圣迭戈分校 Q-Lab 研究能够构建交互式 3D 世界的编程智能体的可靠评测，并在 APEX Lab 研究面向语言模型实际部署的强化学习。',
+      heroWork: '代表工作',
+      heroContact: '联系我',
+      aboutKicker: '01 · 关于我',
+      aboutTitle: '我的研究关注',
+      aboutLead: '我是上海交通大学计算机学院本科生。我的研究围绕<strong>智能体可靠性</strong>、<strong>面向推理的强化学习</strong>，以及评估长程行为所需的系统展开。',
+      thesisLabel: '研究主张',
+      thesisQuote: '仅有能力强大的智能体还不够。我们还需要理解<span>它为什么有效、何时失败，以及哪些能力能够在部署环境中保持。</span>',
+      focusAgents: 'LLM 智能体',
+      focusMemory: '智能体记忆',
+      focusRsi: '递归式自我改进',
+      focusRl: '强化学习',
+      focusEvaluation: '智能体评测',
+      focusRag: '多模态 RAG',
+      focusLowBit: '低比特部署',
+      aboutNote1Title: '<span>01</span> 可靠的智能体系统',
+      aboutNote1Body: '我设计验证器与评测流程，将语义对齐、空间正确性、物理有效性和任务完成度分别建模，而不是把所有失败压缩成单一分数。',
+      aboutNote2Title: '<span>02</span> 部署约束下的强化学习',
+      aboutNote2Body: '我研究当部署策略面临低比特量化、长轨迹和不完美数值执行时，强化学习目标应当如何相应改变。',
+      aboutNote3Title: '<span>03</span> 智能体记忆与自我改进',
+      aboutNote3Body: '我持续关注智能体记忆与递归式自我改进（RSI）：智能体如何在长时间跨度中保留经验并改进自身策略。我正在寻找这些方向的研究机会与潜在合作者。',
+      workKicker: '02 · 代表工作',
+      workTitle: '论文与预印本',
+      work1Summary: '一个多模态文档问答系统，通过共同演化用于证据定位的内容图和用于自适应推理的规划图完成问题求解。',
+      work2Summary: '一个以数据为中心的自主科研框架，将数据准备、下游验证与累积实验知识组织成闭环科研过程。',
+      work3Authors: 'Yiyou Sun 等，包括 <strong>Zimeng Chen</strong> · 组织与执行团队',
+      work3Summary: '在真实软件环境中，以具有可验证交付物和经济价值的长程专业工作流系统评测智能体。',
+      paperLink: '论文',
+      researchKicker: '03 · 科研经历',
+      researchTitle: '科研经历',
+      researchLead: '我目前在加州大学圣迭戈分校 <strong>Q-Lab 担任研究助理</strong>，参与 SimWorld 研究，同时继续在 <strong>APEX Lab 开展强化学习研究</strong>。此前的工作包括 CMIC Lab 以及与加州大学伯克利分校合作的 Agents\' Last Exam。',
+      qDate: '2026 年 6 月 — 至今',
+      researchAssistant: '研究助理',
+      qPlace: '加州大学圣迭戈分校 · 秦连辉教授',
+      current: '进行中',
+      qTitle: 'SimWorld · 智能体生成 3D 场景的统一评测',
+      qSummary: '为能够生成和修复 Unreal Engine 交互场景的编程智能体构建验证器与基准评测流程。',
+      qPoint1: '设计分阶段证据流程，覆盖确定性场景图检查、UE 原生物理探测和基于证据的多视角 VLM 判断。',
+      qPoint2: '将语义、空间、表面、保留项和物理有效性与真实场景恢复保真度分别建模。',
+      qPoint3: '将评测集成到智能体无关的执行框架中，记录制品来源，并提供明确的失败处理与可复现评分。',
+      qPoint4: '分析文本生成场景与图像生成场景任务中的模型轨迹、人类一致性、重跑行为和 VLM 判断不稳定性。',
+      apexDate: '2026 年 5 月 — 至今',
+      apexPlace: '温木宁教授',
+      apexTitle: '面向低比特语言模型部署的强化学习',
+      apexSummary: '研究如何直接针对推理策略部署时实际采用的数值执行路径进行优化，而不是将量化作为训练后的附加步骤。',
+      apexPoint1: '基于 verl、vLLM、Triton 和 Marlin 构建端到端 W4A16 GRPO 框架，用于系统开展量化感知强化学习实验。',
+      apexPoint2: '将训练与评测从短程推理扩展到长程数学推理轨迹和多检查点分析。',
+      apexPoint3: '研究高精度教师指导机制，选择性纠正量化策略中与奖励相关的错误。',
+      aleDate: '2026 年 2 月 — 2026 年 5 月',
+      alePlace: '与加州大学伯克利分校合作',
+      aleTitle: '医疗软件智能体评测',
+      aleSummary: '将专业医学影像流程转化为长程软件任务，并提供结构化输入、隐藏参考答案和可验证交付物。',
+      alePoint1: '设计公开论文中使用的 MicroDicom 胸部 X 光片标注裁决任务。',
+      alePoint2: '结合文件与模式验证、病例级隐藏参考答案和基于 IoU 的定位指标。',
+      cmicDate: '2025 年 10 月 — 2026 年 2 月',
+      cmicPlace: '上海交通大学 · 陈思衡教授',
+      cmicTitle: '多模态文档问答与图结构检索',
+      cmicSummary: '参与后来发展为 G²-Reader 的研究，将智能体 RAG 从单模态检索扩展到多模态、多文档问答。',
+      cmicPoint1: '扩展 MA-RAG 以联合处理文本与视觉证据，并集成 LightRAG 作为受控基线。',
+      cmicPoint2: '在五个领域的 2,271 个 VisDoMBench 样本上，使用固定检索预算完成全量验证。',
+      educationKicker: '04 · 教育经历',
+      educationTitle: '教育经历',
+      educationLead: '软件工程训练为我建立了系统、算法和可靠软件开发方面的扎实基础。此后，我转向人工智能研究，并将工程视角应用于 LLM 智能体、强化学习和具身系统。',
+      sjtuDate: '2023 年 8 月 — 2027 年 6 月（预计）',
+      sjtuName: '上海交通大学 <span class="school-abbr">(SJTU)</span>',
+      sjtuSub: 'Shanghai Jiao Tong University · 计算机学院',
+      sjtuDegree: '软件工程工学学士',
+      cuhkDate: '2025 年 7 月 — 2025 年 8 月',
+      cuhkName: '香港中文大学 <span class="school-abbr">(CUHK)</span>',
+      cuhkSub: 'The Chinese University of Hong Kong',
+      cuhkDegree: '机器人学与人工智能暑期交换',
+      rdfzDate: '高中',
+      rdfzName: '中国人民大学附属中学 <span class="school-abbr">(RDFZ)</span>',
+      rdfzSub: 'The High School Affiliated to Renmin University of China · 北京',
+      rdfzDegree: '高中教育',
+      serviceKicker: '05 · 学术服务',
+      serviceTitle: '学术服务',
+      serviceLead: '学术同行评审服务。',
+      serviceEntry: '审稿人 · ICLR 2027',
+      serviceBody: '担任国际学习表征会议（ICLR 2027）审稿人。',
+      honorsKicker: '06 · 荣誉',
+      honorsTitle: '荣誉',
+      honorsLead: '部分校级荣誉。',
+      honor1: '上海交通大学三好学生',
+      honor2: '上海交通大学奖学金',
+      contactKicker: '07 · 联系',
+      contactTitle: '欢迎交流。',
+      contactCopy: '我乐于与每一位主动联系我的人交流，包括但不限于学术讨论、科研合作，以及学术之外的对话。我目前正在申请 2027 年秋季入学的研究生项目。',
+      footerFocus: 'LLM 智能体 · 强化学习 · 可靠评测'
+    };
+
+    const languageUi = {
+      en: {
+        close: 'Close',
+        menu: 'Menu',
+        choose: 'Choose language',
+        openNavigation: 'Open navigation',
+        closeNavigation: 'Close navigation',
+        title: 'Zimeng Chen — LLM Agents & Reinforcement Learning',
+        description: 'Zimeng Chen is an undergraduate at the School of Computer Science, Shanghai Jiao Tong University, researching LLM agents, reinforcement learning, and reliable agent evaluation.'
+      },
+      zh: {
+        close: '关闭',
+        menu: '菜单',
+        choose: '选择语言',
+        openNavigation: '打开导航',
+        closeNavigation: '关闭导航',
+        title: '陈梓萌 — LLM 智能体与强化学习',
+        description: '陈梓萌是上海交通大学计算机学院本科生，研究 LLM 智能体、强化学习与可靠的智能体评测。'
+      }
+    };
+
+    let currentLanguage = 'en';
+
+    const setLanguage = (language, persist = true) => {
+      currentLanguage = language === 'zh' ? 'zh' : 'en';
+      const isChinese = currentLanguage === 'zh';
+      const ui = languageUi[currentLanguage];
+
+      document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
+      document.title = ui.title;
+      descriptionMeta?.setAttribute('content', ui.description);
+      languageSwitcher?.setAttribute('aria-label', ui.choose);
+
+      translatableElements.forEach((element) => {
+        const key = element.dataset.i18n;
+        element.innerHTML = isChinese && chineseCopy[key] ? chineseCopy[key] : defaultContent.get(element);
+      });
+
+      languageOptions.forEach((option) => {
+        const isActive = option.dataset.lang === currentLanguage;
+        option.classList.toggle('is-active', isActive);
+        option.setAttribute('aria-pressed', String(isActive));
+      });
+
+      const isOpen = navigation?.classList.contains('open');
+      if (toggle) {
+        toggle.textContent = isOpen ? ui.close : ui.menu;
+        toggle.setAttribute('aria-label', isOpen ? ui.closeNavigation : ui.openNavigation);
+      }
+
+      if (persist) {
+        try { localStorage.setItem('site-language', currentLanguage); } catch (error) {}
+      }
+    };
+
+    languageOptions.forEach((option) => {
+      option.addEventListener('click', () => setLanguage(option.dataset.lang));
+    });
+
+    let savedLanguage = 'en';
+    try { savedLanguage = localStorage.getItem('site-language') || 'en'; } catch (error) {}
+    setLanguage(savedLanguage, false);
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = navigation.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      const ui = languageUi[currentLanguage];
+      toggle.textContent = isOpen ? ui.close : ui.menu;
+      toggle.setAttribute('aria-label', isOpen ? ui.closeNavigation : ui.openNavigation);
     });
 
     navLinks.forEach((link) => {
       link.addEventListener('click', () => {
-        navigation.classList.remove('is-open');
-        menuButton.setAttribute('aria-expanded', 'false');
+        navigation.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+        if (toggle) {
+          toggle.textContent = languageUi[currentLanguage].menu;
+          toggle.setAttribute('aria-label', languageUi[currentLanguage].openNavigation);
+        }
       });
     });
 
-    const observedSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
-    const sectionObserver = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) return;
-      navLinks.forEach((link) => {
-        link.removeAttribute('aria-current');
-        if (link.getAttribute('href') === `#${visible.target.id}`) link.setAttribute('aria-current', 'true');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
       });
-    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.4] });
-    observedSections.forEach((section) => sectionObserver.observe(section));
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => revealObserver.observe(element));
+
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const activeNavObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach((section) => activeNavObserver.observe(section));
   </script>
 </body>
 </html>
