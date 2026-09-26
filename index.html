@@ -155,39 +155,6 @@
       font-weight: 700;
     }
 
-    .language-switcher {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      width: 8.4rem;
-      margin: -0.25rem 0 0.9rem;
-      padding: 0.2rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.62);
-    }
-
-    .language-option {
-      min-height: 2rem;
-      padding: 0.25rem 0.65rem;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      color: #6a7c82;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
-    }
-
-    .language-option:hover { color: var(--ink); }
-
-    .language-option.is-active {
-      background: var(--white);
-      color: var(--ink);
-      box-shadow: 0 3px 10px rgba(24, 55, 68, 0.1);
-    }
-
     .nav-toggle { display: none; }
 
     .rail-nav {
@@ -1265,17 +1232,6 @@
       .rail-copy,
       .rail-bottom { display: none; }
 
-      .language-switcher {
-        width: auto;
-        min-width: 6.4rem;
-        margin: 0;
-      }
-
-      .language-option {
-        min-height: 2.4rem;
-        padding-inline: 0.55rem;
-      }
-
       .nav-toggle {
         display: inline-flex;
         width: 2.8rem;
@@ -1438,7 +1394,7 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content" data-i18n="skipLink">Skip to content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <div class="site-shell">
     <aside class="profile-rail" aria-label="Profile and site navigation">
@@ -1453,35 +1409,30 @@
           </div>
         </a>
 
-        <p class="rail-copy" data-i18n="railCopy">
+        <p class="rail-copy">
           Undergraduate at the <strong>School of Computer Science, Shanghai Jiao Tong University</strong>. Researching LLM agents, reinforcement learning, and verifiable systems. <strong>Applying to graduate programs for Fall 2027.</strong>
         </p>
 
-        <div class="language-switcher" role="group" aria-label="Choose language">
-          <button class="language-option is-active" type="button" data-lang="en" aria-pressed="true">EN</button>
-          <button class="language-option" type="button" data-lang="zh" aria-pressed="false">中文</button>
-        </div>
-
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="rail-navigation" aria-label="Open navigation" data-i18n="menu">Menu</button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="rail-navigation" aria-label="Open navigation">Menu</button>
 
         <nav class="rail-nav" id="rail-navigation" aria-label="Main navigation">
-          <a href="#about" data-i18n="navAbout"><span>01</span>About</a>
-          <a href="#work" data-i18n="navWork"><span>02</span>Selected Work</a>
-          <a href="#research" data-i18n="navResearch"><span>03</span>Research</a>
-          <a href="#education" data-i18n="navEducation"><span>04</span>Education</a>
-          <a href="#service" data-i18n="navService"><span>05</span>Service</a>
-          <a href="#honors" data-i18n="navHonors"><span>06</span>Honors</a>
-          <a href="#contact" data-i18n="navContact"><span>07</span>Contact</a>
+          <a href="#about"><span>01</span>About</a>
+          <a href="#work"><span>02</span>Selected Work</a>
+          <a href="#research"><span>03</span>Research</a>
+          <a href="#education"><span>04</span>Education</a>
+          <a href="#service"><span>05</span>Service</a>
+          <a href="#honors"><span>06</span>Honors</a>
+          <a href="#contact"><span>07</span>Contact</a>
         </nav>
 
         <div class="rail-bottom">
           <div class="social-row" aria-label="External profiles">
-            <a href="mailto:zimeng_chen@sjtu.edu.cn" data-i18n="emailLabel">Email</a>
-            <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer" data-i18n="scholarLabel">Scholar</a>
+            <a href="mailto:zimeng_chen@sjtu.edu.cn">Email</a>
+            <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Scholar</a>
             <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X</a>
           </div>
-          <p class="rail-location" data-i18n="railLocation">Shanghai · San Diego · Building toward reliable agents</p>
+          <p class="rail-location">Shanghai · San Diego · Building toward reliable agents</p>
         </div>
       </div>
     </aside>
@@ -1491,14 +1442,14 @@
         <div class="hero-sun" aria-hidden="true"></div>
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-content reveal is-visible">
-          <p class="eyebrow" data-i18n="heroEyebrow">LLM agents · RL · evaluation</p>
-          <h1 id="hero-title" data-i18n="heroTitle">Zimeng Chen <em>陈梓萌</em></h1>
-          <p class="hero-intro" data-i18n="heroIntro">
+          <p class="eyebrow">LLM agents · RL · evaluation</p>
+          <h1 id="hero-title">Zimeng Chen <em>陈梓萌</em></h1>
+          <p class="hero-intro">
             I study how AI agents can be <strong>evaluated and improved under long-horizon and deployment constraints</strong>. My current work focuses on reliable evaluation of coding agents that build interactive 3D worlds at UC San Diego's Q-Lab and deployment-aware reinforcement learning for language models at APEX Lab.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#work" data-i18n="heroWork">Selected work</a>
-            <a class="button" href="mailto:zimeng_chen@sjtu.edu.cn" data-i18n="heroContact">Get in touch</a>
+            <a class="button primary" href="#work">Selected work</a>
+            <a class="button" href="mailto:zimeng_chen@sjtu.edu.cn">Get in touch</a>
           </div>
         </div>
       </section>
@@ -1507,10 +1458,10 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="aboutKicker">01 · About</p>
-              <h2 class="section-title" id="about-title" data-i18n="aboutTitle">What I care about.</h2>
+              <p class="section-kicker">01 · About</p>
+              <h2 class="section-title" id="about-title">What I care about.</h2>
             </div>
-            <p class="section-lead" data-i18n="aboutLead">
+            <p class="section-lead">
               I am an undergraduate at the School of Computer Science, Shanghai Jiao Tong University. My research connects <strong>agent reliability</strong>, <strong>reinforcement learning for reasoning</strong>, and the systems needed to evaluate long-horizon behavior.
             </p>
           </div>
@@ -1518,34 +1469,34 @@
           <div class="about-grid">
             <div class="about-primary">
               <article class="thesis-card reveal">
-                <span class="thesis-label" data-i18n="thesisLabel">Research thesis</span>
-                <blockquote data-i18n="thesisQuote">
+                <span class="thesis-label">Research thesis</span>
+                <blockquote>
                   Capable agents are not enough. We need to know <span>why they work, when they fail, and what survives deployment.</span>
                 </blockquote>
               </article>
               <div class="focus-list reveal" aria-label="Research interests">
-                <span data-i18n="focusAgents">LLM Agents</span>
-                <span data-i18n="focusMemory">Agent Memory</span>
-                <span data-i18n="focusRsi">Recursive Self-Improvement</span>
-                <span data-i18n="focusRl">Reinforcement Learning</span>
-                <span data-i18n="focusEvaluation">Agent Evaluation</span>
-                <span data-i18n="focusRag">Multimodal RAG</span>
-                <span data-i18n="focusLowBit">Low-bit Deployment</span>
+                <span>LLM Agents</span>
+                <span>Agent Memory</span>
+                <span>Recursive Self-Improvement</span>
+                <span>Reinforcement Learning</span>
+                <span>Agent Evaluation</span>
+                <span>Multimodal RAG</span>
+                <span>Low-bit Deployment</span>
               </div>
             </div>
 
             <div class="about-notes reveal">
               <article class="about-note">
-                <h3 data-i18n="aboutNote1Title"><span>01</span> Reliable agent systems</h3>
-                <p data-i18n="aboutNote1Body">I design verifiers and evaluation workflows that separate semantic alignment, spatial correctness, physical validity, and task completion instead of compressing every failure into one score.</p>
+                <h3><span>01</span> Reliable agent systems</h3>
+                <p>I design verifiers and evaluation workflows that separate semantic alignment, spatial correctness, physical validity, and task completion instead of compressing every failure into one score.</p>
               </article>
               <article class="about-note">
-                <h3 data-i18n="aboutNote2Title"><span>02</span> RL under deployment constraints</h3>
-                <p data-i18n="aboutNote2Body">I study how reinforcement learning objectives should change when the deployed policy runs under low-bit quantization, long rollouts, and imperfect numerical execution.</p>
+                <h3><span>02</span> RL under deployment constraints</h3>
+                <p>I study how reinforcement learning objectives should change when the deployed policy runs under low-bit quantization, long rollouts, and imperfect numerical execution.</p>
               </article>
               <article class="about-note">
-                <h3 data-i18n="aboutNote3Title"><span>03</span> Agent memory &amp; self-improvement</h3>
-                <p data-i18n="aboutNote3Body">I am particularly interested in agent memory and recursive self-improvement (RSI): how agents retain experience and improve their own strategies over long horizons. I am actively looking for research opportunities and potential co-authors in these directions.</p>
+                <h3><span>03</span> Agent memory &amp; self-improvement</h3>
+                <p>I am particularly interested in agent memory and recursive self-improvement (RSI): how agents retain experience and improve their own strategies over long horizons. I am actively looking for research opportunities and potential co-authors in these directions.</p>
               </article>
             </div>
           </div>
@@ -1556,8 +1507,8 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="workKicker">02 · Selected work</p>
-              <h2 class="section-title" id="work-title" data-i18n="workTitle">Publications &amp; preprints.</h2>
+              <p class="section-kicker">02 · Selected work</p>
+              <h2 class="section-title" id="work-title">Publications &amp; preprints.</h2>
             </div>
           </div>
 
@@ -1570,11 +1521,11 @@
                 <a class="work-figure" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" aria-label="Open the G²-Reader paper">
                   <img src="assets/g2-reader-overview.webp" alt="Overview of the G²-Reader dual-graph framework" loading="lazy" decoding="async">
                 </a>
-                <p class="work-summary" data-i18n="work1Summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
+                <p class="work-summary">A multimodal document QA system that jointly evolves a content graph for grounded evidence and a planning graph for adaptive reasoning.</p>
               </div>
               <div class="work-meta">
                 <span class="venue">ICML 2026</span>
-                <a class="paper-link" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+                <a class="paper-link" href="https://arxiv.org/abs/2601.22055" target="_blank" rel="noreferrer">Paper</a>
               </div>
             </article>
 
@@ -1586,11 +1537,11 @@
                 <a class="work-figure" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" aria-label="Open the DataMaster paper">
                   <img src="assets/datamaster-overview.webp" alt="Overview of the DataMaster DataTree, Global Memory, and Data Pool" loading="lazy" decoding="async">
                 </a>
-                <p class="work-summary" data-i18n="work2Summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
+                <p class="work-summary">An autonomous research framework that treats data preparation, downstream validation, and accumulated experimental evidence as a closed-loop scientific process.</p>
               </div>
               <div class="work-meta">
                 <span class="venue">arXiv 2026</span>
-                <a class="paper-link" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+                <a class="paper-link" href="https://arxiv.org/abs/2605.10906" target="_blank" rel="noreferrer">Paper</a>
               </div>
             </article>
 
@@ -1598,15 +1549,15 @@
               <div class="work-index">03</div>
               <div class="work-content">
                 <h3>Agents' Last Exam</h3>
-                <p class="work-authors" data-i18n="work3Authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
+                <p class="work-authors">Yiyou Sun et al., including <strong>Zimeng Chen</strong> · Organization and Execution Team</p>
                 <a class="work-figure" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" aria-label="Open the Agents' Last Exam paper">
                   <img src="assets/agents-last-exam-overview.webp" alt="Agents' Last Exam professional task taxonomy and representative workflows" loading="lazy" decoding="async">
                 </a>
-                <p class="work-summary" data-i18n="work3Summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
+                <p class="work-summary">A broad evaluation of agents on long-horizon, economically valuable professional workflows with verifiable deliverables and real software environments.</p>
               </div>
               <div class="work-meta">
-                <span class="venue">arXiv 2026</span>
-                <a class="paper-link" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer" data-i18n="paperLink">Paper</a>
+                <span class="venue">NeurIPS 2026</span>
+                <a class="paper-link" href="https://arxiv.org/abs/2606.05405" target="_blank" rel="noreferrer">Paper</a>
               </div>
             </article>
           </div>
@@ -1618,10 +1569,10 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="researchKicker">03 · Research</p>
-              <h2 class="section-title" id="research-title" data-i18n="researchTitle">Experience</h2>
+              <p class="section-kicker">03 · Research</p>
+              <h2 class="section-title" id="research-title">Experience</h2>
             </div>
-            <p class="section-lead" data-i18n="researchLead">
+            <p class="section-lead">
               I am currently a <strong>Research Assistant at UC San Diego's Q-Lab</strong>, working on SimWorld, while continuing <strong>reinforcement-learning research at APEX Lab</strong>. Earlier work includes CMIC Lab and the Agents' Last Exam collaboration with UC Berkeley.
             </p>
           </div>
@@ -1630,20 +1581,20 @@
             <article class="research-item reveal">
               <div class="timeline-dot" aria-hidden="true"></div>
               <div class="research-meta">
-                <p class="research-date" data-i18n="qDate">Jun 2026 — Present</p>
+                <p class="research-date">Jun 2026 — Present</p>
                 <p class="research-lab">Q-Lab</p>
-                <p class="research-role" data-i18n="researchAssistant">Research Assistant</p>
-                <p class="research-place" data-i18n="qPlace">UC San Diego · Prof. Lianhui Qin</p>
-                <span class="current-tag" data-i18n="current">Current</span>
+                <p class="research-role">Research Assistant</p>
+                <p class="research-place">UC San Diego · Prof. Lianhui Qin</p>
+                <span class="current-tag">Current</span>
               </div>
               <div class="research-body">
-                <h3 data-i18n="qTitle">SimWorld · Unified evaluation of agent-generated 3D scenes</h3>
-                <p data-i18n="qSummary">Building a verifier and benchmark workflow for coding agents that generate and repair interactive scenes in Unreal Engine.</p>
+                <h3>SimWorld · Unified evaluation of agent-generated 3D scenes</h3>
+                <p>Building a verifier and benchmark workflow for coding agents that generate and repair interactive scenes in Unreal Engine.</p>
                 <ul class="research-points">
-                  <li data-i18n="qPoint1">Designed a staged evidence pipeline spanning deterministic scene-graph checks, UE-native physical probes, and evidence-grounded multi-view VLM judging.</li>
-                  <li data-i18n="qPoint2">Separated semantic, spatial, surface, preservation, and physical validity from ground-truth restoration fidelity.</li>
-                  <li data-i18n="qPoint3">Integrated evaluation into an agent-agnostic harness with provenance-tracked artifacts, explicit failure handling, and reproducible scoring.</li>
-                  <li data-i18n="qPoint4">Analyzed model trajectories, human alignment, rerun behavior, and VLM judging instability across text-to-scene and image-to-scene tasks.</li>
+                  <li>Designed a staged evidence pipeline spanning deterministic scene-graph checks, UE-native physical probes, and evidence-grounded multi-view VLM judging.</li>
+                  <li>Separated semantic, spatial, surface, preservation, and physical validity from ground-truth restoration fidelity.</li>
+                  <li>Integrated evaluation into an agent-agnostic harness with provenance-tracked artifacts, explicit failure handling, and reproducible scoring.</li>
+                  <li>Analyzed model trajectories, human alignment, rerun behavior, and VLM judging instability across text-to-scene and image-to-scene tasks.</li>
                 </ul>
               </div>
             </article>
@@ -1651,18 +1602,18 @@
             <article class="research-item reveal">
               <div class="timeline-dot" aria-hidden="true"></div>
               <div class="research-meta">
-                <p class="research-date" data-i18n="apexDate">May 2026 — Present</p>
+                <p class="research-date">May 2026 — Present</p>
                 <p class="research-lab">APEX Lab</p>
-                <p class="research-place" data-i18n="apexPlace">Prof. Muning Wen</p>
-                <span class="current-tag" data-i18n="current">Current</span>
+                <p class="research-place">Prof. Muning Wen</p>
+                <span class="current-tag">Current</span>
               </div>
               <div class="research-body">
-                <h3 data-i18n="apexTitle">Deployment-aware reinforcement learning for low-bit LLMs</h3>
-                <p data-i18n="apexSummary">Studying how to optimize reasoning policies for the numerical path they actually use at deployment rather than treating quantization as an afterthought.</p>
+                <h3>Deployment-aware reinforcement learning for low-bit LLMs</h3>
+                <p>Studying how to optimize reasoning policies for the numerical path they actually use at deployment rather than treating quantization as an afterthought.</p>
                 <ul class="research-points">
-                  <li data-i18n="apexPoint1">Built an end-to-end W4A16 GRPO framework using verl, vLLM, Triton, and Marlin for systematic quantization-aware RL experiments.</li>
-                  <li data-i18n="apexPoint2">Extended training and evaluation from short-form reasoning to long-horizon mathematical trajectories and multi-checkpoint analysis.</li>
-                  <li data-i18n="apexPoint3">Investigating high-precision teacher guidance that selectively corrects reward-relevant errors in a quantized policy.</li>
+                  <li>Built an end-to-end W4A16 PPO framework using verl, vLLM, Triton, and Marlin for systematic quantization-aware RL experiments.</li>
+                  <li>Extended training and evaluation from short-form reasoning to long-horizon mathematical trajectories and multi-checkpoint analysis.</li>
+                  <li>Investigating high-precision teacher guidance that selectively corrects reward-relevant errors in a quantized policy.</li>
                 </ul>
               </div>
             </article>
@@ -1670,16 +1621,16 @@
             <article class="research-item reveal">
               <div class="timeline-dot" aria-hidden="true"></div>
               <div class="research-meta">
-                <p class="research-date" data-i18n="aleDate">Feb 2026 — May 2026</p>
+                <p class="research-date">Feb 2026 — May 2026</p>
                 <p class="research-lab">Agents' Last Exam</p>
-                <p class="research-place" data-i18n="alePlace">Collaboration with UC Berkeley</p>
+                <p class="research-place">Collaboration with UC Berkeley</p>
               </div>
               <div class="research-body">
-                <h3 data-i18n="aleTitle">Medical-software agent evaluation</h3>
-                <p data-i18n="aleSummary">Translated professional medical-imaging procedures into long-horizon software tasks with structured inputs, hidden references, and verifiable deliverables.</p>
+                <h3>Medical-software agent evaluation</h3>
+                <p>Translated professional medical-imaging procedures into long-horizon software tasks with structured inputs, hidden references, and verifiable deliverables.</p>
                 <ul class="research-points">
-                  <li data-i18n="alePoint1">Designed the MicroDicom chest-X-ray annotation adjudication task featured in the public paper.</li>
-                  <li data-i18n="alePoint2">Combined file and schema validation, case-level hidden references, and IoU-based localization metrics.</li>
+                  <li>Designed the MicroDicom chest-X-ray annotation adjudication task featured in the public paper.</li>
+                  <li>Combined file and schema validation, case-level hidden references, and IoU-based localization metrics.</li>
                 </ul>
               </div>
             </article>
@@ -1687,16 +1638,16 @@
             <article class="research-item reveal">
               <div class="timeline-dot" aria-hidden="true"></div>
               <div class="research-meta">
-                <p class="research-date" data-i18n="cmicDate">Oct 2025 — Feb 2026</p>
+                <p class="research-date">Oct 2025 — Feb 2026</p>
                 <p class="research-lab">CMIC Lab</p>
-                <p class="research-place" data-i18n="cmicPlace">SJTU · Prof. Siheng Chen</p>
+                <p class="research-place">SJTU · Prof. Siheng Chen</p>
               </div>
               <div class="research-body">
-                <h3 data-i18n="cmicTitle">Multimodal document QA and graph-based retrieval</h3>
-                <p data-i18n="cmicSummary">Worked on the research line that became G²-Reader, extending agentic RAG from unimodal retrieval to multimodal, multi-document question answering.</p>
+                <h3>Multimodal document QA and graph-based retrieval</h3>
+                <p>Worked on the research line that became G²-Reader, extending agentic RAG from unimodal retrieval to multimodal, multi-document question answering.</p>
                 <ul class="research-points">
-                  <li data-i18n="cmicPoint1">Extended MA-RAG to jointly process textual and visual evidence and integrated LightRAG as a controlled baseline.</li>
-                  <li data-i18n="cmicPoint2">Ran full-scale validation on 2,271 VisDoMBench samples across five domains using a fixed retrieval budget.</li>
+                  <li>Extended MA-RAG to jointly process textual and visual evidence and integrated LightRAG as a controlled baseline.</li>
+                  <li>Ran full-scale validation on 2,271 VisDoMBench samples across five domains using a fixed retrieval budget.</li>
                 </ul>
               </div>
             </article>
@@ -1708,10 +1659,10 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="educationKicker">04 · Education</p>
-              <h2 class="section-title" id="education-title" data-i18n="educationTitle">Education</h2>
+              <p class="section-kicker">04 · Education</p>
+              <h2 class="section-title" id="education-title">Education</h2>
             </div>
-            <p class="section-lead" data-i18n="educationLead">My software engineering training gave me a strong foundation in systems, algorithms, and building reliable software. I have since transitioned into artificial intelligence research, applying that engineering perspective to LLM agents, reinforcement learning, and embodied systems.</p>
+            <p class="section-lead">My software engineering training gave me a strong foundation in systems, algorithms, and building reliable software. I have since transitioned into artificial intelligence research, applying that engineering perspective to LLM agents, reinforcement learning, and embodied systems.</p>
           </div>
 
           <div class="education-list">
@@ -1719,11 +1670,11 @@
               <span class="school-logo-wrap">
                 <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/zh/thumb/d/d5/SJTU_emblem.svg/250px-SJTU_emblem.svg.png" alt="Shanghai Jiao Tong University emblem" loading="lazy" decoding="async">
               </span>
-              <p class="education-date" data-i18n="sjtuDate">Aug 2023 — Jun 2027 (Expected)</p>
+              <p class="education-date">Aug 2023 — Jun 2027 (Expected)</p>
               <div class="education-content">
-                <h3 data-i18n="sjtuName">Shanghai Jiao Tong University <span class="school-abbr">(SJTU)</span></h3>
-                <p class="school-cn" data-i18n="sjtuSub">上海交通大学 · School of Computer Science</p>
-                <p class="degree" data-i18n="sjtuDegree">B.E. in Software Engineering</p>
+                <h3>Shanghai Jiao Tong University <span class="school-abbr">(SJTU)</span></h3>
+                <p class="school-cn">上海交通大学 · School of Computer Science</p>
+                <p class="degree">B.E. in Software Engineering</p>
               </div>
             </article>
 
@@ -1731,11 +1682,11 @@
               <span class="school-logo-wrap">
                 <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Emblem_of_CU.png/250px-Emblem_of_CU.png" alt="The Chinese University of Hong Kong emblem" loading="lazy" decoding="async">
               </span>
-              <p class="education-date" data-i18n="cuhkDate">Jul 2025 — Aug 2025</p>
+              <p class="education-date">Jul 2025 — Aug 2025</p>
               <div class="education-content">
-                <h3 data-i18n="cuhkName">The Chinese University of Hong Kong <span class="school-abbr">(CUHK)</span></h3>
-                <p class="school-cn" data-i18n="cuhkSub">香港中文大学</p>
-                <p class="degree" data-i18n="cuhkDegree">Summer Exchange in Robotics and Artificial Intelligence</p>
+                <h3>The Chinese University of Hong Kong <span class="school-abbr">(CUHK)</span></h3>
+                <p class="school-cn">香港中文大学</p>
+                <p class="degree">Summer Exchange in Robotics and Artificial Intelligence</p>
               </div>
             </article>
 
@@ -1743,11 +1694,11 @@
               <span class="school-logo-wrap">
                 <img class="school-logo" src="https://thumb.wikimedia.org/wikipedia/en/thumb/7/7a/The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png/250px-The_High_School_Affiliated_to_Renmin_University_of_China_Logo.png" alt="The High School Affiliated to Renmin University of China logo" loading="lazy" decoding="async">
               </span>
-              <p class="education-date" data-i18n="rdfzDate">High School</p>
+              <p class="education-date">High School</p>
               <div class="education-content">
-                <h3 data-i18n="rdfzName">The High School Affiliated to Renmin University of China <span class="school-abbr">(RDFZ)</span></h3>
-                <p class="school-cn" data-i18n="rdfzSub">中国人民大学附属中学 · Beijing</p>
-                <p class="degree" data-i18n="rdfzDegree">Secondary education</p>
+                <h3>The High School Affiliated to Renmin University of China <span class="school-abbr">(RDFZ)</span></h3>
+                <p class="school-cn">中国人民大学附属中学 · Beijing</p>
+                <p class="degree">Secondary education</p>
               </div>
             </article>
           </div>
@@ -1758,10 +1709,10 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="serviceKicker">05 · Service</p>
-              <h2 class="section-title" id="service-title" data-i18n="serviceTitle">Service</h2>
+              <p class="section-kicker">05 · Service</p>
+              <h2 class="section-title" id="service-title">Service</h2>
             </div>
-            <p class="section-lead" data-i18n="serviceLead">Academic peer-review service.</p>
+            <p class="section-lead">Academic peer-review service.</p>
           </div>
 
           <div class="service-grid">
@@ -1769,8 +1720,8 @@
               <div class="service-entry">
                 <span class="service-year">2027</span>
                 <div>
-                  <h4 data-i18n="serviceEntry">Reviewer · ICLR 2027</h4>
-                  <p data-i18n="serviceBody">Peer review service for the International Conference on Learning Representations.</p>
+                  <h4>Reviewer · ICLR 2027</h4>
+                  <p>Peer review service for the International Conference on Learning Representations.</p>
                 </div>
               </div>
             </article>
@@ -1783,16 +1734,16 @@
         <div class="section-inner">
           <div class="section-heading reveal">
             <div>
-              <p class="section-kicker" data-i18n="honorsKicker">06 · Honors</p>
-              <h2 class="section-title" id="honors-title" data-i18n="honorsTitle">Honors</h2>
+              <p class="section-kicker">06 · Honors</p>
+              <h2 class="section-title" id="honors-title">Honors</h2>
             </div>
-            <p class="section-lead" data-i18n="honorsLead">Selected university honors.</p>
+            <p class="section-lead">Selected university honors.</p>
           </div>
 
           <div class="honors-strip reveal">
             <ul class="honors-list">
-              <li><strong data-i18n="honor1">SJTU Outstanding Student</strong><span>2023–2025</span></li>
-              <li><strong data-i18n="honor2">SJTU Merit Scholarship</strong><span>2023–2025</span></li>
+              <li><strong>SJTU Outstanding Student</strong><span>2023–2025</span></li>
+              <li><strong>SJTU Merit Scholarship</strong><span>2023–2025</span></li>
             </ul>
           </div>
         </div>
@@ -1802,13 +1753,13 @@
         <div class="section-inner">
           <div class="contact-card reveal">
             <div>
-              <p class="section-kicker" data-i18n="contactKicker">07 · Contact</p>
-              <h2 id="contact-title" data-i18n="contactTitle">Always happy to connect.</h2>
-              <p class="contact-copy" data-i18n="contactCopy">I am always happy to hear from people who reach out, whether for academic discussions, research collaborations, or conversations beyond academia. I am currently open to Fall 2027 graduate opportunities.</p>
+              <p class="section-kicker">07 · Contact</p>
+              <h2 id="contact-title">Always happy to connect.</h2>
+              <p class="contact-copy">I am always happy to hear from people who reach out, whether for academic discussions, research collaborations, or conversations beyond academia. I am currently open to Fall 2027 graduate opportunities.</p>
             </div>
             <div class="contact-links">
               <a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a>
-              <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer" data-i18n="googleScholarLabel">Google Scholar ↗</a>
+              <a href="https://scholar.google.com/citations?user=lk7U-JQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar ↗</a>
               <a href="https://github.com/MieMieChen" target="_blank" rel="noreferrer">github.com/MieMieChen ↗</a>
               <a href="https://x.com/MieMie_Meng" target="_blank" rel="noreferrer">X · @MieMie_Meng ↗</a>
             </div>
@@ -1818,7 +1769,7 @@
 
       <footer>
         <span>© 2026 Zimeng Chen</span>
-        <span data-i18n="footerFocus">LLM agents · reinforcement learning · reliable evaluation</span>
+        <span>LLM agents · reinforcement learning · reliable evaluation</span>
       </footer>
     </main>
   </div>
@@ -1827,189 +1778,11 @@
     const toggle = document.querySelector('.nav-toggle');
     const navigation = document.querySelector('.rail-nav');
     const navLinks = [...document.querySelectorAll('.rail-nav a')];
-    const languageSwitcher = document.querySelector('.language-switcher');
-    const languageOptions = [...document.querySelectorAll('.language-option')];
-    const translatableElements = [...document.querySelectorAll('[data-i18n]')];
-    const defaultContent = new Map(translatableElements.map((element) => [element, element.innerHTML]));
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-
-    const chineseCopy = {
-      skipLink: '跳至正文',
-      railCopy: '上海交通大学<strong>计算机学院</strong>本科生，研究 LLM 智能体、强化学习与可验证系统。<strong>正在申请 2027 年秋季入学的研究生项目。</strong>',
-      menu: '菜单',
-      navAbout: '<span>01</span>关于我',
-      navWork: '<span>02</span>代表工作',
-      navResearch: '<span>03</span>科研经历',
-      navEducation: '<span>04</span>教育经历',
-      navService: '<span>05</span>学术服务',
-      navHonors: '<span>06</span>荣誉',
-      navContact: '<span>07</span>联系',
-      emailLabel: '邮箱',
-      scholarLabel: '学术主页',
-      googleScholarLabel: '谷歌学术 ↗',
-      railLocation: '上海 · 圣迭戈 · 致力于构建可靠的智能体',
-      heroEyebrow: 'LLM 智能体 · 强化学习 · 评测',
-      heroTitle: '陈梓萌 <em>Zimeng Chen</em>',
-      heroIntro: '我研究如何在长程任务与部署约束下<strong>评测并改进 AI 智能体</strong>。目前，我在加州大学圣迭戈分校 Q-Lab 研究能够构建交互式 3D 世界的编程智能体的可靠评测，并在 APEX Lab 研究面向语言模型实际部署的强化学习。',
-      heroWork: '代表工作',
-      heroContact: '联系我',
-      aboutKicker: '01 · 关于我',
-      aboutTitle: '我的研究关注',
-      aboutLead: '我是上海交通大学计算机学院本科生。我的研究围绕<strong>智能体可靠性</strong>、<strong>面向推理的强化学习</strong>，以及评估长程行为所需的系统展开。',
-      thesisLabel: '研究主张',
-      thesisQuote: '仅有能力强大的智能体还不够。我们还需要理解<span>它为什么有效、何时失败，以及哪些能力能够在部署环境中保持。</span>',
-      focusAgents: 'LLM 智能体',
-      focusMemory: '智能体记忆',
-      focusRsi: '递归式自我改进',
-      focusRl: '强化学习',
-      focusEvaluation: '智能体评测',
-      focusRag: '多模态 RAG',
-      focusLowBit: '低比特部署',
-      aboutNote1Title: '<span>01</span> 可靠的智能体系统',
-      aboutNote1Body: '我设计验证器与评测流程，将语义对齐、空间正确性、物理有效性和任务完成度分别建模，而不是把所有失败压缩成单一分数。',
-      aboutNote2Title: '<span>02</span> 部署约束下的强化学习',
-      aboutNote2Body: '我研究当部署策略面临低比特量化、长轨迹和不完美数值执行时，强化学习目标应当如何相应改变。',
-      aboutNote3Title: '<span>03</span> 智能体记忆与自我改进',
-      aboutNote3Body: '我持续关注智能体记忆与递归式自我改进（RSI）：智能体如何在长时间跨度中保留经验并改进自身策略。我正在寻找这些方向的研究机会与潜在合作者。',
-      workKicker: '02 · 代表工作',
-      workTitle: '论文与预印本',
-      work1Summary: '一个多模态文档问答系统，通过共同演化用于证据定位的内容图和用于自适应推理的规划图完成问题求解。',
-      work2Summary: '一个以数据为中心的自主科研框架，将数据准备、下游验证与累积实验知识组织成闭环科研过程。',
-      work3Authors: 'Yiyou Sun 等，包括 <strong>Zimeng Chen</strong> · 组织与执行团队',
-      work3Summary: '在真实软件环境中，以具有可验证交付物和经济价值的长程专业工作流系统评测智能体。',
-      paperLink: '论文',
-      researchKicker: '03 · 科研经历',
-      researchTitle: '科研经历',
-      researchLead: '我目前在加州大学圣迭戈分校 <strong>Q-Lab 担任研究助理</strong>，参与 SimWorld 研究，同时继续在 <strong>APEX Lab 开展强化学习研究</strong>。此前的工作包括 CMIC Lab 以及与加州大学伯克利分校合作的 Agents\' Last Exam。',
-      qDate: '2026 年 6 月 — 至今',
-      researchAssistant: '研究助理',
-      qPlace: '加州大学圣迭戈分校 · 秦连辉教授',
-      current: '进行中',
-      qTitle: 'SimWorld · 智能体生成 3D 场景的统一评测',
-      qSummary: '为能够生成和修复 Unreal Engine 交互场景的编程智能体构建验证器与基准评测流程。',
-      qPoint1: '设计分阶段证据流程，覆盖确定性场景图检查、UE 原生物理探测和基于证据的多视角 VLM 判断。',
-      qPoint2: '将语义、空间、表面、保留项和物理有效性与真实场景恢复保真度分别建模。',
-      qPoint3: '将评测集成到智能体无关的执行框架中，记录制品来源，并提供明确的失败处理与可复现评分。',
-      qPoint4: '分析文本生成场景与图像生成场景任务中的模型轨迹、人类一致性、重跑行为和 VLM 判断不稳定性。',
-      apexDate: '2026 年 5 月 — 至今',
-      apexPlace: '温木宁教授',
-      apexTitle: '面向低比特语言模型部署的强化学习',
-      apexSummary: '研究如何直接针对推理策略部署时实际采用的数值执行路径进行优化，而不是将量化作为训练后的附加步骤。',
-      apexPoint1: '基于 verl、vLLM、Triton 和 Marlin 构建端到端 W4A16 GRPO 框架，用于系统开展量化感知强化学习实验。',
-      apexPoint2: '将训练与评测从短程推理扩展到长程数学推理轨迹和多检查点分析。',
-      apexPoint3: '研究高精度教师指导机制，选择性纠正量化策略中与奖励相关的错误。',
-      aleDate: '2026 年 2 月 — 2026 年 5 月',
-      alePlace: '与加州大学伯克利分校合作',
-      aleTitle: '医疗软件智能体评测',
-      aleSummary: '将专业医学影像流程转化为长程软件任务，并提供结构化输入、隐藏参考答案和可验证交付物。',
-      alePoint1: '设计公开论文中使用的 MicroDicom 胸部 X 光片标注裁决任务。',
-      alePoint2: '结合文件与模式验证、病例级隐藏参考答案和基于 IoU 的定位指标。',
-      cmicDate: '2025 年 10 月 — 2026 年 2 月',
-      cmicPlace: '上海交通大学 · 陈思衡教授',
-      cmicTitle: '多模态文档问答与图结构检索',
-      cmicSummary: '参与后来发展为 G²-Reader 的研究，将智能体 RAG 从单模态检索扩展到多模态、多文档问答。',
-      cmicPoint1: '扩展 MA-RAG 以联合处理文本与视觉证据，并集成 LightRAG 作为受控基线。',
-      cmicPoint2: '在五个领域的 2,271 个 VisDoMBench 样本上，使用固定检索预算完成全量验证。',
-      educationKicker: '04 · 教育经历',
-      educationTitle: '教育经历',
-      educationLead: '软件工程训练为我建立了系统、算法和可靠软件开发方面的扎实基础。此后，我转向人工智能研究，并将工程视角应用于 LLM 智能体、强化学习和具身系统。',
-      sjtuDate: '2023 年 8 月 — 2027 年 6 月（预计）',
-      sjtuName: '上海交通大学 <span class="school-abbr">(SJTU)</span>',
-      sjtuSub: 'Shanghai Jiao Tong University · 计算机学院',
-      sjtuDegree: '软件工程工学学士',
-      cuhkDate: '2025 年 7 月 — 2025 年 8 月',
-      cuhkName: '香港中文大学 <span class="school-abbr">(CUHK)</span>',
-      cuhkSub: 'The Chinese University of Hong Kong',
-      cuhkDegree: '机器人学与人工智能暑期交换',
-      rdfzDate: '高中',
-      rdfzName: '中国人民大学附属中学 <span class="school-abbr">(RDFZ)</span>',
-      rdfzSub: 'The High School Affiliated to Renmin University of China · 北京',
-      rdfzDegree: '高中教育',
-      serviceKicker: '05 · 学术服务',
-      serviceTitle: '学术服务',
-      serviceLead: '学术同行评审服务。',
-      serviceEntry: '审稿人 · ICLR 2027',
-      serviceBody: '担任国际学习表征会议（ICLR 2027）审稿人。',
-      honorsKicker: '06 · 荣誉',
-      honorsTitle: '荣誉',
-      honorsLead: '部分校级荣誉。',
-      honor1: '上海交通大学三好学生',
-      honor2: '上海交通大学奖学金',
-      contactKicker: '07 · 联系',
-      contactTitle: '欢迎交流。',
-      contactCopy: '我乐于与每一位主动联系我的人交流，包括但不限于学术讨论、科研合作，以及学术之外的对话。我目前正在申请 2027 年秋季入学的研究生项目。',
-      footerFocus: 'LLM 智能体 · 强化学习 · 可靠评测'
-    };
-
-    const languageUi = {
-      en: {
-        close: 'Close',
-        menu: 'Menu',
-        choose: 'Choose language',
-        openNavigation: 'Open navigation',
-        closeNavigation: 'Close navigation',
-        title: 'Zimeng Chen — LLM Agents & Reinforcement Learning',
-        description: 'Zimeng Chen is an undergraduate at the School of Computer Science, Shanghai Jiao Tong University, researching LLM agents, reinforcement learning, and reliable agent evaluation.'
-      },
-      zh: {
-        close: '关闭',
-        menu: '菜单',
-        choose: '选择语言',
-        openNavigation: '打开导航',
-        closeNavigation: '关闭导航',
-        title: '陈梓萌 — LLM 智能体与强化学习',
-        description: '陈梓萌是上海交通大学计算机学院本科生，研究 LLM 智能体、强化学习与可靠的智能体评测。'
-      }
-    };
-
-    let currentLanguage = 'en';
-
-    const setLanguage = (language, persist = true) => {
-      currentLanguage = language === 'zh' ? 'zh' : 'en';
-      const isChinese = currentLanguage === 'zh';
-      const ui = languageUi[currentLanguage];
-
-      document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
-      document.title = ui.title;
-      descriptionMeta?.setAttribute('content', ui.description);
-      languageSwitcher?.setAttribute('aria-label', ui.choose);
-
-      translatableElements.forEach((element) => {
-        const key = element.dataset.i18n;
-        element.innerHTML = isChinese && chineseCopy[key] ? chineseCopy[key] : defaultContent.get(element);
-      });
-
-      languageOptions.forEach((option) => {
-        const isActive = option.dataset.lang === currentLanguage;
-        option.classList.toggle('is-active', isActive);
-        option.setAttribute('aria-pressed', String(isActive));
-      });
-
-      const isOpen = navigation?.classList.contains('open');
-      if (toggle) {
-        toggle.textContent = isOpen ? ui.close : ui.menu;
-        toggle.setAttribute('aria-label', isOpen ? ui.closeNavigation : ui.openNavigation);
-      }
-
-      if (persist) {
-        try { localStorage.setItem('site-language', currentLanguage); } catch (error) {}
-      }
-    };
-
-    languageOptions.forEach((option) => {
-      option.addEventListener('click', () => setLanguage(option.dataset.lang));
-    });
-
-    let savedLanguage = 'en';
-    try { savedLanguage = localStorage.getItem('site-language') || 'en'; } catch (error) {}
-    setLanguage(savedLanguage, false);
-
     toggle?.addEventListener('click', () => {
       const isOpen = navigation.classList.toggle('open');
       toggle.setAttribute('aria-expanded', String(isOpen));
-      const ui = languageUi[currentLanguage];
-      toggle.textContent = isOpen ? ui.close : ui.menu;
-      toggle.setAttribute('aria-label', isOpen ? ui.closeNavigation : ui.openNavigation);
+      toggle.textContent = isOpen ? 'Close' : 'Menu';
+      toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
     });
 
     navLinks.forEach((link) => {
@@ -2017,8 +1790,8 @@
         navigation.classList.remove('open');
         toggle?.setAttribute('aria-expanded', 'false');
         if (toggle) {
-          toggle.textContent = languageUi[currentLanguage].menu;
-          toggle.setAttribute('aria-label', languageUi[currentLanguage].openNavigation);
+          toggle.textContent = 'Menu';
+          toggle.setAttribute('aria-label', 'Open navigation');
         }
       });
     });
