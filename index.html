@@ -17,7 +17,7 @@
     body { margin: 0; background: #fff; color: var(--ink); font: 17px/1.6 Arial, Helvetica, sans-serif; }
     a { color: var(--link); text-decoration: none; text-underline-offset: 3px; }
     a:hover { text-decoration: underline; }
-    a:focus-visible, summary:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
+    a:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
     p { margin: 0 0 14px; }
     strong { font-weight: 600; }
     img { display: block; max-width: 100%; }
@@ -61,8 +61,6 @@
     .project-title { margin: 8px 0 5px; font-size: 16px; font-weight: 600; }
     .contributions { padding-left: 20px; margin: 5px 0 0; font-size: 16px; line-height: 1.6; }
     .contributions li { margin-bottom: 6px; padding-left: 2px; }
-    details { margin-top: 7px; font-size: 15px; }
-    summary { color: var(--link); cursor: pointer; width: fit-content; }
     .education-entry { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 18px; margin-bottom: 23px; align-items: center; }
     .education-entry:last-child { margin-bottom: 0; }
     .school-logo { width: 74px; height: 74px; object-fit: contain; }
@@ -143,10 +141,12 @@
         <a href="#about">About</a>
         <a href="#work">Publications</a>
         <a href="#research">Experience</a>
+        <a href="#projects">Projects</a>
         <a href="#education">Education</a>
         <a href="#honors">Honors</a>
         <a href="#service">Service</a>
         <a href="#contact">Contact</a>
+        <a href="#miscellany">Miscellany</a>
       </nav>
     </aside>
 
@@ -230,13 +230,8 @@
             <li>Developed task-specific criteria: requirement-level checks and whole-scene alignment for construction; separate measures of target recovery and preservation of unrelated content for editing.</li>
             <li>Built the verification workflow, combining Unreal Engine state measurements, support and collision checks, camera planning, targeted visual evidence, VLM judging, and score aggregation, with parallel evaluation and human verification.</li>
             <li>Evaluated <strong>14 model configurations</strong> across construction and indoor/outdoor editing. Joint analysis of scores and trajectories exposed weak spatial composition and unintended scene changes in <strong>35.8%</strong> of complete target recoveries on public editing tasks.</li>
+            <li>Audited execution trajectories and identified five answer-exposure pathways involving answer metadata, binary ground-truth map decoding, UE/MCP backends, cross-case inputs, and original asset-pack scenes.</li>
           </ul>
-          <details>
-            <summary>Additional contribution</summary>
-            <ul class="contributions">
-              <li>Audited execution trajectories and identified five answer-exposure pathways involving metadata, binary ground-truth maps, engine/tool backends, cross-case inputs, and original asset-pack scenes.</li>
-            </ul>
-          </details>
         </article>
 
         <article class="experience">
@@ -248,7 +243,9 @@
           <p class="project-title">Reinforcement Learning for Reasoning under Training–Inference Mismatch</p>
           <ul class="contributions">
             <li>Independently lead <strong>PPO-based post-training</strong> research on training–inference mismatch, using high-precision feedback to guide low-bit reasoning policies.</li>
-            <li>Implement training and evaluation in verl and vLLM, comparing against matched BF16 PPO and quantization-aware RL baselines on DAPO, MATH, and GSM8K.</li>
+            <li>Developed <strong>Quantization-Counterfactual Advantage (QCA)</strong>: rank BF16 alternatives against low-bit actions at the same prefix, guided by positive critic-estimated benefits.</li>
+            <li>Developed <strong>Advantage-Weighted Consistency (AWC)</strong>, a teacher-to-policy KL objective that uses positive advantages to prioritize BF16 feedback during PPO updates.</li>
+            <li>Implemented QCA and AWC in verl/vLLM; evaluate their effects on <strong>DAPO, MATH, and GSM8K</strong> against matched BF16 PPO and QaRL baselines.</li>
           </ul>
         </article>
 
@@ -282,6 +279,21 @@
             <span class="date">Summer 2024</span>
           </div>
           <p class="role"><strong>Summer Research Intern</strong> · Advised by Mingkai Dong</p>
+        </article>
+      </section>
+
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">Projects</h2>
+        <article class="experience">
+          <div class="entry-heading">
+            <h3>LSM-Tree Storage Engine and Vector Search</h3>
+            <span class="date">Spring 2025</span>
+          </div>
+          <p class="role">Course Project · Advanced Data Structure, Shanghai Jiao Tong University</p>
+          <ul class="contributions">
+            <li>Implemented a <strong>C++ LSM-tree store</strong> with skip-list memtables, SSTable compaction, and Bloom filters; added embedding-based search, HNSW indexing, and persistence.</li>
+            <li>Parallelized top-k search, reducing mean query latency from <strong>76.34 ms to 7.94 ms</strong> on 49,998 precomputed vectors (1 vs. 28 threads, 128 queries).</li>
+          </ul>
         </article>
       </section>
 
@@ -330,6 +342,11 @@
         <h2 id="contact-title">Contact</h2>
         <p>I am always happy to hear from people who reach out—for academic discussions, research collaborations, or conversations beyond academia. I am currently open to <strong>Fall 2027 graduate opportunities</strong>.</p>
         <p><a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a></p>
+      </section>
+
+      <section id="miscellany" aria-labelledby="miscellany-title">
+        <h2 id="miscellany-title">Miscellany</h2>
+        <p>Outside research, I am interested in Bazi (the Four Pillars of Destiny) and tarot. I love good food and experiencing the world with the people I love.</p>
       </section>
 
       <footer>© 2026 Zimeng Chen · Last updated October 2026</footer>
