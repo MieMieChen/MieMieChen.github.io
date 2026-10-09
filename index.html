@@ -8,10 +8,10 @@
   <meta name="theme-color" content="#ffffff">
   <meta property="og:title" content="Zimeng Chen">
   <meta property="og:description" content="LLM post-training · Agentic RL & self-improvement · Reliable agent evaluation">
-  <meta property="og:image" content="https://miemiechen.github.io/assets/profile-coast.jpg">
+  <meta property="og:image" content="https://miemiechen.github.io/assets/profile-portrait.jpg">
   <link rel="canonical" href="https://miemiechen.github.io/">
   <style>
-    :root { color-scheme: light; --ink: #172033; --muted: #475569; --link: #006ad4; --line: #d6e4f0; --accent-soft: #edf6ff; }
+    :root { color-scheme: light; --ink: #211a2e; --muted: #5b5267; --link: #7c3aed; --line: #e5d9f2; --accent-soft: #f6f0ff; }
     * { box-sizing: border-box; }
     html { scroll-padding-top: 24px; }
     body { margin: 0; background: #fff; color: var(--ink); font: 17px/1.6 Arial, Helvetica, sans-serif; }
@@ -25,14 +25,14 @@
     .skip-link:focus { top: 8px; }
     .page { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 60px; max-width: 1120px; margin: 0 auto; padding: 54px 24px 28px; }
     .profile { align-self: start; position: sticky; top: 36px; }
-    .portrait { width: 260px; height: 292px; object-fit: cover; object-position: 82% center; border-radius: 3px; }
+    .portrait { width: 260px; height: 292px; object-fit: cover; object-position: center; border-radius: 3px; }
     h1 { margin: 19px 0 2px; font-size: 30px; line-height: 1.25; font-weight: 600; letter-spacing: -.5px; }
     .chinese-name { color: var(--muted); font-size: 20px; margin-bottom: 14px; }
     .affiliation { font-size: 16px; line-height: 1.55; }
-    .application { margin: 16px 0; font-size: 16px; color: #08788a; font-weight: 600; }
+    .application { margin: 16px 0; font-size: 16px; color: var(--link); font-weight: 600; }
     .profile-contacts { list-style: none; padding: 0; margin: 18px 0 22px; font-size: 17px; line-height: 1.4; }
     .profile-contacts li { margin: 0 0 9px; }
-    .profile-contacts a, .profile-contacts .contact-location { display: flex; align-items: center; gap: 11px; color: #334155; width: fit-content; }
+    .profile-contacts a, .profile-contacts .contact-location { display: flex; align-items: center; gap: 11px; color: #443a53; width: fit-content; }
     .profile-contacts a:hover { color: var(--link); }
     .contact-icon { width: 19px; height: 19px; flex: 0 0 19px; fill: var(--link); }
     .profile h2 { font-size: 16px; font-weight: 600; margin: 0 0 5px; padding: 0; border: 0; }
@@ -45,9 +45,9 @@
     .section-note { color: var(--muted); font-size: 14px; margin: -7px 0 21px; }
     .paper { display: grid; grid-template-columns: 205px minmax(0, 1fr); gap: 25px; align-items: center; margin-bottom: 26px; }
     .paper:last-child { margin-bottom: 0; }
-    .paper-figure { display: block; position: relative; padding: 11px 5px 5px; background: #fff; border: 1px solid #d6e4f0; border-radius: 5px; box-shadow: 0 2px 5px rgb(30 100 160 / 6%); }
+    .paper-figure { display: block; position: relative; padding: 11px 5px 5px; background: #fff; border: 1px solid var(--line); border-radius: 5px; box-shadow: 0 2px 5px rgb(110 55 165 / 6%); }
     .paper-figure img { width: 100%; height: 123px; object-fit: contain; }
-    .paper-badge { position: absolute; top: -1px; left: -1px; min-width: 66px; padding: 2px 11px; border-radius: 4px 0 3px 0; background: #e2f0ff; color: #005cbf; font-size: 12px; line-height: 1.5; font-weight: 600; text-align: center; }
+    .paper-badge { position: absolute; top: -1px; left: -1px; min-width: 66px; padding: 2px 11px; border-radius: 4px 0 3px 0; background: #f0e5ff; color: #6d28d9; font-size: 12px; line-height: 1.5; font-weight: 600; text-align: center; }
     .paper h3 { margin-bottom: 5px; font-size: 17px; line-height: 1.5; }
     .paper h3 a { color: var(--link); }
     .authors { font-size: 16px; line-height: 1.55; margin: 0 0 5px; }
@@ -55,8 +55,8 @@
     .authors sup { font-size: .7em; line-height: 0; }
     .venue { font-size: 16px; margin: 0 0 7px; font-style: italic; }
     .paper-links { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
-    .paper-links a { display: inline-block; padding: 2px 9px; border: 1px solid #9dc6ed; border-radius: 0; background: #fff; color: var(--link); font-size: 14px; line-height: 1.4; }
-    .paper-links a:hover { color: #0057b3; border-color: var(--link); background: var(--accent-soft); text-decoration: none; }
+    .paper-links a { display: inline-block; padding: 2px 9px; border: 1px solid #cbb0ee; border-radius: 0; background: #fff; color: var(--link); font-size: 14px; line-height: 1.4; }
+    .paper-links a:hover { color: #6d28d9; border-color: var(--link); background: var(--accent-soft); text-decoration: none; }
     .experience { margin-bottom: 26px; }
     .experience:last-child { margin-bottom: 0; }
     .entry-heading { display: flex; justify-content: space-between; gap: 9px 16px; align-items: baseline; flex-wrap: wrap; }
@@ -122,7 +122,7 @@
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="page" id="home">
     <aside class="profile" aria-label="Profile">
-      <img class="portrait" src="assets/profile-coast.jpg" width="260" height="292" alt="Zimeng Chen overlooking a coastline">
+      <img class="portrait" src="assets/profile-portrait.jpg" width="260" height="292" alt="Zimeng Chen wearing a Mickey Mouse sorcerer hat">
       <div class="profile-info">
         <h1>Zimeng Chen</h1>
         <p class="chinese-name" lang="zh">陈梓萌</p>
