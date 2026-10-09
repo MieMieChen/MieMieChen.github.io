@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta property="og:title" content="Zimeng Chen">
   <meta property="og:description" content="LLM post-training · Agentic RL & self-improvement · Reliable agent evaluation">
-  <meta property="og:image" content="https://miemiechen.github.io/assets/profile-portrait.jpg">
+  <meta property="og:image" content="https://miemiechen.github.io/assets/portrait-2026.jpg">
   <link rel="canonical" href="https://miemiechen.github.io/">
   <style>
     :root { color-scheme: light; --ink: #211a2e; --muted: #5b5267; --link: #7c3aed; --line: #e5d9f2; --accent-soft: #f6f0ff; }
@@ -25,7 +25,8 @@
     .skip-link:focus { top: 8px; }
     .page { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 60px; max-width: 1120px; margin: 0 auto; padding: 54px 24px 28px; }
     .profile { align-self: start; position: sticky; top: 36px; }
-    .portrait { width: 260px; height: 292px; object-fit: cover; object-position: center; border-radius: 3px; }
+    .portrait-frame { width: 260px; height: 292px; padding: 8px; background: #fff; border: 2px solid #e1dde7; border-radius: 54px; box-shadow: 0 2px 12px rgb(40 25 60 / 9%); }
+    .portrait { width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 44px; }
     h1 { margin: 19px 0 2px; font-size: 30px; line-height: 1.25; font-weight: 600; letter-spacing: -.5px; }
     .chinese-name { color: var(--muted); font-size: 20px; margin-bottom: 14px; }
     .affiliation { font-size: 16px; line-height: 1.55; }
@@ -77,14 +78,15 @@
     @media (min-width: 821px) and (max-height: 860px) { .profile { position: static; } }
     @media (max-width: 1000px) {
       .page { grid-template-columns: 225px minmax(0, 1fr); gap: 36px; }
-      .portrait { width: 225px; height: 260px; }
+      .portrait-frame { width: 225px; height: 260px; }
       .paper { grid-template-columns: 160px minmax(0, 1fr); gap: 18px; }
       .paper-figure img { height: 108px; }
     }
     @media (max-width: 820px) {
       .page { display: block; max-width: 760px; padding: 30px 24px; }
       .profile { position: static; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 0 26px; margin-bottom: 34px; }
-      .portrait { grid-row: 1 / 3; width: 190px; height: 235px; }
+      .portrait-frame { grid-row: 1 / 3; width: 190px; height: 235px; border-radius: 44px; }
+      .portrait { border-radius: 34px; }
       h1 { margin-top: 0; }
       .profile-interests { grid-column: 1 / -1; margin-top: 19px; }
       .profile-interests .interests { margin-bottom: 0; }
@@ -96,7 +98,7 @@
       body { font-size: 16px; }
       .page { padding: 24px 19px; }
       .profile { grid-template-columns: 1fr; gap: 0; }
-      .portrait { grid-row: auto; width: 230px; height: 258px; margin-bottom: 18px; }
+      .portrait-frame { grid-row: auto; width: 230px; height: 258px; margin-bottom: 18px; }
       h1 { font-size: 29px; }
       .profile-interests { margin-top: 16px; }
       h2 { font-size: 23px; }
@@ -111,7 +113,7 @@
     @media print {
       .page { display: block; max-width: none; padding: 0; }
       .profile { position: static; margin-bottom: 25px; }
-      .portrait, .profile-interests { display: none; }
+      .portrait-frame, .profile-interests { display: none; }
       section, .paper, .experience { break-inside: avoid; }
       body { font-size: 11pt; }
       a { color: inherit; }
@@ -122,7 +124,7 @@
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="page" id="home">
     <aside class="profile" aria-label="Profile">
-      <img class="portrait" src="assets/profile-portrait.jpg" width="260" height="292" alt="Zimeng Chen wearing a Mickey Mouse sorcerer hat">
+      <div class="portrait-frame"><img class="portrait" src="assets/portrait-2026.jpg" width="260" height="292" alt="Zimeng Chen wearing a Mickey Mouse sorcerer hat"></div>
       <div class="profile-info">
         <h1>Zimeng Chen</h1>
         <p class="chinese-name" lang="zh">陈梓萌</p>
@@ -331,15 +333,9 @@
         <p>Reviewer · ICLR 2027</p>
       </section>
 
-      <section id="contact" aria-labelledby="contact-title">
-        <h2 id="contact-title">Contact</h2>
-        <p>I am always happy to hear from people who reach out—for academic discussions, research collaborations, or conversations beyond academia. I am currently open to <strong>Fall 2027 graduate opportunities</strong>.</p>
-        <p><a href="mailto:zimeng_chen@sjtu.edu.cn">zimeng_chen@sjtu.edu.cn</a></p>
-      </section>
-
       <section id="miscellany" aria-labelledby="miscellany-title">
         <h2 id="miscellany-title">Miscellany</h2>
-        <p>Outside research, I am interested in Bazi (the Four Pillars of Destiny) and tarot. I love good food and experiencing the world with the people I love.</p>
+        <p>Beyond research, I enjoy exploring Bazi (the Four Pillars of Destiny) and tarot. I cherish good food and discovering new corners of the world—especially in the company of those dear to me.</p>
       </section>
 
       <footer>© 2026 Zimeng Chen · Last updated October 2026</footer>
