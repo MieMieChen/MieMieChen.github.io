@@ -11,7 +11,7 @@
   <meta property="og:image" content="https://miemiechen.github.io/assets/profile-coast.jpg">
   <link rel="canonical" href="https://miemiechen.github.io/">
   <style>
-    :root { color-scheme: light; --ink: #292929; --muted: #646464; --link: #235e8b; --line: #dedede; }
+    :root { color-scheme: light; --ink: #172033; --muted: #475569; --link: #006ad4; --line: #d6e4f0; --accent-soft: #edf6ff; }
     * { box-sizing: border-box; }
     html { scroll-padding-top: 24px; }
     body { margin: 0; background: #fff; color: var(--ink); font: 17px/1.6 Arial, Helvetica, sans-serif; }
@@ -29,12 +29,12 @@
     h1 { margin: 19px 0 2px; font-size: 30px; line-height: 1.25; font-weight: 600; letter-spacing: -.5px; }
     .chinese-name { color: var(--muted); font-size: 20px; margin-bottom: 14px; }
     .affiliation { font-size: 16px; line-height: 1.55; }
-    .application { margin: 16px 0; font-size: 16px; color: #8b3d2f; font-weight: 600; }
+    .application { margin: 16px 0; font-size: 16px; color: #08788a; font-weight: 600; }
     .profile-contacts { list-style: none; padding: 0; margin: 18px 0 22px; font-size: 17px; line-height: 1.4; }
     .profile-contacts li { margin: 0 0 9px; }
-    .profile-contacts a, .profile-contacts .contact-location { display: flex; align-items: center; gap: 11px; color: #4c5155; width: fit-content; }
+    .profile-contacts a, .profile-contacts .contact-location { display: flex; align-items: center; gap: 11px; color: #334155; width: fit-content; }
     .profile-contacts a:hover { color: var(--link); }
-    .contact-icon { width: 19px; height: 19px; flex: 0 0 19px; fill: currentColor; }
+    .contact-icon { width: 19px; height: 19px; flex: 0 0 19px; fill: var(--link); }
     .profile h2 { font-size: 16px; font-weight: 600; margin: 0 0 5px; padding: 0; border: 0; }
     .interests { color: var(--muted); font-size: 15px; line-height: 1.65; }
     main { min-width: 0; }
@@ -45,18 +45,18 @@
     .section-note { color: var(--muted); font-size: 14px; margin: -7px 0 21px; }
     .paper { display: grid; grid-template-columns: 205px minmax(0, 1fr); gap: 25px; align-items: center; margin-bottom: 26px; }
     .paper:last-child { margin-bottom: 0; }
-    .paper-figure { display: block; position: relative; padding: 11px 5px 5px; background: #fff; border: 1px solid #e5e1e8; border-radius: 5px; box-shadow: 1px 2px 5px rgb(0 0 0 / 13%); }
+    .paper-figure { display: block; position: relative; padding: 11px 5px 5px; background: #fff; border: 1px solid #d6e4f0; border-radius: 5px; box-shadow: 0 2px 5px rgb(30 100 160 / 6%); }
     .paper-figure img { width: 100%; height: 123px; object-fit: contain; }
-    .paper-badge { position: absolute; top: -1px; left: -1px; min-width: 66px; padding: 2px 11px; border-radius: 4px 0 3px 0; background: #563174; color: #fff; font-size: 12px; line-height: 1.5; font-weight: 600; text-align: center; }
+    .paper-badge { position: absolute; top: -1px; left: -1px; min-width: 66px; padding: 2px 11px; border-radius: 4px 0 3px 0; background: #e2f0ff; color: #005cbf; font-size: 12px; line-height: 1.5; font-weight: 600; text-align: center; }
     .paper h3 { margin-bottom: 5px; font-size: 17px; line-height: 1.5; }
-    .paper h3 a { color: #673e83; }
+    .paper h3 a { color: var(--link); }
     .authors { font-size: 16px; line-height: 1.55; margin: 0 0 5px; }
     .authors strong { color: #111; }
     .authors sup { font-size: .7em; line-height: 0; }
     .venue { font-size: 16px; margin: 0 0 7px; font-style: italic; }
     .paper-links { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
-    .paper-links a { display: inline-block; padding: 2px 9px; border: 1px solid #555; border-radius: 0; color: #333; font-size: 14px; line-height: 1.4; }
-    .paper-links a:hover { color: #673e83; border-color: #673e83; background: #faf8fc; text-decoration: none; }
+    .paper-links a { display: inline-block; padding: 2px 9px; border: 1px solid #9dc6ed; border-radius: 0; background: #fff; color: var(--link); font-size: 14px; line-height: 1.4; }
+    .paper-links a:hover { color: #0057b3; border-color: var(--link); background: var(--accent-soft); text-decoration: none; }
     .experience { margin-bottom: 26px; }
     .experience:last-child { margin-bottom: 0; }
     .entry-heading { display: flex; justify-content: space-between; gap: 9px 16px; align-items: baseline; flex-wrap: wrap; }
@@ -163,7 +163,7 @@
             <h3><a href="https://arxiv.org/abs/2609.36777">Code4Scene: Benchmarking Coding Agents for Constructing and Editing 3D Scenes</a></h3>
             <p class="authors">Xiaokang Ye<sup>*</sup>, Siddhant Hitesh Mantri<sup>*</sup>, <strong>Zimeng Chen<sup>*</sup></strong>, Edward Zhang, Zhaoxu Zheng, Yuanheng Li, Yizhao Chen, Tianyang Huang, Lianhui Qin</p>
             <p class="venue">arXiv preprint, 2026</p>
-            <p class="paper-links"><a href="https://arxiv.org/abs/2609.36777">Paper</a><a href="https://simworld-ai-code4scene.static.hf.space/index.html">Project</a></p>
+            <p class="paper-links"><a href="https://arxiv.org/abs/2609.36777">Paper</a><a href="https://simworld-ai-code4scene.static.hf.space/index.html">Website</a><a href="https://github.com/SimWorld-AI/Code4Scene">GitHub</a></p>
           </div>
         </article>
 
